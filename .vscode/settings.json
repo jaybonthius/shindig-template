@@ -1,0 +1,37 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.includeLanguages": {
+    "racket": "txt",
+    "pollen-markup": "txt",
+    "pollen-template-html": "html",
+  },
+  "tailwindCSS.experimental.classRegex": [
+    // "tailwind\\s*[\"'](.*)[\"']",
+    // "class\\s*[\"'](.*)[\"']",
+    "class\\s\"(.*)\""
+  ],
+  "[racket]": {
+    "editor.rulers": [88],
+    "inlineFold.regex": "class\\s*[\"'](.*)[\"']",
+    "inlineFold.unfoldedOpacity": 1,
+    "inlineFold.regexFlags": "g",
+    "inlineFold.regexGroup": 1,
+    "inlineFold.maskChar": "◦◦◦"
+  },
+  "[pollen-markup]": {
+    "inlineFold.regex": "class\\s*[\"'](.*)[\"']",
+    "inlineFold.unfoldedOpacity": 1,
+    "inlineFold.regexFlags": "g",
+    "inlineFold.regexGroup": 1,
+    "inlineFold.maskChar": "◦◦◦"
+  },
+  "[pollen-template-html]": {
+    "inlineFold.regex": "class\\s*=\\s*[\"'](.*)[\"']",
+    "inlineFold.unfoldedOpacity": 1,
+    "inlineFold.regexFlags": "g",
+    "inlineFold.regexGroup": 1,
+    "inlineFold.maskChar": "◦◦◦"
+  }
+}
