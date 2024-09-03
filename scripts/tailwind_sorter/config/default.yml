@@ -6,10 +6,10 @@ regexps:
     regexp: 'class="([^"]*)"'
     file_extension: .html.p
   racket:
-    regexp: 'class\s"(.*)"'
+    regexp: 'class "([^"]*)"'
     file_extension: .rkt
   poly_pm:
-    regexp: 'class\s"(.*)"'
+    regexp: 'class "([^"]*)"'
     file_extension: .pm
 
 variants_order:

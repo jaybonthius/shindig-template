@@ -6,7 +6,7 @@ WATCH_DIR="."
 # File extensions to watch and their corresponding commands
 # Use semicolons to separate multiple commands
 declare -A EXTENSIONS
-EXTENSIONS[".html.p"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path"
+EXTENSIONS[".html.p"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path;pnpx prettier --write --parser "html" --print-width 140"
 EXTENSIONS[".pm"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path"
 EXTENSIONS[".rkt"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path;raco fmt -i --width 88"
 

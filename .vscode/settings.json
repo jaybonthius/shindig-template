@@ -14,14 +14,14 @@
   ],
   "[racket]": {
     "editor.rulers": [88],
-    "inlineFold.regex": "class\\s*[\"'](.*)[\"']",
+    "inlineFold.regex": "class\\s*[\"'](.*?)[\"']",
     "inlineFold.unfoldedOpacity": 1,
     "inlineFold.regexFlags": "g",
     "inlineFold.regexGroup": 1,
     "inlineFold.maskChar": "◦◦◦"
   },
   "[pollen-markup]": {
-    "inlineFold.regex": "class\\s*[\"'](.*)[\"']",
+    "inlineFold.regex": "class\\s*[\"'](.*?)[\"']",
     "inlineFold.unfoldedOpacity": 1,
     "inlineFold.regexFlags": "g",
     "inlineFold.regexGroup": 1,

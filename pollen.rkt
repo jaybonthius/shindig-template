@@ -189,10 +189,10 @@ handle it at the Pollen processing level.
       (apply hyperlinker (get-elements inline-tx))
       inline-tx))
 
-(define (p . words)
-  (case (current-poly-target)
-    [(ltx pdf) `(txt ,@words)]
-    [else `(p ,@words)]))
+; (define (p . words)
+;   (case (current-poly-target)
+;     [(ltx pdf) `(txt ,@words)]
+;     [else `(p ,@words)]))
 
 (define (blockquote . words)
   (case (current-poly-target)
