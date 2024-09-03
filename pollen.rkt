@@ -10,11 +10,8 @@
          racket/string
          sugar/coerce
          pollen/file
-         (only-in srfi/13 string-contains)
+         (only-in srfi/13 string-contains) ; avoid collision with racket/string
          txexpr)
-
-; We want srfi/13 for string-contains but need to avoid collision between
-; its string-replace function and the one in racket/string
 
 (provide add-between
          attr-ref
@@ -185,7 +182,7 @@ handle it at the Pollen processing level.
       [(ltx pdf) `(txt "\\href{" ,url "}" "{" ,@words "}")]
       [else
        `(a [[href ,url]
-            (class "text-[#0077AA] no-underline align-text-bottom hover:underline")]
+            (class "align-text-bottom text-[#0077AA] no-underline hover:underline")]
            ,@words)]))
 
   (if (eq? 'hyperlink (get-tag inline-tx))
@@ -269,10 +266,10 @@ handle it at the Pollen processing level.
                   (img [[src ,source]]))
          `(figure ,(apply margin-note caption) (img [[src ,source]])))]))
 
-(define (code . text)
-  (case (current-poly-target)
-    [(ltx pdf) `(txt "\\texttt{" ,@text "}")]
-    [else `(span [(class "code")] ,@text)]))
+; (define (code . text)
+;   (case (current-poly-target)
+;     [(ltx pdf) `(txt "\\texttt{" ,@text "}")]
+;     [else `(span [(class "inline")] ,@text)]))
 
 (define (blockcode . text)
   (case (current-poly-target)
@@ -299,30 +296,6 @@ handle it at the Pollen processing level.
     [(ltx pdf) `(txt "\\textsuperscript{" ,@text "}")]
     [else `(sup ,@text)]))
 
-#|
-	Just because we can, here's a tag function for typesetting the LaTeX logo
-	in both HTML and (obv.) LaTeX.
-|#
-(define (Latex)
-  (case (current-poly-target)
-    [(ltx pdf)
-     `(txt
-       "\\LaTeX\\xspace")] ; \xspace adds a space if the next char is not punctuation
-    [else
-     `(span [(class "latex")]
-            "L"
-            (span [(class "latex-sup")] "a")
-            "T"
-            (span [(class "latex-sub")] "e")
-            "X")]))
-
-; In HTML the <i> and <em> tags won't look much different. But when outputting to
-; LaTeX, ◊i will italicize multiple blocks of text, where ◊emph should be
-; used for words or phrases that are intended to be emphasized. In LaTeX,
-; if the surrounding text is already italic then the emphasized words will be
-; non-italicized.
-;   A similar approach is offered for boldface text.
-;
 (define (i . text)
   (case (current-poly-target)
     [(ltx pdf) `(txt "{\\itshape " ,@text "}")]
@@ -342,224 +315,3 @@ handle it at the Pollen processing level.
   (case (current-poly-target)
     [(ltx pdf) `(txt "\\textbf{" ,@text "}")]
     [else `(strong ,@text)]))
-
-#|
-Typesetting poetry in LaTeX or HTML. HTML uses a straightforward <pre> with
-appropriate CSS. In LaTeX we explicitly specify the longest line for centering
-purposes, and replace double-spaces with \vin to indent lines.
-|#
-(define verse
-  (lambda (#:title [title ""] #:italic [italic #f] . text)
-    (case (current-poly-target)
-      [(ltx pdf)
-       (define poem-title
-         (if (non-empty-string? title)
-             (apply string-append `("\\poemtitle{" ,title "}"))
-             ""))
-
-       ; Replace double spaces with "\vin " to indent lines
-       (define poem-text (string-replace (apply string-append text) "  " "\\vin "))
-
-       ; Optionally italicize poem text
-       (define fmt-text
-         (if italic
-             (format "{\\itshape ~a}" (latex-poem-linebreaks poem-text))
-             (latex-poem-linebreaks poem-text)))
-
-       `(txt "\n\n"
-             ,poem-title
-             "\n\\settowidth{\\versewidth}{"
-             ,(longest-line poem-text)
-             "}"
-             "\n\\begin{verse}[\\versewidth]"
-             ,fmt-text
-             "\\end{verse}\n\n")]
-      [else
-       (define pre-attrs
-         (if italic '((class "verse") [style "font-style: italic"]) '((class "verse"))))
-       (define poem-xpr
-         (if (non-empty-string? title)
-             `(pre ,pre-attrs (p [(class "poem-heading")] ,title) ,@text)
-             `(pre ,pre-attrs ,@text)))
-       `(div [(class "poem")] ,poem-xpr)])))
-#|
-Helper function for typesetting poetry in LaTeX. Poetry should be centered
-on the longest line. Browsers will do this automatically with proper CSS but
-in LaTeX we need to tell it what the longest line is.
-|#
-(define (longest-line str)
-  (first (sort (string-split str "\n")
-               (λ (x y) (> (string-length x) (string-length y))))))
-
-(define (latex-poem-linebreaks text)
-  (regexp-replace*
-   #px"([^[:space:]])\n(?!\n)" ; match newlines that follow non-whitespace
-   ; and which are not followed by another newline
-   text
-   "\\1 \\\\\\\\\n"))
-
-(define (grey . text)
-  (case (current-poly-target)
-    [(ltx pdf) `(txt "\\textcolor{gray}{" ,@text "}")]
-    [else `(span [[style "color: #777"]] ,@text)]))
-
-(define (video source
-               #:loop [loop #f]
-               #:autoplay [autoplay #f]
-               #:image [thumbnail #f]
-               #:link (link #f))
-  (case (current-poly-target)
-    [(ltx pdf) (if thumbnail (figure thumbnail "") '(txt ""))]
-    [else
-     (let* ([vid-tag `(video [[src ,source]])]
-            [vid-tag (if loop (attr-set vid-tag 'loop "loop") vid-tag)]
-            [vid-tag (if autoplay (attr-set vid-tag 'autoplay "autoplay") vid-tag)]
-            [vid-tag (if thumbnail (attr-set vid-tag 'poster thumbnail) vid-tag)]
-            [vid-tag (if link `(a [[href ,link]] ,vid-tag) vid-tag)])
-       `(p [(class "video")] ,vid-tag))]))
-
-#|
-Index functionality: allows creation of a book-style keyword index.
-
-* An index ENTRY refers to the heading that will appear in the index.
-* An index LINK is a txexpr that has class="index-entry" and
-	id="ENTRY-WORD". (Created in docs with the ◊index-entry tag above)
-
-|#
-
-; Returns a list of all elements in xpr that have class="index-entry"
-; and an id key.
-(define (filter-index-entries xpr)
-  (define is-index-entry?
-    (λ (x)
-      (and (txexpr? x)
-           (attrs-have-key? x 'class)
-           (attrs-have-key? x 'id)
-           (equal? "index-entry" (attr-ref x 'class)))))
-  (let-values ([(x y) (splitf-txexpr xpr is-index-entry?)])
-    y))
-
-; Given a file, returns a list of links to each index entry within that file
-(define (get-index-links file)
-  (define file-body (select-from-doc 'body file))
-  (if file-body
-      (map (λ (x)
-             `(a [[href ,(string-append (symbol->string file) "#" (attr-ref x 'id))]
-                  [id ,(attr-ref x 'id)]]
-                 ,(select-from-metas 'title file)))
-           (filter-index-entries (make-txexpr 'div '() file-body)))
-      ; return a dummy entry when `file` has no 'body (for debugging)
-      (list `(a [(class "index-entry") [id ,(symbol->string file)]]
-                "Not a txexpr: "
-                ,(symbol->string file)))))
-
-; Returns a list of index links (not entries!) for all files in file-list.
-(define (collect-index-links file-list)
-  (apply append (map get-index-links file-list)))
-
-; Given a list of index links, returns a list of headings (keywords). This list
-; has duplicates removed and is sorted in ascending alphabetical order.
-; Note that the list is case-sensitive by design; "thing" and "Thing" are
-; treated as separate keywords.
-(define (index-headings entrylink-list)
-  (sort (remove-duplicates (map (λ (tx) (attr-ref tx 'id)) entrylink-list))
-        string-ci<?))
-
-; Given a heading and a list of index links, returns only the links that match
-; the heading.((
-(define (match-index-links keyword entrylink-list)
-  (filter (λ (link) (string=? (attr-ref link 'id) keyword)) entrylink-list))
-
-; Modified from https://github.com/malcolmstill/mstill.io/blob/master/blog/pollen.rkt
-; Converts a string "2015-12-19" or "2015-12-19 16:02" to a Racket date value
-(define (datestring->date datetime)
-  (match (string-split datetime)
-    [(list date time)
-     (match (map string->number
-                 (append (string-split date "-") (string-split time ":")))
-       [(list year month day hour minutes)
-        (seconds->date (find-seconds 0 minutes hour day month year))])]
-    [(list date)
-     (match (map string->number (string-split date "-"))
-       [(list year month day) (seconds->date (find-seconds 0 0 0 day month year))])]))
-#|
-	Converts a string "2015-12-19" or "2015-12-19 16:02" to a string
-	"Saturday, December 19th, 2015" by way of the datestring->date function above
-|#
-(define (pubdate->english datetime)
-  (date->string (datestring->date datetime)))
-
-(define (my-div class . text)
-  `(div (h1 ((className "")) ,@text)))
-
-(define (email-input . text)
-  `(input
-    [(class "`focus:outline-none focus:shadow-outline border border-green-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal")
-     (type "email")
-     (placeholder ,@text)]))
-
-; (define (tailwind #:default [default ""] #:dark [dark ""])
-;   (define dark-parts (string-split dark))
-;   (define dark-string (string-join (map (lambda (part) (string-append "dark:" part)) dark-parts) " "))
-;   (string-join (cons default dark-string) " "))
-
-; (define (tailwind #:default [default ""] #:dark [dark ""])
-;   (let* ([dark-parts (string-split dark " ")]
-;          [dark-strings (map (lambda (part) (string-append "dark:" part)) "")]
-;          [dark-string (string-join dark-strings)])
-;     (string-join (list default dark-string))))
-
-(define (example . text)
-  `(div [(class "bg-blue-800")] ,@text))
-
-(define (hero . text)
-  `(div
-    [(class "bg-slate-900")]
-    (div
-     [(class "bg-gradient-to-b from-violet-600/[.15] via-transparent")]
-     (div
-      [(class "max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8")]
-      (div
-       [(class "flex justify-center")]
-       (a
-        [(class "group inline-block bg-white/[.05] hover:bg-white/[.1] border border-white/[.05] p-1 ps-4 rounded-full shadow-md")
-         (href "../figma.html")])
-       (p [(class "me-2 inline-block text-white text-sm")] "Preline UI Figma is live.")
-       (span
-        [(class "group-hover:bg-white/[.1] py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-white/[.075] font-semibold text-white text-sm")]
-        (svg
-         [(class "flex-shrink-0 size-4")
-          (width "16")
-          (height "16")
-          (viewbox "0 0 16 16")
-          (fill "none")]
-         (path
-          ((d
-            "M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14")
-           (stroke "currentColor")
-           (stroke-width "2")
-           (stroke-linecap "round"))))))
-      (div
-       [(class "max-w-3xl text-center mx-auto")]
-       (h1
-        [(class "block font-medium text-gray-200 text-4xl sm:text-5xl md:text-6xl lg:text-7xl")]
-        "Now it's easier than ever to build products"))
-      (div [(class "max-w-3xl text-center mx-auto")]
-           (p [(class "text-lg text-pink-700")] ,@text))
-      (div
-       [(class "text-center")]
-       (a
-        [(class "inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 shadow-lg shadow-transparent hover:shadow-blue-700/50 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-6 dark:focus:ring-offset-gray-800")
-         (href "#")]
-        "Get started"
-        (svg [(class "flex-shrink-0 size-4")
-              (xmlns "http://www.w3.org/2000/svg")
-              (width "24")
-              (height "24")
-              (viewbox "0 0 24 24")
-              (fill "none")
-              (stroke "currentColor")
-              (stroke-width "2")
-              (stroke-linecap "round")
-              (stroke-linejoin "round")]
-             (path ((d "m9 18 6-6-6-6"))))))))))

@@ -3,7 +3,17 @@
 ◊; ◊(define-meta template  "index.html.p")
 ◊(define-meta title     "Demo page")
 
-Lorem ipsum odor amet, consectetuer adipiscing elit. Velit nullam finibus iaculis commodo sit. Condimentum purus condimentum quam fusce iaculis vehicula. Fames conubia orci suspendisse torquent sapien litora venenatis posuere. Fusce lacinia venenatis taciti habitant; duis egestas. Felis magnis ornare; magna adipiscing turpis sagittis. Inceptos pulvinar ut auctor scelerisque a lobortis curabitur quis mi. Vivamus pretium vivamus dapibus posuere, mi curabitur. Porttitor enim enim lobortis; odio per tincidunt posuere.
+Lorem ipsum odor amet, ◊code[#:class "font-mono text-sm bg-gray-100 rounded px-1"]{inline code} consectetuer adipiscing elit. Velit nullam finibus iaculis commodo sit. Condimentum purus condimentum quam fusce iaculis vehicula. Fames conubia orci suspendisse torquent sapien litora venenatis posuere. Fusce lacinia venenatis taciti habitant; duis egestas. Felis magnis ornare; magna adipiscing turpis sagittis. Inceptos pulvinar ut auctor scelerisque a lobortis curabitur quis mi. Vivamus pretium vivamus dapibus posuere, mi curabitur. Porttitor enim enim lobortis; odio per tincidunt posuere.
+
+◊pre[#:class "font-mono text-sm bg-gray-100 p-4 rounded-lg overflow-x-auto"]{
+    ◊code{
+        function greet(name) {
+            console.log(`Hello, ${name}!`);
+        }
+
+        greet('World');
+    }
+}
 
 Class penatibus suspendisse hac cursus ante aenean augue. Tincidunt eu himenaeos fusce aliquam fermentum senectus curabitur. Eros at cubilia fusce, pharetra enim porttitor mattis nunc volutpat. Odio elit dictum, lobortis suspendisse ultrices quam a dignissim. Class sociosqu odio efficitur nisl varius accumsan elementum conubia. Pellentesque duis blandit, finibus bibendum amet non finibus duis. Sociosqu cubilia fringilla congue faucibus augue. Lobortis purus tellus convallis mi himenaeos ultricies metus hendrerit euismod.
 
