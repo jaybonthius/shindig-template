@@ -3,9 +3,9 @@
 ◊; ◊(define-meta template  "index.html.p")
 ◊(define-meta title     "Demo page")
 
-Lorem ipsum odor amet, ◊code[#:class "font-mono text-sm bg-gray-100 rounded px-1"]{inline code} consectetuer adipiscing elit. Velit nullam finibus iaculis commodo sit. Condimentum purus condimentum quam fusce iaculis vehicula. Fames conubia orci suspendisse torquent sapien litora venenatis posuere. Fusce lacinia venenatis taciti habitant; duis egestas. Felis magnis ornare; magna adipiscing turpis sagittis. Inceptos pulvinar ut auctor scelerisque a lobortis curabitur quis mi. Vivamus pretium vivamus dapibus posuere, mi curabitur. Porttitor enim enim lobortis; odio per tincidunt posuere.
+Lorem ipsum odor amet, ◊code{inline code} consectetuer adipiscing elit. Velit nullam finibus iaculis commodo sit. Condimentum purus condimentum quam fusce iaculis vehicula. Fames conubia orci suspendisse torquent sapien litora venenatis posuere. Fusce lacinia venenatis taciti habitant; duis egestas. Felis magnis ornare; magna adipiscing turpis sagittis. Inceptos pulvinar ut auctor scelerisque a lobortis curabitur quis mi. Vivamus pretium vivamus dapibus posuere, mi curabitur. Porttitor enim enim lobortis; odio per tincidunt posuere.
 
-◊pre[#:class "font-mono text-sm bg-gray-100 p-4 rounded-lg overflow-x-auto"]{
+◊pre{
     ◊code{
         function greet(name) {
             console.log(`Hello, ${name}!`);

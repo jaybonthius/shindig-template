@@ -9,7 +9,7 @@
     <body class="antialiased bg-gray-100 text-gray-900 leading-tight">
         <div class="min-h-screen flex flex-col">
             <main class="flex-grow">
-                <div class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl container max-w-none mx-auto px-4 py-6 sm:py-8 lg:py-12">
+                <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 lg:py-12 prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
                     <h1 class="text-3xl mb-4 font-bold sm:text-4xl lg:text-5xl">◊(select-from-metas 'title here)</h1>
                     <div class="content">
                         ◊(map ->html (select-from-doc 'body here))

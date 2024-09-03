@@ -8,9 +8,39 @@ regexps:
   racket:
     regexp: 'class\s"(.*)"'
     file_extension: .rkt
+  poly_pm:
+    regexp: 'class\s"(.*)"'
+    file_extension: .pm
 
 variants_order:
   - custom # this is a special variant so that only custom variants have index 0
+  - prose-headings
+  - prose-lead
+  - prose-h1
+  - prose-h2
+  - prose-h3
+  - prose-h4
+  - prose-p
+  - prose-a
+  - prose-blockquote
+  - prose-figure
+  - prose-figcaption
+  - prose-strong
+  - prose-em
+  - prose-kbd
+  - prose-code
+  - prose-pre
+  - prose-ol
+  - prose-ul
+  - prose-li
+  - prose-table
+  - prose-thead
+  - prose-tr
+  - prose-th
+  - prose-td
+  - prose-img
+  - prose-video
+  - prose-hr
   - sm
   - md
   - lg
@@ -464,6 +494,17 @@ classes_order:
     - pb-32
     - pb-96
   typography:
+    - prose # not sure where this should go
+    - prose-sm
+    - prose-base
+    - prose-lg
+    - prose-xl
+    - prose-2x
+    - prose-gray 
+    - prose-slate
+    - prose-zinc
+    - prose-neutral
+    - prose-stone
     - font-sans
     - text-3xs
     - text-2xs

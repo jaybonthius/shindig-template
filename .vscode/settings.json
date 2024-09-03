@@ -33,5 +33,10 @@
     "inlineFold.regexFlags": "g",
     "inlineFold.regexGroup": 1,
     "inlineFold.maskChar": "◦◦◦"
+  },
+  "files.exclude": {
+    "**/__pycache__": true,
+    "compiled": true,
+    "node_modules": true,
   }
 }
