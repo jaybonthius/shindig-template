@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory to watch
-WATCH_DIR="."
+WATCH_DIR="pollen"
 
 # File extensions to watch and their corresponding commands
 # Use semicolons to separate multiple commands
