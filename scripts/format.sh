@@ -5,10 +5,11 @@ WATCH_DIR="pollen"
 
 # File extensions to watch and their corresponding commands
 # Use semicolons to separate multiple commands
+# Use {file} as a placeholder for the filename
 declare -A EXTENSIONS
-EXTENSIONS[".html.p"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path;pnpx prettier --write --parser "html" --print-width 140"
-EXTENSIONS[".pm"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path"
-EXTENSIONS[".rkt"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path;raco fmt -i --width 88"
+EXTENSIONS[".html.p"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file};poetry run djlint {file} --reformat;raco pollen render {file}"
+EXTENSIONS[".pm"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file};raco pollen render {file}"
+EXTENSIONS[".rkt"]="python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file};raco fmt -i --width 88 {file};raco pollen render pollen"
 
 # Function to process file based on its extension
 process_file() {
@@ -17,7 +18,8 @@ process_file() {
         if [[ "${file}" == *"${ext}" ]]; then
             IFS=';' read -ra COMMANDS <<< "${EXTENSIONS[$ext]}"
             for cmd in "${COMMANDS[@]}"; do
-                eval "$cmd \"$file\""
+                cmd="${cmd//\{file\}/$file}"
+                eval "$cmd"
             done
             break
         fi
