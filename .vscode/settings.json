@@ -1,6 +1,7 @@
 {
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "*.html.p": "html"
   },
   "tailwindCSS.includeLanguages": {
     "racket": "txt",
