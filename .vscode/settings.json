@@ -38,5 +38,6 @@
     "**/__pycache__": true,
     "compiled": true,
     "node_modules": true,
+    "pollen/compiled": true,
   }
 }
