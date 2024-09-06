@@ -31,30 +31,32 @@
                                     <option value="gruvbox_dark">Gruvbox dark</option>
                                 </select>
                             </div>
-                            <div id="main">
-                                {% block main %}{% endblock %}
-                            </div>
+                            <div id="main" hx-history-elt>{{ page_content|safe }}</div>
                         </div>
                     </main>
                 </div>
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="bg-base-100 menu menu-lg w-56 min-h-full p-4"
-                        hx-target="#main"
-                        hx-boost="true">
+                    <ul class="bg-base-100 menu menu-lg w-56 min-h-full p-4">
                         <li>
                             <a href="/page1/"
-                               :class="'/page1/' === currentPath { } 'active':"
+                               hx-get="/page1/"
+                               hx-target="#main"
+                               hx-push-url="true"
                                class="text-base-content no-underline">Page 1</a>
                         </li>
                         <li>
                             <a href="/page2/"
-                               :class="'/page2/' === currentPath { } 'active':"
+                               hx-get="/page2/"
+                               hx-target="#main"
+                               hx-push-url="true"
                                class="text-base-content no-underline">Page 2</a>
                         </li>
                         <li>
                             <a href="/page3/"
-                               :class="'/page3/' === currentPath { } 'active':"
+                               hx-get="/page3/"
+                               hx-target="#main"
+                               hx-push-url="true"
                                class="text-base-content no-underline">Page 3</a>
                         </li>
                     </ul>
