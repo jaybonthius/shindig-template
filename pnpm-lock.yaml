@@ -18,9 +18,6 @@ importers:
       daisyui:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.44)
-      husky:
-        specifier: ^9.1.5
-        version: 9.1.5
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10
@@ -273,11 +270,6 @@ packages:
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
-
-  husky@9.1.5:
-    resolution: {integrity: sha512-rowAVRUBfI0b4+niA4SJMhfQwc107VLkBUgEYYAOQAbqDCnra1nYh83hF/MDmhYs9t9n1E3DuKOrs2LYNC+0Ag==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
@@ -882,8 +874,6 @@ snapshots:
       function-bind: 1.1.2
 
   human-signals@5.0.0: {}
-
-  husky@9.1.5: {}
 
   is-binary-path@2.1.0:
     dependencies:
