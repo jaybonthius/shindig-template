@@ -1,10 +1,11 @@
+import glob
 import os
 import subprocess
 import time
-from watchdog.observers import Observer
+
 from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 from watchdog.observers.polling import PollingObserver
-import glob
 
 # File patterns to watch
 WATCH_PATTERNS = [

@@ -10,3 +10,22 @@ TODOS:
   - LaTeX?
   - pollen target for an 8.5" x 11" HTML version of the webpage, and then print that out?
   - holy shit! [you can define a CSS class that hides elements when printing](https://stackoverflow.com/a/55169528)
+
+
+
+ssh -i "honeycomb.pem" ubuntu@ec2-13-59-116-135.us-east-2.compute.amazonaws.com
+
+```sh
+sudo ufw enable
+
+sudo ufw allow OpenSSH
+
+sudo apt install nginx
+sudo ufw allow 'Nginx Full'
+
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx gunicorn curl
+
+
+
+
+```

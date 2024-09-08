@@ -62,6 +62,7 @@ def process_file(file_path: str, config: Dict) -> None:
             file.write(new_content)
         print(f"Sorted tailwind in {file_path}")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Sort Tailwind CSS classes in files.")
     parser.add_argument(
