@@ -1,5 +1,6 @@
 {
 	"devDependencies": {
+		"@kitschpatrol/tldraw-cli": "^4.6.13",
 		"@tailwindcss/typography": "^0.5.15",
 		"daisyui": "^4.12.10",
 		"lint-staged": "^15.2.10",

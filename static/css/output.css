@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Virgil';
+
+  src: url('/static/fonts/Virgil.woff2') format('woff2');
+}
+
 /*
 ! tailwindcss v3.4.10 | MIT License | https://tailwindcss.com
 */

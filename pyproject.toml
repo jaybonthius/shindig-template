@@ -11,6 +11,7 @@ django = "^5.1.1"
 djlint = "^1.35.2"
 django-htmx = "^1.19.0"
 pre-commit = "^3.8.0"
+watchdog = "^5.0.2"
 
 
 [build-system]

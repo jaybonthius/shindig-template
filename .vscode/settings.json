@@ -40,5 +40,10 @@
     "compiled": true,
     "node_modules": true,
     "pollen/compiled": true,
+  },
+  "excalidraw.image": {
+    "exportScale": 1,
+    "exportBackground": false,
+    "exportWithDarkMode": false
   }
 }
