@@ -2,4 +2,3 @@ node_modules/
 compiled/
 __pycache__/
 .venv/
-pollen/**/*.html

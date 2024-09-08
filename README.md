@@ -27,5 +27,14 @@ sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib
 
 
 
+sudo apt update
+sudo apt install pipx
+pipx ensurepath
+
+pipx install poetry
+
+
+
+
 
 ```
