@@ -45,5 +45,13 @@
     "exportScale": 1,
     "exportBackground": false,
     "exportWithDarkMode": false
-  }
+  },
+  // this is needed for the racket language server to work on a headless server
+  "magicRacket.languageServer.command": "xvfb-run",
+  "magicRacket.languageServer.arguments": [
+      "--auto-servernum",
+      "racket",
+      "--lib",
+      "racket-langserver"
+  ],
 }
