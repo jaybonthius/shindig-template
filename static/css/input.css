@@ -1,25 +1,3 @@
-
-@font-face {
-  font-family: 'Virgil';
-  src: url('/static/fonts/Virgil.woff2') format('woff2');
-}
-
 @tailwind base;
-
-@layer base {
-  h1 {
-    @apply text-2xl;
-  }
-  h2 {
-    @apply text-xl;
-  }
-  h3 {
-    @apply text-lg;
-  }
-  a {
-    @apply text-blue-600 underline;
-  }
-}
-
 @tailwind components;
 @tailwind utilities;

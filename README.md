@@ -15,6 +15,12 @@ TODOS:
 
 ssh -i "honeycomb.pem" ubuntu@ec2-13-59-116-135.us-east-2.compute.amazonaws.com
 
+## Racket dependencies
+
+- `pollen`
+- `chief`
+- `racket-langserver` (if you want to use the recommended VS Code extension)
+
 ```sh
 sudo ufw enable
 
@@ -32,9 +38,13 @@ sudo apt install pipx
 pipx ensurepath
 
 pipx install poetry
+# source shell
+poetry install
 
+poetry run python manage.py makemigrations
+poetry run python manage.py migrate
 
-
+sudo vim /etc/systemd/system/gunicorn.socket
 
 
 ```

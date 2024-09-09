@@ -11,8 +11,8 @@ from watchdog.observers.polling import PollingObserver
 WATCH_PATTERNS = [
     "pollen/**/*.html.p",
     "pollen/**/*.pm",
-    "pollen/**/*.rkt",
-    "pollen/**/*.tldr",
+    "./**/*.rkt",
+    "./*.tldr",
 ]
 
 # File extensions to watch and their corresponding commands
@@ -29,8 +29,8 @@ EXTENSIONS = {
         "raco pollen render {file}",
     ],
     ".rkt": [
-        "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
         "raco fmt -i --width 88 {file}",
+        "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
         "raco pollen render pollen",
     ],
     ".tldr": [
