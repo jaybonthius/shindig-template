@@ -1,8 +1,10 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
+from django.template import RequestContext
+from django.template.response import TemplateResponse
 
 
 class HtmxHttpRequest(HttpRequest):
@@ -15,10 +17,27 @@ def index(request: HtmxHttpRequest) -> HttpResponse:
 
 
 @require_GET
-def page(request: HtmxHttpRequest, page) -> HttpResponse:
-    page_content = render_to_string(f"{page}.html")
+def page(request, page):
+    request_context = RequestContext(
+        request,
+        {
+            "page": page,
+        },
+    )
+    context_dict = request_context.flatten()
 
-    if request.htmx:
+    page_content = TemplateResponse(
+        request, f"{page}.html", context=context_dict
+    ).rendered_content
+
+    if request.headers.get("HX-Request") == "true":
         return HttpResponse(page_content)
     else:
-        return render(request, "base.html", {"page_content": page_content})
+        return render(
+            request, "base.html", {"page_content": page_content, **context_dict}
+        )
+
+
+@require_POST
+def check_answers(request):
+    return "<div>Answers checked!</div>"

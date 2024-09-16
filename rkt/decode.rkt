@@ -20,9 +20,11 @@
     (decode-elements elements
                      #:txexpr-elements-proc decode-paragraphs
                      #:exclude-tags '(script style figure)))
-  (make-txexpr 'body
-               null
-               (decode-elements first-pass
-                                #:inline-txexpr-proc hyperlink-decoder
-                                #:string-proc (compose1 smart-quotes smart-dashes)
-                                #:exclude-tags '(script style))))
+  (define body
+    (make-txexpr 'body
+                 null
+                 (decode-elements first-pass
+                                  #:inline-txexpr-proc hyperlink-decoder
+                                  #:string-proc (compose1 smart-quotes smart-dashes)
+                                  #:exclude-tags '(script style))))
+  body)

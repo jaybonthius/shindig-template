@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      daisyui:
+        specifier: ^4.12.10
+        version: 4.12.10(postcss@8.4.44)
       theme-change:
         specifier: ^2.5.0
         version: 2.5.0
@@ -18,9 +21,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.15(tailwindcss@3.4.10)
-      daisyui:
-        specifier: ^4.12.10
-        version: 4.12.10(postcss@8.4.44)
       lint-staged:
         specifier: ^15.2.10
         version: 15.2.10

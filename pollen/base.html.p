@@ -30,7 +30,7 @@
                             <a href="/page3/" hx-get="/page3/" hx-target="#main" hx-push-url="true">Page 3</a>
                         </li>
                     </ul>
-                    <div id="main" hx-history-elt>{{ page_content }}</div>
+                    <div id="main">{{ page_content }}</div>
                 </div>
             </main>
         </div>

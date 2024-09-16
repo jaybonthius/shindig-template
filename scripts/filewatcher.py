@@ -9,6 +9,7 @@ from watchdog.observers.polling import PollingObserver
 
 # File patterns to watch
 WATCH_PATTERNS = [
+    "pollen/**/*.html",
     "pollen/**/*.html.p",
     "pollen/**/*.pm",
     "./**/*.rkt",
@@ -19,6 +20,9 @@ WATCH_PATTERNS = [
 # Use lists to store multiple commands
 # Use {file} as a placeholder for the filename
 EXTENSIONS = {
+    ".html": [
+        "poetry run djlint {file} --reformat",
+    ],
     ".html.p": [
         "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
         "poetry run djlint {file} --reformat",
@@ -31,7 +35,7 @@ EXTENSIONS = {
     ".rkt": [
         "raco fmt -i --width 88 {file}",
         "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
-        "raco pollen render pollen",
+        # "raco pollen render pollen",
     ],
     ".tldr": [
         "pnpm tldraw export {file} --transparent --output {file_dir}/light.svg",
@@ -48,6 +52,7 @@ def process_file(file_path):
         if file_path.endswith(ext):
             for cmd in commands:
                 cmd = cmd.format(file=file_path, file_dir=file_dir)
+                print(f"Running command: {cmd}")
                 subprocess.run(cmd, shell=True)
             break
 
