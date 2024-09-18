@@ -14,5 +14,11 @@
 (define (strong . text)
   `(strong ,@text))
 
+(define (bold . text)
+  `(strong ,@text))
+
+(define (test-tag . text)
+  `(div ((class "hey")) ,@text))
+
 (define (emph . text)
   `(em ,@text))

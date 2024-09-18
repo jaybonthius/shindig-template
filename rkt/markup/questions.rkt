@@ -1,9 +1,25 @@
 #lang racket/base
 
-(require racket/string
-         racket/list)
+(require racket/file
+         racket/string
+         racket/list
+         pollen/render
+         pollen/decode
+         racket/pretty
+         racket/string
+         xml
+         pollen/template)
 
 (provide (all-defined-out))
+
+(require racket/match)
+
+(define (quote-xexpr-attributes xexpr)
+  (match xexpr
+    [(list tag (and attrs (list (list _ _) ...)) content ...)
+     (list* tag `'(,@attrs) (map quote-xexpr-attributes content))]
+    [(list tag content ...) (cons tag (map quote-xexpr-attributes content))]
+    [else xexpr]))
 
 (define (option #:correct [correct #f] #:id [id ""] . content)
   `(option ((correct ,correct) (id ,id)) ,@content))
@@ -42,11 +58,6 @@
                        ,@option-content)))
         item))
 
-  ;         <div class="flex items-center">
-  ;             <input type="radio" id="paris" name="capital" value="Paris" class="mr-2">
-  ;             <label for="paris">Paris</label>
-  ;         </div>
-
   (define (split-content items)
     (let loop ([items items]
                [question-content '()]
@@ -57,6 +68,7 @@
             (if (and (list? item) (eq? (car item) 'option))
                 (loop (cdr items) question-content (cons item options))
                 (loop (cdr items) (cons item question-content) options))))))
+
   (define (remove-trailing-newlines items)
     (let loop ([items (reverse items)]
                [result '()])
@@ -71,39 +83,44 @@
   (define-values (question-content options) (split-content content))
   (define cleaned-question-content (remove-trailing-newlines question-content))
   (define rendered-options (add-between (map render-option options) divider))
-
-  ; ◊button[#:class "btn" #:type "submit" #:hx-post "/check-answers" #:hx-target "body" #:hx-include "#quiz-form"]{Submit!}
-
   (define submit-button `(button ((type "submit") (class "btn")) "Submit!"))
 
-  `(form ((id ,uuid) (hx-post "{% url 'check_answers' %}")
-                     (hx-target "body")
-                     (hx-include ,(string-append "#" uuid)))
-         "{% csrf_token %}"
-         ,@cleaned-question-content
-         (div ((class "space-y-2 mb-6")))
-         ,@rendered-options
-         ,submit-button))
+  (define expression
+    `(form ((id ,uuid) (hx-post "{% url 'check_answers' %}")
+                       (hx-target "this")
+                       (hx-include "this"))
+           ,@cleaned-question-content
+           ,@rendered-options
+           ,submit-button))
 
-; <form>
-;     <p>What is the capital of France?</p>
-;     <div class="space-y-2 mb-6">
-;         <div class="flex items-center">
-;             <input type="radio" id="paris" name="capital" value="Paris" class="mr-2">
-;             <label for="paris">Paris</label>
-;         </div>
-;         <div class="flex items-center">
-;             <input type="radio" id="london" name="capital" value="London" class="mr-2">
-;             <label for="london">London</label>
-;         </div>
-;         <div class="flex items-center">
-;             <input type="radio" id="berlin" name="capital" value="Berlin" class="mr-2">
-;             <label for="berlin">Berlin</label>
-;         </div>
-;         <div class="flex items-center">
-;             <input type="radio" id="rome" name="capital" value="Rome" class="mr-2">
-;             <label for="rome">Rome</label>
-;         </div>
-;     </div>
-;     <button type="submit" class="btn">Submit Answer</button>
-; </form>
+  (render-x-expression (quote-xexpr-attributes expression) "question" uuid)
+
+  (define question-content-id (string-append "question-content-" uuid))
+
+  (define question-getter
+    `(div ((id ,question-content-id)
+           (hx-get ,(format "{% url 'question_detail' id='~a' %}" uuid))
+           (hx-trigger "load")
+           (hx-target ,(string-append "#" question-content-id)))
+          "Loading..."))
+
+  question-getter)
+
+(define (render-x-expression xexpr prefix filename)
+  (define temp-dir (build-path (current-directory) "temp"))
+  (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
+  (define output-dir (build-path (current-directory) prefix))
+  (define output-path (build-path output-dir (string-append filename ".html")))
+
+  (make-directory* temp-dir)
+  (make-directory* output-dir)
+
+  (with-output-to-file temp-path
+                       (lambda ()
+                         (displayln "#lang pollen")
+                         (display "◊")
+                         (write xexpr))
+                       #:exists 'replace)
+
+  (render-to-file-if-needed temp-path #f output-path)
+  output-path)

@@ -1,10 +1,14 @@
+import logging
+
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
+from django.template import RequestContext, TemplateDoesNotExist
+from django.template.loader import get_template
+from django.template.response import TemplateResponse
 from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
-from django.template import RequestContext
-from django.template.response import TemplateResponse
+
+logger = logging.getLogger("honeycomb")
 
 
 class HtmxHttpRequest(HttpRequest):
@@ -18,6 +22,7 @@ def index(request: HtmxHttpRequest) -> HttpResponse:
 
 @require_GET
 def page(request, page):
+    logger.info("Page requested: %s", page)
     request_context = RequestContext(
         request,
         {
@@ -40,4 +45,23 @@ def page(request, page):
 
 @require_POST
 def check_answers(request):
-    return "<div>Answers checked!</div>"
+    logger.info("POST request received!")
+    logger.info(f"Contents: {request.POST}")
+    logger.info(f"Headers: {request.headers}")
+    logger.info(f"Body: {request.body}")
+    return HttpResponse("POST request received!")
+
+
+def question_detail(request, id):
+    template_name = f"question/{id}.html"
+
+    try:
+        template = get_template(template_name)
+        content = template.render()
+
+        if request.htmx:
+            return HttpResponse(content)
+        return render(request, template_name)
+
+    except TemplateDoesNotExist:
+        return HttpResponse(f"Question template not found: {template_name}", status=404)

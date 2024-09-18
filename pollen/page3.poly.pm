@@ -8,25 +8,32 @@
     This is a multiple-choice question
 
     ◊option[#:id "1"]{
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet
     }
     ◊option[#:id "2" #:correct #t]{
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet
     }
     ◊option[#:id "3"]{
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet
     }
     ◊option[#:id "4" #:correct #t]{
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet
     }
 }
 
-◊; ◊new-question[#:uuid "5961869e-ad15-4890-a7ba-9f33bb74d06d"]{
-◊;     This is a single-choice question
+◊new-question[#:uuid "33050d6d-05ff-4c6c-8b93-b84b3f8c0dcd" #:multichoice #t]{
+    This is a multiple-choice question
 
-◊;     ◊option[#:id "1"]{Option 1}
-◊;     ◊option[#:id "2"]{Option 2}
-◊;     ◊option[#:id "3"]{Option 3 }
-◊;     ◊option[#:id "4" #:correct #t]{Option 4}
-◊; }
-
+    ◊option[#:id "1"]{
+        Lorem ipsum dolor sit amet
+    }
+    ◊option[#:id "2" #:correct #t]{
+        Lorem ipsum dolor sit amet
+    }
+    ◊option[#:id "3"]{
+        Lorem ipsum dolor sit amet
+    }
+    ◊option[#:id "4" #:correct #t]{
+        Lorem ipsum dolor sit amet
+    }
+}

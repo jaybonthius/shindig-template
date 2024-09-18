@@ -8,11 +8,9 @@
         <meta name="keywords" content="keyword1, keyword2, keyword3" />
         <title>Honeycomb</title>
         <link href="{% static 'css/output.css' %}" rel="stylesheet" />
-        <script src="https://unpkg.com/htmx.org@1.9.10"
-                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
-                crossorigin="anonymous"></script>
     </head>
-    <body class="antialiased leading-tight">
+    <body class="antialiased leading-tight"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         <div class="min-h-screen flex flex-col">
             <main class="flex-grow">
                 <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 lg:py-12 prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
@@ -34,5 +32,8 @@
                 </div>
             </main>
         </div>
+        <script src="https://unpkg.com/htmx.org@1.9.10"
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+                crossorigin="anonymous"></script>
     </body>
 </html>

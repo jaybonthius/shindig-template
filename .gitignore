@@ -2,3 +2,6 @@ node_modules/
 compiled/
 __pycache__/
 .venv/
+temp/
+.env
+**/*.html
