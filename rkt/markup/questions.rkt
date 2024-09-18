@@ -115,9 +115,9 @@
   question-getter)
 
 (define (render-x-expression xexpr prefix filename)
-  (define temp-dir (build-path (current-directory) "temp"))
-  (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
   (define output-dir (build-path (current-directory) prefix))
+  (define temp-dir (build-path output-dir "temp"))
+  (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
   (define output-path (build-path output-dir (string-append filename ".html")))
   (define template-path (build-path output-dir "question-template.html.p"))
 
