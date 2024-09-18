@@ -3,12 +3,16 @@
 (require racket/file
          racket/string
          racket/list
+         racket/set
          pollen/render
          pollen/decode
          racket/pretty
          racket/string
          xml
-         pollen/template)
+         pollen/template
+         "sqlite.rkt"
+         json
+         db)
 
 (provide (all-defined-out))
 
@@ -45,7 +49,7 @@
   (define (render-option item)
     (if (and (list? item) (eq? (car item) 'option))
         (let* ([attrs (cadr item)]
-               [id (string-join (list uuid (cadr (assq 'id attrs))) "-")]
+               [id (cadr (assq 'id attrs))]
                [option-content (cddr item)])
           `(div ((class "flex items-center"))
                 (input ((type ,option-type)
@@ -85,6 +89,10 @@
   (define rendered-options (add-between (map render-option options) divider))
   (define submit-button `(button ((type "submit") (class "btn")) "Submit!"))
 
+  (define correct-answers (get-correct-answers content))
+  (pretty-print correct-answers)
+  (upsert-question uuid correct-answers)
+
   (define expression
     `(form ((id ,uuid) (hx-post "{% url 'check_answers' %}")
                        (hx-target "this")
@@ -111,6 +119,7 @@
   (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
   (define output-dir (build-path (current-directory) prefix))
   (define output-path (build-path output-dir (string-append filename ".html")))
+  (define template-path (build-path output-dir "question-template.html.p"))
 
   (make-directory* temp-dir)
   (make-directory* output-dir)
@@ -122,5 +131,41 @@
                          (write xexpr))
                        #:exists 'replace)
 
-  (render-to-file-if-needed temp-path #f output-path)
+  (render-to-file-if-needed temp-path template-path output-path)
   output-path)
+
+(define (upsert-question question-id correct-answers-set)
+  (define current-dir (current-directory))
+  (define db-file (build-path current-dir "questions.sqlite"))
+  ; todo: have this be a separate thing upon local setup 
+  (try-create-empty-file db-file)
+
+  (define conn (try-connect db-file))
+  (when conn
+    (with-handlers ([exn:fail? (lambda (e)
+                                 (printf "Error during database operations: ~a\n"
+                                         (exn-message e)))])
+      ; todo: have this be a separate thing upon local setup                                       
+      (query-exec conn
+            "CREATE TABLE IF NOT EXISTS questions (
+                id TEXT PRIMARY KEY NOT NULL,
+                answer JSON,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )")
+
+      (define json-answers (jsexpr->string correct-answers-set))
+
+      (printf "Inserting or replacing question with id ~a and answers ~a\n"
+              question-id
+              json-answers)
+
+      (query-exec conn
+                  "INSERT OR REPLACE INTO questions (id, answer) 
+                   VALUES (?, json(?))"
+                  question-id
+                  json-answers)
+
+      (disconnect conn)
+
+      (printf "Database operations completed successfully.\n"))))
+

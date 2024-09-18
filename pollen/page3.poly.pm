@@ -7,10 +7,10 @@
 ◊new-question[#:uuid "dbcf89c7-839c-424c-ba8e-048267c5e305" #:multichoice #t]{
     This is a multiple-choice question
 
-    ◊option[#:id "1"]{
+    ◊option[#:id "1" #:correct #t]{
         Lorem ipsum dolor sit amet
     }
-    ◊option[#:id "2" #:correct #t]{
+    ◊option[#:id "2"]{
         Lorem ipsum dolor sit amet
     }
     ◊option[#:id "3"]{

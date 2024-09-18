@@ -7,6 +7,8 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_GET, require_POST
 from django_htmx.middleware import HtmxDetails
+import json
+import sqlite3
 
 logger = logging.getLogger("honeycomb")
 
@@ -45,11 +47,26 @@ def page(request, page):
 
 @require_POST
 def check_answers(request):
-    logger.info("POST request received!")
-    logger.info(f"Contents: {request.POST}")
-    logger.info(f"Headers: {request.headers}")
-    logger.info(f"Body: {request.body}")
-    return HttpResponse("POST request received!")
+    question_id = next(iter(request.POST.keys()))
+    user_answers = set(request.POST.getlist(question_id))
+
+    conn = sqlite3.connect("pollen/questions.sqlite")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT answer FROM questions WHERE id = ?", (question_id,))
+    result = cursor.fetchone()
+
+    if result is None:
+        return HttpResponse("Question not found", status=404)
+
+    correct_answers = set(json.loads(result[0]))
+
+    conn.close()
+
+    if user_answers == correct_answers:
+        return HttpResponse("correct")
+    else:
+        return HttpResponse("incorrect")
 
 
 def question_detail(request, id):

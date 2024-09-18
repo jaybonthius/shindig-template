@@ -13,7 +13,7 @@ WATCH_PATTERNS = [
     "pollen/**/*.html.p",
     "pollen/**/*.pm",
     "./**/*.rkt",
-    "./*.tldr",
+    "./media/images/tldraw/*.tldr",
 ]
 
 # File extensions to watch and their corresponding commands
