@@ -45,10 +45,11 @@ def page(request, page):
         )
 
 
-@require_POST
 def check_answers(request):
     question_id = next(iter(request.POST.keys()))
-    user_answers = set(request.POST.getlist(question_id))
+    selected_answers = set(request.POST.getlist(question_id))
+
+    template_name = f"question/{question_id}.html"
 
     conn = sqlite3.connect("pollen/questions.sqlite")
     cursor = conn.cursor()
@@ -63,10 +64,18 @@ def check_answers(request):
 
     conn.close()
 
-    if user_answers == correct_answers:
-        return HttpResponse("correct")
-    else:
-        return HttpResponse("incorrect")
+    context = {
+        "selected_answers": selected_answers,
+        "correct_answers": correct_answers,
+        "is_correct": selected_answers == correct_answers,
+        "is_submitted": True,
+    }
+
+    logger.info(f"Correct: {selected_answers == correct_answers}")
+
+    if request.htmx:
+        return render(request, template_name, context)
+    return HttpResponse("Non-HTMX requests are not supported", status=400)
 
 
 def question_detail(request, id):

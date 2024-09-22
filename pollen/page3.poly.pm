@@ -21,19 +21,19 @@
     }
 }
 
-◊new-question[#:uuid "33050d6d-05ff-4c6c-8b93-b84b3f8c0dcd" #:multichoice #t]{
+◊new-question[#:uuid "33050d6d-05ff-4c6c-8b93-b84b3f8c0dcd"]{
     This is a multiple-choice question
 
-    ◊option[#:id "1"]{
+    ◊option[#:id "1" #:correct #t]{
         Lorem ipsum dolor sit amet
     }
-    ◊option[#:id "2" #:correct #t]{
+    ◊option[#:id "2"]{
         Lorem ipsum dolor sit amet
     }
     ◊option[#:id "3"]{
         Lorem ipsum dolor sit amet
     }
-    ◊option[#:id "4" #:correct #t]{
+    ◊option[#:id "4"]{
         Lorem ipsum dolor sit amet
     }
 }

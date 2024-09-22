@@ -1,4 +1,4 @@
-#lang racket/base
+#lang at-exp racket/base
 
 (require racket/file
          racket/string
@@ -28,6 +28,26 @@
 (define (option #:correct [correct #f] #:id [id ""] . content)
   `(option ((correct ,correct) (id ,id)) ,@content))
 
+; <div class="flex items-center {% if 'option-id' in selected_answers %}{% if 'option-id' in correct_answers %}bg-green-100{% else %}bg-red-100{% endif %}{% endif %}">
+;     <label for="option-id">
+;         <input type="checkbox"
+;                id="option-id"
+;                name="dbcf89c7-839c-424c-ba8e-048267c5e305"
+;                value="option-id"
+;                class="checkbox mr-6"
+;                {% if 'option-id' in selected_answers %}checked{% endif %}
+;                {% if is_submitted %}disabled{% endif %} />
+;         Lorem ipsum dolor sit amet
+;     </label>
+;     {% if 'option-id' in selected_answers %}
+;         {% if 'option-id' in correct_answers %}
+;             <span class="text-green-600 ml-2">✓ Correct</span>
+;         {% else %}
+;             <span class="text-red-600 ml-2">✗ Incorrect</span>
+;         {% endif %}
+;     {% endif %}
+; </div>
+
 (define (get-correct-answers items)
   (define (process-item item)
     (if (and (list? item) (eq? (car item) 'option))
@@ -49,17 +69,37 @@
   (define (render-option item)
     (if (and (list? item) (eq? (car item) 'option))
         (let* ([attrs (cadr item)]
-               [id (cadr (assq 'id attrs))]
+               [id (string-join (list uuid (cadr (assq 'id attrs))) "-")]
                [option-content (cddr item)])
-          `(div ((class "flex items-center"))
-                (input ((type ,option-type)
-                        (id ,id)
-                        (name ,uuid)
-                        (value ,id)
-                        (class ,(string-join (list option-type "mr-6") " "))))
-                (label ((for ,id
-                          ))
-                       ,@option-content)))
+          (define correct-option "btn-success")
+          (define incorrect-option "btn-error")
+          `(div
+            ((class "flex items-center"))
+            (label
+             ((for ,id
+                )
+              (class ,(string-join (list "btn btn-block justify-start items-center"
+                                         (format "{% if '~a' in selected_answers %}" id)
+                                         (format "{% if '~a' in correct_answers %}" id)
+                                         correct-option
+                                         "{% else %}"
+                                         incorrect-option
+                                         "{% endif %}"
+                                         "{% else %}"
+                                         "btn-ghost"
+                                         "{% endif %}")
+                                   " ")))
+             (input ((type ,option-type)
+                     (id ,id)
+                     (name ,uuid)
+                     (value ,id)
+                     (class ,(string-join (list option-type "mr-4") " "))
+                     (template-directive
+                      ,(format "{% if '~a' in selected_answers %}checked{% endif %}"
+                               id))
+                     ;  (template-directive "{% if is_submitted %}disabled{% endif %}")
+                     ))
+             ,@option-content)))
         item))
 
   (define (split-content items)
@@ -82,28 +122,25 @@
          (if (null? result) (loop (cdr items) result) (reverse items))]
         [else (reverse items)])))
 
-  (define divider '(div ((class "divider"))))
-
   (define-values (question-content options) (split-content content))
   (define cleaned-question-content (remove-trailing-newlines question-content))
-  (define rendered-options (add-between (map render-option options) divider))
+  (define rendered-options `(div ((class "space-y-2")) ,@(map render-option options)))
   (define submit-button `(button ((type "submit") (class "btn")) "Submit!"))
 
-  (define correct-answers (get-correct-answers content))
-  (pretty-print correct-answers)
-  (upsert-question uuid correct-answers)
+  (define correct-answers
+    (map (lambda (answer) (string-append uuid "-" answer))
+         (get-correct-answers content)))
+
+  (define question-content-id (string-append "question-content-" uuid))
 
   (define expression
     `(form ((id ,uuid) (hx-post "{% url 'check_answers' %}")
                        (hx-target "this")
-                       (hx-include "this"))
+                       (hx-include "this")
+                       (hx-swap "outerHTML"))
            ,@cleaned-question-content
-           ,@rendered-options
+           ,rendered-options
            ,submit-button))
-
-  (render-x-expression (quote-xexpr-attributes expression) "question" uuid)
-
-  (define question-content-id (string-append "question-content-" uuid))
 
   (define question-getter
     `(div ((id ,question-content-id)
@@ -111,6 +148,9 @@
            (hx-trigger "load")
            (hx-target ,(string-append "#" question-content-id)))
           "Loading..."))
+
+  (upsert-question uuid correct-answers)
+  (render-x-expression (quote-xexpr-attributes expression) "question" uuid)
 
   question-getter)
 
@@ -137,7 +177,7 @@
 (define (upsert-question question-id correct-answers-set)
   (define current-dir (current-directory))
   (define db-file (build-path current-dir "questions.sqlite"))
-  ; todo: have this be a separate thing upon local setup 
+  ; todo: have this be a separate thing upon local setup
   (try-create-empty-file db-file)
 
   (define conn (try-connect db-file))
@@ -145,9 +185,10 @@
     (with-handlers ([exn:fail? (lambda (e)
                                  (printf "Error during database operations: ~a\n"
                                          (exn-message e)))])
-      ; todo: have this be a separate thing upon local setup                                       
-      (query-exec conn
-            "CREATE TABLE IF NOT EXISTS questions (
+      ; todo: have this be a separate thing upon local setup
+      (query-exec
+       conn
+       "CREATE TABLE IF NOT EXISTS questions (
                 id TEXT PRIMARY KEY NOT NULL,
                 answer JSON,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -159,13 +200,13 @@
               question-id
               json-answers)
 
-      (query-exec conn
-                  "INSERT OR REPLACE INTO questions (id, answer) 
+      (query-exec
+       conn
+       "INSERT OR REPLACE INTO questions (id, answer)
                    VALUES (?, json(?))"
-                  question-id
-                  json-answers)
+       question-id
+       json-answers)
 
       (disconnect conn)
 
       (printf "Database operations completed successfully.\n"))))
-

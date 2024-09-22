@@ -34,7 +34,7 @@ EXTENSIONS = {
     ],
     ".rkt": [
         "raco fmt -i --width 88 {file}",
-        "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
+        # "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
         # "raco pollen render pollen",
     ],
     ".tldr": [
