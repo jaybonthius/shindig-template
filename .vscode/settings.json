@@ -37,7 +37,9 @@
   },
   "files.exclude": {
     "**/__pycache__": true,
+    ".venv": true,
     "compiled": true,
+    "rkt/compiled": true,
     "node_modules": true,
     "pollen/compiled": true,
   },
