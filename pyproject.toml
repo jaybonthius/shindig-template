@@ -17,6 +17,9 @@ django-environ = "^0.11.2"
 anthropic = "^0.34.2"
 nltk = "^3.9.1"
 scikit-learn = "^1.5.2"
+sympy = "^1.13.3"
+antlr4-python3-runtime = "4.11"
+lark = "^1.2.2"
 
 
 [build-system]

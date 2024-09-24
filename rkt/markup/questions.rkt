@@ -106,8 +106,7 @@
   (define submit-button `(button ((type "submit") (class "btn")) "Submit!"))
 
   (define correct-answers
-    (map (lambda (answer) (string-append uuid "-" answer))
-         (get-correct-answers content)))
+    (map (lambda (answer) (string-append uuid "-" answer)) (get-correct-answers content)))
 
   (define question-content-id (string-append "question-content-" uuid))
 
@@ -121,10 +120,9 @@
            ,submit-button))
 
   (define question-getter
-    `(div ((id ,question-content-id)
-           (hx-get ,(format "{% url 'question_detail' id='~a' %}" uuid))
-           (hx-trigger "load")
-           (hx-target ,(string-append "#" question-content-id)))
+    `(div ((id ,question-content-id) (hx-get ,(format "{% url 'question_detail' id='~a' %}" uuid))
+                                     (hx-trigger "load")
+                                     (hx-target ,(string-append "#" question-content-id)))
           "Loading..."))
 
   (upsert-question uuid correct-answers)
@@ -161,8 +159,7 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n"
-                                         (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
@@ -173,9 +170,7 @@
 
       (define json-answers (jsexpr->string correct-answers-set))
 
-      (printf "Inserting or replacing question with id ~a and answers ~a\n"
-              question-id
-              json-answers)
+      (printf "Inserting or replacing question with id ~a and answers ~a\n" question-id json-answers)
 
       (query-exec
        conn
@@ -187,3 +182,10 @@
       (disconnect conn)
 
       (printf "Database operations completed successfully.\n"))))
+
+(define (free-response-question #:uuid [uuid #f] . content)
+  `(div "hey")
+
+  ; get all the correct answers and put in BD
+  ; render question
+  )
