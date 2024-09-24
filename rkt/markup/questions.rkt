@@ -1,18 +1,17 @@
-#lang at-exp racket/base
+#lang racket/base
 
-(require racket/file
-         racket/string
-         racket/list
-         racket/set
-         pollen/render
+(require db
+         json
          pollen/decode
+         pollen/render
+         pollen/template
+         racket/file
+         racket/list
          racket/pretty
+         racket/set
          racket/string
          xml
-         pollen/template
-         "sqlite.rkt"
-         json
-         db)
+         "sqlite.rkt")
 
 (provide (all-defined-out))
 
@@ -28,36 +27,16 @@
 (define (option #:correct [correct #f] #:id [id ""] . content)
   `(option ((correct ,correct) (id ,id)) ,@content))
 
-; <div class="flex items-center {% if 'option-id' in selected_answers %}{% if 'option-id' in correct_answers %}bg-green-100{% else %}bg-red-100{% endif %}{% endif %}">
-;     <label for="option-id">
-;         <input type="checkbox"
-;                id="option-id"
-;                name="dbcf89c7-839c-424c-ba8e-048267c5e305"
-;                value="option-id"
-;                class="checkbox mr-6"
-;                {% if 'option-id' in selected_answers %}checked{% endif %}
-;                {% if is_submitted %}disabled{% endif %} />
-;         Lorem ipsum dolor sit amet
-;     </label>
-;     {% if 'option-id' in selected_answers %}
-;         {% if 'option-id' in correct_answers %}
-;             <span class="text-green-600 ml-2">✓ Correct</span>
-;         {% else %}
-;             <span class="text-red-600 ml-2">✗ Incorrect</span>
-;         {% endif %}
-;     {% endif %}
-; </div>
-
 (define (get-correct-answers items)
   (define (process-item item)
-    (if (and (list? item) (eq? (car item) 'option))
-        (let ([attrs (cadr item)])
-          (if (and (list? attrs)
-                   (assq 'correct attrs)
-                   (eq? #t (cadr (assq 'correct attrs))))
-              (list (cadr (assq 'id attrs)))
-              '()))
-        (if (list? item) (process-items item) '())))
+    (cond
+      [(and (list? item) (eq? (car item) 'option))
+       (define attrs (cadr item))
+       (if (and (list? attrs) (assq 'correct attrs) (eq? #t (cadr (assq 'correct attrs))))
+           (list (cadr (assq 'id attrs)))
+           '())]
+      [(list? item) (process-items item)]
+      [else '()]))
 
   (define (process-items items)
     (apply append (map process-item items)))
@@ -67,51 +46,50 @@
   (define option-type (if multichoice "checkbox" "radio"))
 
   (define (render-option item)
-    (if (and (list? item) (eq? (car item) 'option))
-        (let* ([attrs (cadr item)]
-               [id (string-join (list uuid (cadr (assq 'id attrs))) "-")]
-               [option-content (cddr item)])
-          (define correct-option "btn-success")
-          (define incorrect-option "btn-error")
-          `(div
-            ((class "flex items-center"))
-            (label
-             ((for ,id
-                )
-              (class ,(string-join (list "btn btn-block justify-start items-center"
-                                         (format "{% if '~a' in selected_answers %}" id)
-                                         (format "{% if '~a' in correct_answers %}" id)
-                                         correct-option
-                                         "{% else %}"
-                                         incorrect-option
-                                         "{% endif %}"
-                                         "{% else %}"
-                                         "btn-ghost"
-                                         "{% endif %}")
-                                   " ")))
-             (input ((type ,option-type)
-                     (id ,id)
-                     (name ,uuid)
-                     (value ,id)
-                     (class ,(string-join (list option-type "mr-4") " "))
-                     (template-directive
-                      ,(format "{% if '~a' in selected_answers %}checked{% endif %}"
-                               id))
-                     ;  (template-directive "{% if is_submitted %}disabled{% endif %}")
-                     ))
-             ,@option-content)))
-        item))
+    (cond
+      [(and (list? item) (eq? (car item) 'option))
+       (define attrs (cadr item))
+       (define id (string-join (list uuid (cadr (assq 'id attrs))) "-"))
+       (define option-content (cddr item))
+       (define correct-option "btn-success")
+       (define incorrect-option "btn-error")
+       `(div ((class "flex items-center"))
+             (label ((for ,id
+                       )
+                     (class ,(string-join (list "btn btn-block justify-start items-center"
+                                                (format "{% if '~a' in selected_answers %}" id)
+                                                (format "{% if '~a' in correct_answers %}" id)
+                                                correct-option
+                                                "{% else %}"
+                                                incorrect-option
+                                                "{% endif %}"
+                                                "{% else %}"
+                                                "btn-ghost"
+                                                "{% endif %}")
+                                          " ")))
+                    (input ((type ,option-type)
+                            (id ,id)
+                            (name ,uuid)
+                            (value ,id)
+                            (class ,(string-join (list option-type "mr-4") " "))
+                            (template-directive
+                             ,(format "{% if '~a' in selected_answers %}checked{% endif %}" id))
+                            ;  (template-directive "{% if is_submitted %}disabled{% endif %}")
+                            ))
+                    ,@option-content))]
+      [else item]))
 
   (define (split-content items)
     (let loop ([items items]
                [question-content '()]
                [options '()])
-      (if (null? items)
-          (values (reverse question-content) (reverse options))
-          (let ([item (car items)])
-            (if (and (list? item) (eq? (car item) 'option))
-                (loop (cdr items) question-content (cons item options))
-                (loop (cdr items) (cons item question-content) options))))))
+      (cond
+        [(null? items) (values (reverse question-content) (reverse options))]
+        [else
+         (define item (car items))
+         (if (and (list? item) (eq? (car item) 'option))
+             (loop (cdr items) question-content (cons item options))
+             (loop (cdr items) (cons item question-content) options))])))
 
   (define (remove-trailing-newlines items)
     (let loop ([items (reverse items)]
@@ -190,8 +168,7 @@
        conn
        "CREATE TABLE IF NOT EXISTS questions (
                 id TEXT PRIMARY KEY NOT NULL,
-                answer JSON,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                answer JSON
             )")
 
       (define json-answers (jsexpr->string correct-answers-set))

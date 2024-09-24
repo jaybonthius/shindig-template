@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/base
 
 (require db)
 
@@ -18,6 +18,6 @@
                                (printf "Error connecting to database: ~a\n" (exn-message e))
                                #f)])
     (printf "Attempting to connect to the database at: ~a\n" db-path)
-    (let ([conn (sqlite3-connect #:database db-path)])
-      (printf "Successfully connected to the database.\n")
-      conn)))
+    (define conn (sqlite3-connect #:database db-path))
+    (printf "Successfully connected to the database.\n")
+    conn))
