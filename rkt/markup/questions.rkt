@@ -143,7 +143,7 @@
   (with-output-to-file temp-path
                        (lambda ()
                          (displayln "#lang pollen")
-                         (display "◊")
+                         (display "○")
                          (write xexpr))
                        #:exists 'replace)
 
