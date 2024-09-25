@@ -1,9 +1,4 @@
-((nav-dashboard             . "Dashboard")
- (nav-log-in                . "Log in")
- (nav-log-out               . "Log out")
- (nav-sign-up               . "Sign up")
-
- (subtitle-not-found              . "Page Not Found")
+((subtitle-not-found              . "Page Not Found")
  (subtitle-log-in                 . "Log In")
  (subtitle-sign-up                . "Sign Up")
  (subtitle-signed-up              . "You have signed up")

@@ -64,11 +64,11 @@
         (:body
          (when show-nav?
            (if (current-user)
-               (nav (nav-item (reverse-uri 'dashboard-page) (translate 'nav-dashboard))
-                    (nav-item (reverse-uri 'logout-page) (translate 'nav-log-out)))
-               (nav (nav-item (reverse-uri 'dashboard-page) (translate 'nav-dashboard))
-                    (nav-item (reverse-uri 'login-page) (translate 'nav-log-in))
-                    (nav-item (reverse-uri 'signup-page) (translate 'nav-sign-up)))))
+               (nav (nav-item (reverse-uri 'dashboard-page) "Dashboard")
+                    (nav-item (reverse-uri 'logout-page) "Log out"))
+               (nav (nav-item (reverse-uri 'dashboard-page) "Dashboard")
+                    (nav-item (reverse-uri 'login-page) "Log in")
+                    (nav-item (reverse-uri 'signup-page) "Sign up"))))
 
          (unless (null? (current-flash-messages))
            (container
