@@ -38,6 +38,9 @@
       #:roles (user)
       dashboard-page]
 
+    [("lesson" (string-arg))
+      lesson-page]
+
      [("login")
       (login-page auth)]
 
