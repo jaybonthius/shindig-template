@@ -34,7 +34,10 @@
        app?)
   (define-values (dispatch reverse-uri req-roles)
     (dispatch-rules+roles
-     [("")
+      [("")
+      index-page]
+
+     [("dashboard")
       #:roles (user)
       dashboard-page]
 

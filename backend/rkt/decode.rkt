@@ -24,5 +24,5 @@
                null
                (decode-elements first-pass
                                 #:inline-txexpr-proc hyperlink-decoder
-                                #:string-proc (compose1 smart-quotes smart-dashes)
+                                #:string-proc smart-dashes
                                 #:exclude-tags '(script style))))

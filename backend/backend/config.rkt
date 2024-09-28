@@ -17,6 +17,11 @@
 (define-runtime-path locales-path
   (build-path 'up "resources" "locales"))
 
+(provide pollen-path)
+
+(define-runtime-path pollen-path
+  (simplify-path (path->complete-path (build-path 'up "pollen"))))
+
 (current-locale-specifier 'backend)
 (load-locales! locales-path)
 
