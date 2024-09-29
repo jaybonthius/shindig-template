@@ -9,13 +9,13 @@
         <link href="../static/css/output.css" rel="stylesheet" />
     </head>
     <body class="antialiased leading-tight">
-        <div class="drawer xl:drawer-open" x-data="{ activePage: window.location.pathname }">
+        <div class="drawer" x-data="{ activePage: window.location.pathname }">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
                 <div class="min-h-screen flex flex-col">
                     <div class="navbar bg-base-100">
                         <div class="flex-none">
-                            <label for="my-drawer" class="btn btn-square btn-ghost xl:hidden">
+                            <label for="my-drawer" class="btn btn-square btn-ghost">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -48,8 +48,8 @@
                             </button>
                         </div>
                     </div>
-                    <main class="flex-grow flex xl:justify-start">
-                        <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 xl:py-12 xl:pl-8 prose prose-sm sm:prose lg:prose-lg xl:prose-xl xl:ml-0">
+                    <main class="flex-grow flex">
+                        <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 xl:py-12 xl:pl-8 prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
                             <div id="main">
                                 ●|lesson-content|
                             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="drawer-side">
                 <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-                <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-base sm:text-sm lg:text-lg xl:text-xl">
                     <li>
                         <a href="/" 
                            hx-get="/" 

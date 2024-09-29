@@ -27,10 +27,15 @@ module.exports = {
         'sans': ['heliotrope_4'],
       },
       typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            maxWidth: '60ch',
+          }
+        },
         sm: {
           css: [
             {
-              fontSize: rem(14),
+              fontSize: rem(20),
               lineHeight: round(24 / 14),
               p: {
                 marginTop: em(16, 14),
@@ -235,7 +240,7 @@ module.exports = {
         base: {
           css: [
             {
-              fontSize: rem(16),
+              fontSize: rem(24),
               lineHeight: round(28 / 16),
               p: {
                 marginTop: em(20, 16),
@@ -440,7 +445,7 @@ module.exports = {
         lg: {
           css: [
             {
-              fontSize: rem(18),
+              fontSize: rem(24),
               lineHeight: round(32 / 18),
               p: {
                 marginTop: em(24, 18),
@@ -645,7 +650,7 @@ module.exports = {
         xl: {
           css: [
             {
-              fontSize: rem(20),
+              fontSize: rem(24),
               lineHeight: round(36 / 20),
               p: {
                 marginTop: em(24, 20),

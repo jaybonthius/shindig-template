@@ -2,7 +2,7 @@
 
 ○(define-meta title     "Page 1")
 
-○h1{Tailwind Typography Example}
+○h2{Tailwind Typography Example}
 
 ○div[#:class "mt-4 text-blue-400"]{
     ○span[#:class "block md:hidden"]{SM and below (<768px)}
@@ -28,7 +28,7 @@ The ○code{@tailwindcss/typography} plugin is our attempt to give you what you 
 
 It adds a new ○code{prose} class that you can slap on any block of vanilla HTML content and turn it into a beautiful, well-formatted document:
 
-○code-block{
+○pre{
 <article class="prose"> <h1>Garlic bread with cheese: What the science tells us</h1> <p> For years parents have espoused the health benefits of eating garlic bread with cheese to their children, with the food earning such an iconic status in our culture that kids will often dress up as warm, cheesy loaf for Halloween. </p> <p> But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases springing up around the country. </p> <!-- ... --> </article> }
 
 For more information about how to use the plugin and the features it includes, ○a{read the documentation}.
@@ -104,7 +104,7 @@ After this sort of list I usually have a closing statement or paragraph, because
 I think most people are going to use ○a{highlight.js} or ○a{Prism} or something if they want to style their code blocks but it wouldn't hurt to make them look ○em{okay} out of the box, even with no syntax highlighting.
 
 Here's what a default ○code{tailwind.config.js} file looks like at the time of writing:
-○code-block{
+○pre{
 module.exports = {
 purge: [],
 theme: {
