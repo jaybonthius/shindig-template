@@ -13,4 +13,9 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("daisyui")
   ],
+  safelist: [
+    'btn-correct',
+    'btn-error',
+    'btn-ghost'
+  ]
 };

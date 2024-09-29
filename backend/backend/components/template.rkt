@@ -22,6 +22,11 @@
   (begin0 path/full
     (track-preload-dependency! path/full)))
 
+(define (media-uri path)
+  (define path/full (format "/media/~a?rev=~a" path config:version))
+  (begin0 path/full
+    (track-preload-dependency! path/full)))
+
 (define (container . content)
   (haml (.container ,@content)))
 

@@ -26,11 +26,15 @@
 (define/contract (make-app auth broker flashes mailer _migrator sessions users
                            #:debug? [debug? #f]
                            #:memory-threshold [memory-threshold (* 1 1024 1024 1024)]
-                           #:static-path [static-path #f])
+                           #:static-path [static-path #f]
+                           #:media-path [media-path #f]
+                           )
   (->* [auth-manager? broker? flash-manager? mailer? migrator? session-manager? user-manager?]
        [#:debug? boolean?
         #:memory-threshold exact-positive-integer?
-        #:static-path (or/c #f path-string?)]
+        #:static-path (or/c #f path-string?)
+        #:media-path (or/c #f path-string?)
+        ]
        app?)
   (define-values (dispatch reverse-uri req-roles)
     (dispatch-rules+roles
@@ -43,6 +47,13 @@
 
     [("lesson" (string-arg))
       lesson-page]
+
+    [("question_detail" (string-arg))
+      question-detail]
+
+    [("check_answers" (string-arg))
+      #:method "post"
+      question-detail]
 
      [("login")
       (login-page auth)]
@@ -88,6 +99,7 @@
 
   (define dispatchers
     (list
+     (and media-path (make-static-dispatcher media-path))
      (and static-path (make-static-dispatcher static-path))
      (dispatch/servlet #:manager manager (stack dispatch))
      (dispatch/servlet #:manager manager (stack not-found-page))))

@@ -7,9 +7,9 @@ TODOS:
   - LaTeX?
   - pollen target for an 8.5" x 11" HTML version of the webpage, and then print that out?
   - holy shit! [you can define a CSS class that hides elements when printing](https://stackoverflow.com/a/55169528)
+  - check this out: https://docs.racket-lang.org/marionette/index.html#%28def._%28%28lib._marionette%2Fmain..rkt%29._call-with-page-pdf%21%29%29
 - quiz questions
   - question answers in a sqlite file, written by pollen
-
 
 
 ssh -i "honeycomb.pem" ubuntu@ec2-13-59-116-135.us-east-2.compute.amazonaws.com

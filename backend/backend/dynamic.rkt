@@ -28,6 +28,9 @@
 (define-runtime-path static-path
   (build-path 'up "static"))
 
+(define-runtime-path media-path
+  (build-path 'up "media"))
+
 (define mail-adapter
   (if config:postmark-token
       (make-postmark-mail-adapter (postmark config:postmark-token))
@@ -39,7 +42,10 @@
          (apply make-app deps
                 #:debug? config:debug
                 #:memory-threshold config:continuation-manager-memory-threshold
-                #:static-path static-path))]
+                #:static-path static-path
+                #:media-path media-path
+                
+                ))]
   [auth (sessions users) make-auth-manager]
   [broker (db) make-broker]
   [db (make-database-factory
