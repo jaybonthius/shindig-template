@@ -154,7 +154,7 @@ html,
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: heliotrope_4;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -2033,6 +2033,12 @@ html {
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
 }
 
+.btm-nav > *:where(.active) {
+  border-top-width: 2px;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
 .btm-nav > * .label {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -2565,6 +2571,13 @@ html {
   background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
 }
 
+.table-zebra tr.active,
+    .table-zebra tr.active:nth-child(even),
+    .table-zebra-zebra tbody tr:nth-child(even) {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
+}
+
 .table :where(thead tr, tbody tr:not(:last-child), tbody tr:first-child:last-child) {
   border-bottom-width: 1px;
   --tw-border-opacity: 1;
@@ -2634,6 +2647,22 @@ html {
 
 .prose :where(tbody tr, thead):not(:where([class~="not-prose"] *)) {
   border-bottom-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
+
+.btm-nav-xs > *:where(.active) {
+  border-top-width: 1px;
+}
+
+.btm-nav-sm > *:where(.active) {
+  border-top-width: 2px;
+}
+
+.btm-nav-md > *:where(.active) {
+  border-top-width: 2px;
+}
+
+.btm-nav-lg > *:where(.active) {
+  border-top-width: 4px;
 }
 
 .btn-block {
@@ -2874,6 +2903,930 @@ html:has(.drawer-toggle:checked) {
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_index;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_index_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: icomoon;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/icomoon.woff") format("woff");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_3_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_3_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_4_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_4_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: concourse_index;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/concourse_index_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_3_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_3_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_4_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_4_caps_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_6_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_6_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: heliotrope_8_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/heliotrope_8_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: italic;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_b_code;
+
+  font-style: italic;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_b_code_bold_italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code_caps;
+
+  font-style: normal;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_caps_regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: triplicate_a_code_caps;
+
+  font-style: normal;
+
+  font-weight: bold;
+
+  font-stretch: normal;
+
+  src: url("../fonts/triplicate_a_code_caps_bold.woff2") format("woff2");
 }
 
 @media (min-width: 640px) {

@@ -9,7 +9,7 @@
         <link href="../static/css/output.css" rel="stylesheet" />
     </head>
     <body class="antialiased leading-tight">
-        <div class="drawer xl:drawer-open">
+        <div class="drawer xl:drawer-open" x-data="{ activePage: window.location.pathname }">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
                 <div class="min-h-screen flex flex-col">
@@ -61,16 +61,36 @@
                 <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                     <li>
-                        <a href="/" hx-get="/" hx-target="#main" hx-push-url="true">Home</a>
+                        <a href="/" 
+                           hx-get="/" 
+                           hx-target="#main" 
+                           hx-push-url="true"
+                           @click="activePage = '/'"
+                           :class="{ 'active': activePage === '/' }">Home</a>
                     </li>
                     <li>
-                        <a href="/lesson/page1" hx-get="/lesson/page1" hx-target="#main" hx-push-url="true">Page 1</a>
+                        <a href="/lesson/page1" 
+                           hx-get="/lesson/page1" 
+                           hx-target="#main" 
+                           hx-push-url="true"
+                           @click="activePage = '/lesson/page1'"
+                           :class="{ 'active': activePage === '/lesson/page1' }">Page 1</a>
                     </li>
                     <li>
-                        <a href="/lesson/page2" hx-get="/lesson/page2" hx-target="#main" hx-push-url="true">Page 2</a>
+                        <a href="/lesson/page2" 
+                           hx-get="/lesson/page2" 
+                           hx-target="#main" 
+                           hx-push-url="true"
+                           @click="activePage = '/lesson/page2'"
+                           :class="{ 'active': activePage === '/lesson/page2' }">Page 2</a>
                     </li>
                     <li>
-                        <a href="/lesson/page3" hx-get="/lesson/page3" hx-target="#main" hx-push-url="true">Page 3</a>
+                        <a href="/lesson/page3" 
+                           hx-get="/lesson/page3" 
+                           hx-target="#main" 
+                           hx-push-url="true"
+                           @click="activePage = '/lesson/page3'"
+                           :class="{ 'active': activePage === '/lesson/page3' }">Page 3</a>
                     </li>
                 </ul>
             </div>
@@ -78,5 +98,6 @@
         <script src="https://unpkg.com/htmx.org@1.9.10"
                 integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
                 crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
     </body>
 </html>

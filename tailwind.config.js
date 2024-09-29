@@ -24,7 +24,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'virgil': ['Virgil', 'sans-serif'],
+        'sans': ['heliotrope_4'],
       },
       typography: (theme) => ({
         sm: {
