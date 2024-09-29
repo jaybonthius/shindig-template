@@ -15,4 +15,5 @@
 
 (module setup racket/base
   (provide (all-defined-out))
+  (define command-char #\○)
   (define publish-directory (build-path (current-directory) 'up "pollen_out")))

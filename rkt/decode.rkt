@@ -1,6 +1,7 @@
 #lang racket/base
 
 (require pollen/decode
+        racket/pretty
          txexpr)
 
 (provide (all-defined-out))
@@ -16,13 +17,15 @@
       inline-tx))
 
 (define (root . elements)
+  (displayln "decoding")
   (define first-pass
     (decode-elements elements
                      #:txexpr-elements-proc decode-paragraphs
                      #:exclude-tags '(script style figure)))
-  (make-txexpr 'body
+  (define body (make-txexpr 'body
                null
                (decode-elements first-pass
                                 #:inline-txexpr-proc hyperlink-decoder
-                                #:string-proc (compose1 smart-quotes smart-dashes)
+                                #:string-proc smart-dashes
                                 #:exclude-tags '(script style))))
+  body)

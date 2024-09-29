@@ -1,50 +1,41 @@
+# honeycomb
 
-TODOS:
-- [Manim slides](https://manim-slides.eertmans.be/latest/)
-- Reveal.js support
-- as an alternative (or in addition) to Reveal.js support, what about a feature where between every paragraph, youo can click a button that expands a drawing region? and just generally being able to annotate the page?
-- print outs
-  - LaTeX?
-  - pollen target for an 8.5" x 11" HTML version of the webpage, and then print that out?
-  - holy shit! [you can define a CSS class that hides elements when printing](https://stackoverflow.com/a/55169528)
-- quiz questions
-  - question answers in a sqlite file, written by pollen
+## Setup
 
+### Requirements
 
+* You need [Racket] since this is a Racket application.
+* You need [Node.js] version 18 or higher to build the assets.
+* You need access to a couple local [Postgres] databases.  One named
+  `honeycomb` and the other `honeycomb_tests`.  The latter is
+  exercised by unit tests.
 
-ssh -i "honeycomb.pem" ubuntu@ec2-13-59-116-135.us-east-2.compute.amazonaws.com
+### First-time Setup
 
-## Racket dependencies
+    npm install && npm run build
+    raco pkg install chief
+    raco pkg install honeycomb/        # install and build the application and its deps
+    raco pkg install honeycomb-tests/  # install and build the tests and their deps
 
-- `pollen`
-- `chief`
-- `racket-langserver` (if you want to use the recommended VS Code extension)
-- `uuid`
+### Development environment
 
-```sh
-sudo ufw enable
+Copy `.env.default` to `.env`.  [chief] will automatically load the
+variables defined in this file into the environment of the
+subprocesses defined in the `Procfile` whenever it is run.
 
-sudo ufw allow OpenSSH
+The app expects to be run behind an SSL terminated connection (for
+example, behind an nginx instance using a self-signed cert), even for
+local development .  You can disable this requirement by setting
+`current-continuation-key-cookie-secure?` parameter to `#f` before the
+application is started.
 
-sudo apt install nginx
-sudo ufw allow 'Nginx Full'
+## Running the app locally
 
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx gunicorn curl
-
-
-
-sudo apt update
-sudo apt install pipx
-pipx ensurepath
-
-pipx install poetry
-# source shell
-poetry install
-
-poetry run python manage.py makemigrations
-poetry run python manage.py migrate
-
-sudo vim /etc/systemd/system/gunicorn.socket
+    raco chief start
 
 
-```
+[Postgres]: https://www.postgresql.org/
+[Racket]: https://racket-lang.org/
+[Node.js]: https://nodejs.org/en/
+[argon2]: https://www.argon2.com/
+[chief]: https://github.com/Bogdanp/racket-chief

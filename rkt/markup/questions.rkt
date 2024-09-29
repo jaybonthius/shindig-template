@@ -56,25 +56,12 @@
        `(div ((class "flex items-center"))
              (label ((for ,id
                        )
-                     (class ,(string-join (list "btn btn-block justify-start items-center"
-                                                (format "{% if '~a' in selected_answers %}" id)
-                                                (format "{% if '~a' in correct_answers %}" id)
-                                                correct-option
-                                                "{% else %}"
-                                                incorrect-option
-                                                "{% endif %}"
-                                                "{% else %}"
-                                                "btn-ghost"
-                                                "{% endif %}")
-                                          " ")))
+                     (class ,(format "btn btn-block justify-start items-center ●(if (not (equal? selected-answers \"none\")) (if (set-member? selected-answers \"~a\") (if (set-member? correct-answers \"~a\") \"btn-success\" \"btn-error\" ) \"btn-ghost\" ) \"\" )" id id)))
                     (input ((type ,option-type)
                             (id ,id)
                             (name ,uuid)
                             (value ,id)
                             (class ,(string-join (list option-type "mr-4") " "))
-                            (template-directive
-                             ,(format "{% if '~a' in selected_answers %}checked{% endif %}" id))
-                            ;  (template-directive "{% if is_submitted %}disabled{% endif %}")
                             ))
                     ,@option-content))]
       [else item]))
@@ -111,7 +98,7 @@
   (define question-content-id (string-append "question-content-" uuid))
 
   (define expression
-    `(form ((id ,uuid) (hx-post "{% url 'check_answers' %}")
+    `(form ((id ,uuid) (hx-post ,(format "/check_answers/~a" uuid))
                        (hx-target "this")
                        (hx-include "this")
                        (hx-swap "outerHTML"))
@@ -120,7 +107,7 @@
            ,submit-button))
 
   (define question-getter
-    `(div ((id ,question-content-id) (hx-get ,(format "{% url 'question_detail' id='~a' %}" uuid))
+    `(div ((id ,question-content-id) (hx-get ,(format "/question_detail/~a" uuid))
                                      (hx-trigger "load")
                                      (hx-target ,(string-append "#" question-content-id)))
           "Loading..."))
@@ -143,7 +130,7 @@
   (with-output-to-file temp-path
                        (lambda ()
                          (displayln "#lang pollen")
-                         (display "◊")
+                         (display "○")
                          (write xexpr))
                        #:exists 'replace)
 

@@ -2254,10 +2254,6 @@ html {
   margin-inline-start: calc(var(--border-btn) * -1);
 }
 
-.static {
-  position: static;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;

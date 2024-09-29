@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +6,7 @@
         <meta name="description" content="Your description here" />
         <meta name="keywords" content="keyword1, keyword2, keyword3" />
         <title>Honeycomb</title>
-        <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+        <link href="../static/css/output.css" rel="stylesheet" />
     </head>
     <body class="antialiased leading-tight"
           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -19,16 +18,18 @@
                             <a href="/" hx-get="/" hx-target="#main" hx-push-url="true">Home</a>
                         </li>
                         <li>
-                            <a href="/page1/" hx-get="/page1/" hx-target="#main" hx-push-url="true">Page 1</a>
+                            <a href="/lesson/page1" hx-get="/lesson/page1" hx-target="#main" hx-push-url="true">Page 1</a>
                         </li>
                         <li>
-                            <a href="/page2/" hx-get="/page2/" hx-target="#main" hx-push-url="true">Page 2</a>
+                            <a href="/lesson/page2" hx-get="/lesson/page2" hx-target="#main" hx-push-url="true">Page 2</a>
                         </li>
                         <li>
-                            <a href="/page3/" hx-get="/page3/" hx-target="#main" hx-push-url="true">Page 3</a>
+                            <a href="/lesson/page3" hx-get="/lesson/page3" hx-target="#main" hx-push-url="true">Page 3</a>
                         </li>
                     </ul>
-                    <div id="main">{{ page_content }}</div>
+                    <div id="main">
+                        ●|lesson-content|
+                    </div>
                 </div>
             </main>
         </div>

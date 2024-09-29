@@ -1,3 +1,7 @@
+.env
+compiled
+coverage
+node_modules
 node_modules/
 compiled/
 __pycache__/

@@ -1,15 +1,17 @@
 #lang pollen
 
-◊(define-meta title     "Page 2")
+○(define-meta title     "Page 2")
 
 This is the SECOND PAGE!
 
-◊; ◊div[#:class "excalidraw"]{
-◊;     This is some regular texts
-◊;     ◊svg["excalidraw/simple.excalidraw"]{}
-◊; }
+○; ○div[#:class "excalidraw"]{
+○;     This is some regular texts
+○;     ○svg["excalidraw/simple.excalidraw"]{}
+○; }
 
-◊tldraw["test"]{}
+○tldraw["test"]{}
 
+●(define test-var "HAHA IT WORKS!!!")
+●|test-var|
 
-◊tldraw["simple"]{}
+○tldraw["simple"]{}
