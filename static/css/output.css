@@ -794,7 +794,7 @@ html {
 
 .prose {
   color: var(--tw-prose-body);
-  max-width: 60ch;
+  max-width: 65ch;
 }
 
 .prose :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -1298,7 +1298,7 @@ html {
 }
 
 .prose-sm {
-  font-size: 1.25rem;
+  font-size: 0.875rem;
   line-height: 1.7142857;
 }
 
@@ -3824,7 +3824,7 @@ html:has(.drawer-toggle:checked) {
 @media (min-width: 640px) {
   .sm\:prose {
     color: var(--tw-prose-body);
-    max-width: 60ch;
+    max-width: 65ch;
   }
 
   .sm\:prose :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -4375,7 +4375,7 @@ html:has(.drawer-toggle:checked) {
 
 @media (min-width: 1024px) {
   .lg\:prose-lg {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     line-height: 1.7777778;
   }
 
@@ -4624,7 +4624,7 @@ html:has(.drawer-toggle:checked) {
 
 @media (min-width: 1280px) {
   .xl\:prose-xl {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 1.8;
   }
 
