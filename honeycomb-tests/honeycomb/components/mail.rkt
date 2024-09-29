@@ -7,8 +7,8 @@
          rackunit
          threading
 
-         backend/components/mail
-         backend/components/user
+         honeycomb/components/mail
+         honeycomb/components/user
          "../common.rkt")
 
 (provide

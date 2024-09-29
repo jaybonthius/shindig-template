@@ -5,7 +5,7 @@
          racket/match
          rackunit
 
-         backend/components/user
+         honeycomb/components/user
          "../common.rkt")
 
 (provide

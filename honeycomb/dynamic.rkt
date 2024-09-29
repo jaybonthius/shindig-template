@@ -78,7 +78,7 @@
              #:cookie-same-site 'lax
              #:shelf-life config:session-shelf-life
              #:secret-key config:session-secret-key
-             #:store (make-memory-session-store #:file-path "/tmp/backend-session.rktd"))]
+             #:store (make-memory-session-store #:file-path "/tmp/honeycomb-session.rktd"))]
   [users (db hasher) make-user-manager]
   [worker (broker) (make-worker-factory)])
 

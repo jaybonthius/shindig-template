@@ -62,7 +62,7 @@
          (:meta ([:charset "utf-8"]))
          (:meta ([:name "viewport"] [:content "width=device-width, initial-scale=1"]))
 
-         (:title (if subtitle (~a subtitle " - backend") "backend"))
+         (:title (if subtitle (~a subtitle " - honeycomb") "honeycomb"))
          (:link ([:rel "stylesheet"] [:href (static-uri "app.css")]))
 
          (:script ([:src (static-uri "app.js")] [:defer "defer"])))

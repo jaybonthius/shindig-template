@@ -9,9 +9,9 @@
          racket/runtime-path
          rackunit/text-ui
 
-         backend/components/mail
-         backend/components/user
-         (prefix-in config: backend/config))
+         honeycomb/components/mail
+         honeycomb/components/user
+         (prefix-in config: honeycomb/config))
 
 
 ;; database ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

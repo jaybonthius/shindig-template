@@ -5,8 +5,8 @@
          koyo/testing
          rackunit
 
-         backend/components/auth
-         backend/components/user
+         honeycomb/components/auth
+         honeycomb/components/user
          "../common.rkt")
 
 (provide

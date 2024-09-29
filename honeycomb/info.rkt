@@ -1,6 +1,6 @@
 #lang info
 
-(define collection "backend")
+(define collection "honeycomb")
 (define deps
   '("base"
     "component-lib"

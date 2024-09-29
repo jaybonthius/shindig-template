@@ -11,6 +11,6 @@
                      "threading-lib"
                      "rackunit-lib"
 
-                     "backend"))
+                     "honeycomb"))
 
-(define update-implies '("backend"))
+(define update-implies '("honeycomb"))

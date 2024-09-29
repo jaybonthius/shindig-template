@@ -22,7 +22,7 @@
 (define-runtime-path pollen-path
   (simplify-path (path->complete-path (build-path 'up "pollen"))))
 
-(current-locale-specifier 'backend)
+(current-locale-specifier 'honeycomb)
 (load-locales! locales-path)
 
 (define (reload-locales!)
@@ -31,7 +31,7 @@
 
 ;; config values ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(current-option-name-prefix "BACKEND")
+(current-option-name-prefix "HONEYCOMB")
 
 (define-option version #:default "dev")
 (define-option debug
@@ -61,7 +61,7 @@
     (current-application-url-port (string->number url-port))))
 
 (define-values (_ default-db-host default-db-port default-db-name default-db-username default-db-password)
-  (parse-database-url (or (getenv "DATABASE_URL") "postgres://backend:backend@127.0.0.1:5432/backend")))
+  (parse-database-url (or (getenv "DATABASE_URL") "postgres://honeycomb:honeycomb@127.0.0.1:5432/honeycomb")))
 
 (define-option db-name #:default default-db-name)
 (define-option db-username #:default default-db-username)
@@ -70,9 +70,9 @@
 (define-option db-port #:default (number->string default-db-port)
   (string->number db-port))
 
-(define-option test-db-name #:default "backend_tests")
-(define-option test-db-username #:default "backend")
-(define-option test-db-password #:default "backend")
+(define-option test-db-name #:default "honeycomb_tests")
+(define-option test-db-username #:default "honeycomb")
+(define-option test-db-password #:default "honeycomb")
 (define-option test-db-host #:default "127.0.0.1")
 (define-option test-db-port #:default "5432"
   (string->number test-db-port))
@@ -80,7 +80,7 @@
 (define-option session-cookie-name #:default "_sid")
 (define-option session-shelf-life #:default "86400"
   (string->number session-shelf-life))
-(define-option session-secret-key-path #:default "/tmp/backend-secret-key")
+(define-option session-secret-key-path #:default "/tmp/honeycomb-secret-key")
 (define-option session-secret-key
   (or session-secret-key (make-secret-salt/file session-secret-key-path)))
 
@@ -89,11 +89,11 @@
 
 (define-option postmark-token)
 
-(define-option product-name #:default "backend")
-(define-option company-name #:default "backend")
+(define-option product-name #:default "honeycomb")
+(define-option company-name #:default "honeycomb")
 (define-option company-address #:default "")
 (define-option support-name #:default "Bot Botterson")
-(define-option support-email #:default "support@backend.com")
+(define-option support-email #:default "support@honeycomb.com")
 
 (provide common-mail-variables)
 (define common-mail-variables

@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "honeycomb",
   "type": "module",
   "engines": {
     "node": ">=18",
