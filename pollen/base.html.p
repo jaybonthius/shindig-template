@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <main class="flex-grow flex">
-                        <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 xl:py-12 xl:pl-8 prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
+                        <div class="container max-w-none mx-auto px-4 py-6 sm:py-8 xl:py-12 xl:pl-8 prose !prose-butterick dark:!prose-invert prose-sm sm:prose lg:prose-lg xl:prose-xl">
                             <div id="main">
                                 ●|lesson-content|
                             </div>

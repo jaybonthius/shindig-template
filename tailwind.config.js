@@ -440,45 +440,45 @@ module.exports = {
           css: [
             {
               // fontSize: rem(18),
-              // lineHeight: round(32 / 18),
-              // p: {
-              //   marginTop: em(24, 18),
-              //   marginBottom: em(24, 18),
-              // },
+              lineHeight: round(28 / 18), // round(32 / 18),
+              p: {
+                marginTop: em(18, 18), // marginTop: em(24, 18),
+                marginBottom: em(18, 18), // marginBottom: em(24, 18),
+              },
               // '[class~="lead"]': {
               //   fontSize: em(22, 18),
               //   lineHeight: round(32 / 22),
               //   marginTop: em(24, 22),
               //   marginBottom: em(24, 22),
               // },
-              // blockquote: {
-              //   marginTop: em(40, 24),
-              //   marginBottom: em(40, 24),
-              //   paddingInlineStart: em(24, 24),
-              // },
+              blockquote: {
+                marginTop: em(32, 24), // em(40, 24),
+                marginBottom: em(32, 24), // em(40, 24),
+                paddingInlineStart: em(24, 24), // em(24, 24),
+              },
               // h1: {
               //   fontSize: em(48, 18),
               //   marginTop: "0",
               //   marginBottom: em(40, 48),
               //   lineHeight: round(48 / 48),
               // },
-              // h2: {
-              //   fontSize: em(30, 18),
-              //   marginTop: em(56, 30),
-              //   marginBottom: em(32, 30),
-              //   lineHeight: round(40 / 30),
-              // },
-              // h3: {
-              //   fontSize: em(24, 18),
-              //   marginTop: em(40, 24),
-              //   marginBottom: em(16, 24),
-              //   lineHeight: round(36 / 24),
-              // },
-              // h4: {
-              //   marginTop: em(32, 18),
-              //   marginBottom: em(8, 18),
-              //   lineHeight: round(28 / 18),
-              // },
+              h2: {
+                fontSize: em(20, 18), // em(30, 18),
+                marginTop: em(56, 30), // em(56, 30),
+                marginBottom: em(24, 30), // em(32, 30),
+                lineHeight: round(40 / 30), // round(40 / 30),
+              },
+              h3: {
+                fontSize: em(20, 18), // em(24, 18),
+                marginTop: em(40, 24), // em(40, 24),
+                marginBottom: em(16, 24), // em(16, 24),
+                lineHeight: round(36 / 24), // round(36 / 24),
+              },
+              h4: {
+                marginTop: em(20, 18), // em(32, 18),
+                marginBottom: em(8, 18), // em(8, 18),
+                lineHeight: round(28 / 18), // round(28 / 18),
+              },
               // img: {
               //   marginTop: em(32, 18),
               //   marginBottom: em(32, 18),
@@ -1095,6 +1095,48 @@ module.exports = {
           },
         },
 
+
+        butterick: {
+          css: {
+            "--tw-prose-body": colors.gray[900], // colors.gray[700]
+            "--tw-prose-headings": colors.gray[900], // colors.gray[900]
+            "--tw-prose-lead": colors.gray[600], // colors.gray[600]
+            "--tw-prose-links": colors.gray[900], // colors.gray[900]
+            "--tw-prose-bold": colors.gray[900], // colors.gray[900]
+            "--tw-prose-counters": colors.gray[500], // colors.gray[500]
+            "--tw-prose-bullets": colors.gray[300], // colors.gray[300]
+            "--tw-prose-hr": colors.gray[200], // colors.gray[200]
+            "--tw-prose-quotes": colors.gray[900], // colors.gray[900]
+            "--tw-prose-quote-borders": colors.gray[200], // colors.gray[200]
+            "--tw-prose-captions": colors.gray[500], // colors.gray[500]
+            "--tw-prose-kbd": colors.gray[900], // colors.gray[900]
+            "--tw-prose-kbd-shadows": hexToRgb(colors.gray[900]), // hexToRgb(colors.gray[900])
+            "--tw-prose-code": colors.gray[900], // colors.gray[900]
+            "--tw-prose-pre-code": colors.gray[200], // colors.gray[200]
+            "--tw-prose-pre-bg": colors.gray[800], // colors.gray[800]
+            "--tw-prose-th-borders": colors.gray[300], // colors.gray[300]
+            "--tw-prose-td-borders": colors.gray[200], // colors.gray[200]
+            "--tw-prose-invert-body": colors.gray[100], // colors.gray[300]
+            "--tw-prose-invert-headings": colors.white, // colors.white
+            "--tw-prose-invert-lead": colors.gray[400], // colors.gray[400]
+            "--tw-prose-invert-links": colors.white, // colors.white
+            "--tw-prose-invert-bold": colors.white, // colors.white
+            "--tw-prose-invert-counters": colors.gray[400], // colors.gray[400]
+            "--tw-prose-invert-bullets": colors.gray[600], // colors.gray[600]
+            "--tw-prose-invert-hr": colors.gray[700], // colors.gray[700]
+            "--tw-prose-invert-quotes": colors.gray[100], // colors.gray[100]
+            "--tw-prose-invert-quote-borders": colors.gray[700], // colors.gray[700]
+            "--tw-prose-invert-captions": colors.gray[400], // colors.gray[400]
+            "--tw-prose-invert-kbd": colors.white, // colors.white
+            "--tw-prose-invert-kbd-shadows": hexToRgb(colors.white), // hexToRgb(colors.white)
+            "--tw-prose-invert-code": colors.white, // colors.white
+            "--tw-prose-invert-pre-code": colors.gray[300], // colors.gray[300]
+            "--tw-prose-invert-pre-bg": "rgb(0 0 0 / 50%)", // "rgb(0 0 0 / 50%)"
+            "--tw-prose-invert-th-borders": colors.gray[600], // colors.gray[600]
+            "--tw-prose-invert-td-borders": colors.gray[700], // colors.gray[700]
+          },
+        },
+
         gray: {
           css: {
             // "--tw-prose-body": colors.gray[700],
@@ -1407,7 +1449,7 @@ module.exports = {
           css: [
             {
               // color: 'var(--tw-prose-body)',
-              // maxWidth: '65ch',
+              maxWidth: '60ch', // 65ch
               // p: {}, // Required to maintain correct order when merging
               // '[class~="lead"]': {
               //   color: 'var(--tw-prose-lead)',
