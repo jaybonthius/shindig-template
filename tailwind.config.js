@@ -1678,5 +1678,5 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
-  safelist: ["btn-correct", "btn-error", "btn-ghost"],
+  safelist: ["btn-correct", "btn-error", "btn-ghost", "text-green-500", "text-red-500"],
 };

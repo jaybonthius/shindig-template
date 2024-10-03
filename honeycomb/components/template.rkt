@@ -63,9 +63,10 @@
          (:meta ([:name "viewport"] [:content "width=device-width, initial-scale=1"]))
 
          (:title (if subtitle (~a subtitle " - honeycomb") "honeycomb"))
-         (:link ([:rel "stylesheet"] [:href (static-uri "app.css")]))
+        ;  (:link ([:rel "stylesheet"] [:href (static-uri "app.css")]))
 
-         (:script ([:src (static-uri "app.js")] [:defer "defer"])))
+        ;  (:script ([:src (static-uri "app.js")] [:defer "defer"]))
+         )
         (:body
          (when show-nav?
            (if (current-user)

@@ -45,7 +45,7 @@
   (string->symbol log-level))
 
 (define-option http-host #:default "127.0.0.1")
-(define-option http-port #:default (or (getenv "PORT") "8000")
+(define-option http-port #:default "8080" ; (or (getenv "PORT") "8000") not working
   (string->number http-port))
 
 (define-option url-scheme #:default "http"
@@ -56,7 +56,7 @@
   (begin0 url-host
     (current-application-url-host url-host)))
 
-(define-option url-port #:default (or (getenv "PORT") "8000")
+(define-option url-port #:default "8080" ; (or (getenv "PORT") "8000") not working
   (begin0 url-port
     (current-application-url-port (string->number url-port))))
 

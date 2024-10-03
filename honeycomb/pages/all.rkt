@@ -5,4 +5,4 @@
     (require mod ...)
     (provide (all-from-out mod ...))))
 
-(reprovide "auth.rkt" "common.rkt" "dashboard.rkt" "lesson.rkt")
+(reprovide "auth.rkt" "common.rkt" "dashboard.rkt" "lesson.rkt" "free-response.rkt")

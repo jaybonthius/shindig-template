@@ -55,6 +55,13 @@
       #:method "post"
       question-detail]
 
+    [("free-response" (string-arg))
+      get-free-response]
+
+    [("free-response" (string-arg))
+      #:method "post"
+      post-free-response]
+
      [("login")
       (login-page auth)]
 

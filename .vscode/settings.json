@@ -56,4 +56,14 @@
       "--lib",
       "racket-langserver"
   ],
+
+  "todohighlight.isEnable": true,
+  "todohighlight.isCaseSensitive": true,
+  "todohighlight.keywords": [
+      {
+          "text": "TODO:",
+          "color": "white",
+          "backgroundColor": "#865C67",
+      }
+  ],
 }

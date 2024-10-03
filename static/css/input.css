@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+math-view {
+  outline: 2px dashed lightgray;
+  border-radius: 4px;
+  /* background: rgba(251,	187,	182, .1);  */
+}
+
 @font-face {
   font-family: concourse_3;
   font-style: normal;

@@ -11,18 +11,12 @@
          racket/set
          racket/string
          xml
-         "sqlite.rkt")
+         "sqlite.rkt"
+         "../utils.rkt")
 
 (provide (all-defined-out))
 
 (require racket/match)
-
-(define (quote-xexpr-attributes xexpr)
-  (match xexpr
-    [(list tag (and attrs (list (list _ _) ...)) content ...)
-     (list* tag `'(,@attrs) (map quote-xexpr-attributes content))]
-    [(list tag content ...) (cons tag (map quote-xexpr-attributes content))]
-    [else xexpr]))
 
 (define (option #:correct [correct #f] #:id [id ""] . content)
   `(option ((correct ,correct) (id ,id)) ,@content))
@@ -53,17 +47,20 @@
        (define option-content (cddr item))
        (define correct-option "btn-success")
        (define incorrect-option "btn-error")
-       `(div ((class "flex items-center"))
-             (label ((for ,id
-                       )
-                     (class ,(format "btn btn-block justify-start items-center ●(if (not (equal? selected-answers \"none\")) (if (set-member? selected-answers \"~a\") (if (set-member? correct-answers \"~a\") \"btn-success\" \"btn-error\" ) \"btn-ghost\" ) \"\" )" id id)))
-                    (input ((type ,option-type)
-                            (id ,id)
-                            (name ,uuid)
-                            (value ,id)
-                            (class ,(string-join (list option-type "mr-4") " "))
-                            ))
-                    ,@option-content))]
+       `(div
+         ((class "flex items-center"))
+         (label
+          ((for ,id
+             )
+           (class ,(format
+                    "btn btn-block justify-start items-center ●(if (not (equal? selected-answers \"none\")) (if (set-member? selected-answers \"~a\") (if (set-member? correct-answers \"~a\") \"btn-success\" \"btn-error\" ) \"btn-ghost\" ) \"\" )"
+                    id
+                    id)))
+          (input ((type ,option-type) (id ,id)
+                                      (name ,uuid)
+                                      (value ,id)
+                                      (class ,(string-join (list option-type "mr-4") " "))))
+          ,@option-content))]
       [else item]))
 
   (define (split-content items)
@@ -117,62 +114,15 @@
 
   question-getter)
 
-(define (render-x-expression xexpr prefix filename)
-  (define output-dir (build-path (current-directory) prefix))
-  (define temp-dir (build-path output-dir "temp"))
-  (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
-  (define output-path (build-path output-dir (string-append filename ".html")))
-  (define template-path (build-path output-dir "question-template.html.p"))
-
-  (make-directory* temp-dir)
-  (make-directory* output-dir)
-
-  (with-output-to-file temp-path
-                       (lambda ()
-                         (displayln "#lang pollen")
-                         (display "○")
-                         (write xexpr))
-                       #:exists 'replace)
-
-  (render-to-file-if-needed temp-path template-path output-path)
-  output-path)
-
-(define (upsert-question question-id correct-answers-set)
-  (define current-dir (current-directory))
-  (define db-file (build-path current-dir "questions.sqlite"))
-  ; todo: have this be a separate thing upon local setup
-  (try-create-empty-file db-file)
-
-  (define conn (try-connect db-file))
-  (when conn
-    (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
-      ; todo: have this be a separate thing upon local setup
-      (query-exec
-       conn
-       "CREATE TABLE IF NOT EXISTS questions (
-                id TEXT PRIMARY KEY NOT NULL,
-                answer JSON
-            )")
-
-      (define json-answers (jsexpr->string correct-answers-set))
-
-      (printf "Inserting or replacing question with id ~a and answers ~a\n" question-id json-answers)
-
-      (query-exec
-       conn
-       "INSERT OR REPLACE INTO questions (id, answer)
-                   VALUES (?, json(?))"
-       question-id
-       json-answers)
-
-      (disconnect conn)
-
-      (printf "Database operations completed successfully.\n"))))
-
-(define (free-response-question #:uuid [uuid #f] . content)
-  `(div "hey")
-
-  ; get all the correct answers and put in BD
-  ; render question
-  )
+(define (free-response-question #:uuid [uuid #f] answer)
+  (upsert-question uuid answer)
+  `(div (div ((class "not-prose my-2")) (math-field [(style "width: 30%") (id ,uuid)] ""))
+        (div [(id "css-container")] "")
+        (div (button [(class "btn")
+                      (hx-post "/check-free-response")
+                      (hx-vals ,(format "js:{latex: document.getElementById('~a').value, uuid: '~a'}"
+                                        uuid
+                                        uuid))
+                      (hx-target "#css-container")
+                      (hx-swap "innerHTML")]
+                     "Submit!"))))
