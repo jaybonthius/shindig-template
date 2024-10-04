@@ -93,7 +93,7 @@
 
 
 (define (fr-field-answer uid answer)
-  (define html `(div (math-field [(id ,uid) (name ,uid) (style "display: block")])  ,(format "●|~a|" "thing") ))
+  (define html `(div (math-field [(id ,uid) (name ,uid) (style "display: block")])))
   (make-fr-field-object html (hash 'uid uid 'answer answer)))
 
 (define (fr-field-placeholders uid placeholders content)

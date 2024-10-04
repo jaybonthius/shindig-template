@@ -46,7 +46,7 @@
                                   #:append-content [append-content ""]
                                   file-path)
     (define rendered-content
-      (call-with-output-string (lambda (op) (display (free-response-template file-path 'thing "hello") op))))
+      (call-with-output-string (lambda (op) (display (free-response-template file-path) op))))
 
     (define modified-content (string-append prepend-content rendered-content append-content))
 
