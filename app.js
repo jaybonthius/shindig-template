@@ -19,6 +19,7 @@ function compareLatexExpressions(latex1, latex2) {
 
 fastify.post('/compare', async (request, reply) => {
   const { latex1, latex2 } = request.body;
+  request.log.info(`Comparing LaTeX expressions: ${latex1}, ${latex2}`);
 
   if (!latex1 || !latex2) {
     reply.code(400).send({ error: 'Both latex1 and latex2 are required.' });

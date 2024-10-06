@@ -8,6 +8,10 @@ math-view {
   /* background: rgba(251,	187,	182, .1);  */
 }
 
+math-field:not(:defined) {
+  display: none;
+}
+
 @font-face {
   font-family: concourse_3;
   font-style: normal;

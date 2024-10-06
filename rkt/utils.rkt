@@ -80,3 +80,35 @@
       (disconnect conn)
 
       (printf "Database operations completed successfully.\n"))))
+
+
+(define (upsert-free-response field-id question-id answer)
+  (define current-dir (current-directory))
+  (define db-file (build-path current-dir "free-response-questions.sqlite"))
+  ; todo: have this be a separate thing upon local setup
+  (try-create-empty-file db-file)
+
+  (define conn (try-connect db-file))
+  (when conn
+    (with-handlers ([exn:fail? (lambda (e)
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+      ; todo: have this be a separate thing upon local setup
+      (query-exec
+       conn
+       "CREATE TABLE IF NOT EXISTS free_response_questions (
+                field_id TEXT PRIMARY KEY NOT NULL,
+                question_id TEXT NOT NULL,
+                answer TEXT
+            )")
+
+      (query-exec
+       conn
+       "INSERT OR REPLACE INTO free_response_questions (field_id, question_id, answer)
+                   VALUES (?, ?, ?)"
+       field-id
+       question-id
+       answer)
+
+      (disconnect conn)
+
+      (printf "Database operations completed successfully.\n"))))

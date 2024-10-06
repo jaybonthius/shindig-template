@@ -16,97 +16,55 @@
 
 (provide (all-defined-out))
 
-(define-struct fr-field-object (html metadata))
-
-; (define (generate-hx-vals-string metadata-list)
-;   (define (item->string h)
-;     (format "{latex: document.getElementById('~a').value, uid: '~a'}"
-;             (hash-ref h 'uid)
-;             (hash-ref h 'uid)))
-  
-;   (define items-string
-;     (string-join (map item->string metadata-list) ","))
-  
-;   (define hx-vals-string
-;     (format "js:{submissions: [~a]}" items-string))
-  
-;   hx-vals-string)
+(define question-id-param (make-parameter ""))
 
 (define (free-response #:uid (uid "") . content)
   (validate-uid uid)
-  (set! uid (string-append "fr-question-" uid))
-  
-  (define metadata '())
-  (define parsed-content '())
+  (define question-id (string-append "fr-question-" uid))
+  (define buttion-id (string-append "fr-button-" uid))
 
-  (pretty-print content)
-
-  (for ([item content])
-    (if (fr-field-object? item)
-        (begin
-          (set! metadata (cons (fr-field-object-metadata item) metadata))
-          (set! parsed-content (cons (fr-field-object-html item) parsed-content)))
-        (set! parsed-content (cons item parsed-content))))
-  (set! parsed-content (reverse parsed-content))
-
-  (for ([item metadata])
-    (upsert-question (hash-ref item 'uid) (hash-ref item 'answer)))
-
-  ; (define submit-button-hx-vals (generate-hx-vals-string metadata))
-
-  (pretty-print parsed-content)
+  (define evaluated-content
+    (parameterize ([question-id-param uid])
+      (map (lambda (x) (if (procedure? x) (x) x)) content)))
 
   (define question-content
-    `(div 
-          (div ,@parsed-content)
-          (button [(class "btn")
-                   (hx-post ,(format "/free-response/~a" uid))
-                  ;  (hx-vals ,submit-button-hx-vals)
-                   ]
-                   "Submit!")
-                   ))
-  (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
+    `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))
 
-  `(div ((id ,uid) (hx-get ,(format "/free-response/~a" uid))
-                    (hx-trigger "load")
-                    (hx-target "this"))
-          "Loading...")
-)
+  ; TODO: uncomment this to enable HTMX loading
+  ; (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
+  ; `(div ((id ,uid) (hx-get ,(format "/free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
+  ;       "Loading...")
+
+  question-content)
 
 (define (fr-field #:uid [uid ""] #:answer [answer ""] #:placeholders [placeholders (hash)] . content)
-  (validate-uid uid)
-  (set! uid (string-append "fr-field-" uid))
-  
-  (define answer-provided? (not (string=? answer "")))
-  (define placeholders-provided? (not (hash-empty? placeholders)))
+  (lambda ()
+    (validate-uid uid)
+    (define field-uid (string-append "fr-field-" uid))
+    (define field-style-uid (string-append "fr-style-" uid))
+    (define buttion-id (string-append "fr-button-" (question-id-param)))
 
-  (cond
-    [(and answer-provided? placeholders-provided?)
-     (raise-argument-error 'fr-field "answer and placeholders cannot both be provided" (list answer placeholders))]
-    [(not (or answer-provided? placeholders-provided?))
-     (raise-argument-error 'fr-field "either answer or placeholders must be provided" (list answer placeholders))]
-    [answer-provided? (fr-field-answer uid answer)]
-    ; [placeholders-provided? (fr-field-placeholders uid placeholders content)]
-    )
-)
+    (displayln (format "Question ID: ~a" (question-id-param)))
 
+    (upsert-free-response uid (question-id-param) answer)
 
+    `(div [(hx-get ,(format "/free-response/~a" uid))
+           (hx-trigger "load")
+           (hx-swap "none")
+           (hx-select-oob ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
+           (hx-ext "debug")]
+          (math-field [(id ,field-uid)
+                       (name ,field-uid)
+                       (hx-post ,(format "/free-response/~a" uid))
+                       (hx-trigger ,(format "click from:#~a" buttion-id))
+                       (hx-target ,(format "#~a" field-style-uid))
+                       (hx-swap "innerHTML")
+                       (style "display: block")])
+          (style [(id ,field-style-uid)]))))
 
-(define (fr-field-answer uid answer)
-  (define html `(div (math-field [(id ,uid) (name ,uid) (style "display: block")])))
-  (make-fr-field-object html (hash 'uid uid 'answer answer)))
-
-(define (fr-field-placeholders uid placeholders content)
-  (define html `(div (math-field [(id ,uid) (name ,uid)] ,@content)))
-  (make-fr-field-object html (hash 'uid uid 'placeholders placeholders)))
-
-; test 
-
-; (fr-container #:uid "Lzpw5LEviNx4INfuN3W5p"
-;               "This is some good stuff!!! Yahoo!!"
-;               ; (fr-field #:uid "WkRqouD4ql1-kAqYnxBMS" #:placeholders (hash 'numerator "5" 'denominator "4") "\\frac{15}{12} = \\frac{\\placeholder[numerator]{?}}{\\placeholder[denominator]{?}}")
-;               (fr-field #:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "3")
-;               (fr-field #:uid "smBDN0w0DyGLhrE0OB5Db" #:answer "7")
-;               )
-
-
+; (free-response
+;  #:uid "Lzpw5LEviNx4INfuN3W5p"
+;  "This is some good stuff!!! Yahoo!!"
+;  ; (fr-field #:uid "WkRqouD4ql1-kAqYnxBMS" #:placeholders (hash 'numerator "5" 'denominator "4") "\\frac{15}{12} = \\frac{\\placeholder[numerator]{?}}{\\placeholder[denominator]{?}}")
+;  (fr-field #:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "3")
+;  (fr-field #:uid "smBDN0w0DyGLhrE0OB5Db" #:answer "7"))

@@ -6,24 +6,91 @@
          web-server/http
          web-server/servlet
          web-server/templates
+         honeycomb/components/auth
+         honeycomb/components/user
          web-server/http/request-structs
          racket/path
+         racket/match
+         racket/file
          racket/runtime-path
          racket/pretty
          racket/set
          racket/list
          racket/port
          net/uri-codec
+         (only-in srfi/13 string-index)
          (only-in net/http-easy post response-status-code response-body response-close!)
          racket/string
          json
          db
          xml
          (prefix-in config: "../config.rkt")
+         "../components/auth.rkt"
          "../components/template.rkt")
 
 (provide (contract-out [get-free-response (-> request? string? response?)]
                        [post-free-response (-> request? string? response?)]))
+
+(define (try-create-empty-file path)
+  (with-handlers ([exn:fail? (lambda (e) 
+                              ;  (printf "Error creating empty file: ~a\n" (exn-message e))
+                              (void)
+                               #f)])
+    (call-with-output-file path (lambda (out) (void)))
+    (printf "Successfully created empty file.\n")
+    #t))
+
+(define (try-connect db-path)
+  (with-handlers ([exn:fail? (lambda (e)
+                               (printf "Error connecting to database: ~a\n" (exn-message e))
+                               #f)])
+    (printf "Attempting to connect to the database at: ~a\n" db-path)
+    (define conn (sqlite3-connect #:database db-path))
+    (printf "Successfully connected to the database.\n")
+    conn))
+
+
+(define (upsert-free-response-submission field-id user-id question-id submission is-corrent)
+  (define current-dir (current-directory))
+  (define db-file (build-path current-dir "free-response-submissions.sqlite"))
+  ; todo: have this be a separate thing upon local setup
+  (try-create-empty-file db-file)
+
+  ; convert is-correct from bool to int
+  (define is-corrent-int (if is-corrent 1 0))
+
+  (define conn (try-connect db-file))
+  (when conn
+    (with-handlers ([exn:fail? (lambda (e)
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+      ; todo: have this be a separate thing upon local setup
+      (query-exec
+       conn
+       "CREATE TABLE IF NOT EXISTS free_response_submissions (
+                field_id TEXT NOT NULL,
+                user_id TEXT NOT NULL,
+                question_id TEXT,
+                submission TEXT,
+                is_correct INT,
+                PRIMARY KEY (field_id, user_id)
+            )")
+
+      (query-exec
+       conn
+       "INSERT OR REPLACE INTO free_response_submissions (field_id, user_id, question_id, submission, is_correct)
+                   VALUES (?, ?, ?, ?, ?)"
+       field-id
+       user-id
+       question-id
+       submission
+       is-corrent-int)
+
+      (disconnect conn)
+
+      (printf "Database operations completed successfully.\n"))))
+
+
+
 
 (define (free-response-template path . args)
   (for ([i (in-range 0 (length args) 2)])
@@ -36,52 +103,63 @@
   (define match (regexp-match pattern data))
   (if match (cadr match) #f))
 
+(define (plain-text-response content)
+  (response/full 200 ; HTTP status code
+                 #"OK" ; Status message
+                 (current-seconds) ; Timestamp
+                 #"text/plain" ; MIME type (plain text)
+                 '() ; Additional headers
+                 (list (string->bytes/utf-8 content))))
+
 (define (get-free-response req uid)
-  (render-free-response req uid))
+  (define current-user-info (current-user))
+  (define username (user-username current-user-info))
+  (define db-connection (sqlite3-connect #:database "free-response-submissions.sqlite"))
+  (match-define (vector latest-submission is-correct)
+    (query-row db-connection
+              "select submission, is_correct from free_response_submissions where field_id = $1 and user_id = $2"
+              uid username))
+  (set! is-correct (if (equal? is-correct 1) #t #f))
 
-(define (render-free-response #:results [results (hash)] req uid)
-  (define file-path (format "pollen/free-response/~a.html" uid))
+  (define is-correct-style 
+    " {outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);}"
+  )
 
-  (define (rendered-page-with-div #:prepend-content [prepend-content ""]
-                                  #:append-content [append-content ""]
-                                  file-path)
-    (define rendered-content
-      (call-with-output-string (lambda (op) (display (free-response-template file-path) op))))
+  (define is-not-correct-style
+    " {outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);}"
+  )
 
-    (define modified-content (string-append prepend-content rendered-content append-content))
 
-    (response/output (lambda (op) (display modified-content op))))
+  (define field-uid (string-append "fr-field-" uid))
+  (define field-style-uid (string-append "fr-style-" uid))
 
-  ; TODO: check if student answer is in DB
+  (define style 
+    `(style [(id ,field-style-uid)]
+      ,(string-append "#" field-uid (if is-correct
+        is-correct-style
+        is-not-correct-style
+      ))
+    )
+  )
 
-  (pretty-print results)
+  (define math-field 
+    `(math-field [(id ,field-uid)]
+      ,latest-submission
+    )
+  )
 
-  (define (correct-style-tag uid)
-    (string-append "<style>"
-                   (string-append "#" uid " {")
-                   "outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);"
-                   "}"
-                   "</style>"))
+  (define response-full-input 
+      (list (string->bytes/utf-8 (string-append (xexpr->string math-field) (xexpr->string style))))
+  )
 
-  (define (incorrect-style-tag uid)
-    (string-append "<style>"
-                   (string-append "#" uid " {")
-                   "outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);"
-                   "}"
-                   "</style>"))
-
-  (define style-tags '())
-  (for ([result results])
-    (if (hash-ref result 'is-correct)
-        (set! style-tags (cons (correct-style-tag (hash-ref result 'uid)) style-tags))
-        (set! style-tags (cons (incorrect-style-tag (hash-ref result 'uid)) style-tags))))
-
-  (pretty-print style-tags)
-  (set! style-tags (string-join style-tags ""))
-
-  (define rendered-page (rendered-page-with-div #:append-content style-tags file-path))
-
-  rendered-page)
+  (response/full
+    200 ; HTTP status code
+    #"OK" ; Status message
+    (current-seconds) ; Timestamp
+    #"text/plain" ; MIME type (plain text)
+    '() ; Additional headers
+    response-full-input)
+)
 
 (define (bytes-string->string value)
   (if (bytes? value) (bytes->string/utf-8 value) value))
@@ -93,52 +171,49 @@
     [else (error "Invalid boolean string")]))
 
 (define (post-free-response req uid)
+  (define field-uid (string-append "fr-field-" uid))
+  (define current-user-info (current-user))
+  (define username (user-username current-user-info))
   (define post-data (uri-decode (bytes->string/utf-8 (request-post-data/raw req))))
-  (define (parse-http-request-string str)
-    (define (parse-pair pair)
-      (let* ([key-value (string-split pair "=")]
-             [key (first key-value)]
-             [value (string-join (rest key-value) "=")])
-        (cons key (if (string-prefix? value "{") (string->jsexpr value) value))))
 
-    (define (parse-submission submission)
-      (if (and (hash? submission) (hash-has-key? submission 'uid)) (hash-ref submission 'uid) #f))
-
-    (let* ([pairs (string-split str "&")]
-           [parsed-pairs (map parse-pair pairs)]
-           [submissions (filter-map (lambda (pair) (and (equal? (car pair) "submissions") (cdr pair)))
-                                    parsed-pairs)])
-      submissions))
-  (define submissions (parse-http-request-string post-data))
+  (define (extract-submission s)
+  (let ((pos (string-index s #\=)))
+    (if pos
+        (substring s (+ pos 1))
+        "")))
+  (define submission (extract-submission post-data))
 
   ; check if submissions are correct
   (define url "http://localhost:5200/compare")
-  (define db-connection (sqlite3-connect #:database "pollen/questions.sqlite"))
-
-  (define (process-submission submission)
-    (let* ([uid (hash-ref submission 'uid)]
-           [submission-latex (hash-ref submission 'latex)]
-           [correct-answer-latex
-            (string->jsexpr
-             (query-value db-connection "select answer from questions where id = $1" uid))]
+  (define db-connection (sqlite3-connect #:database "pollen/free-response-questions.sqlite"))
+  (define is-corrent
+    (let* ([correct-answer-latex
+            (query-value db-connection
+                         "select answer from free_response_questions where field_id = $1"
+                         uid)]
            [correct-answer-latex (regexp-replace* #px"([$#%&])" correct-answer-latex "\\\\\\1")]
-           [payload (hash 'latex1 correct-answer-latex 'latex2 submission-latex)]
-           [response (post url #:json payload)]
-           [is-correct (string-bool->racket-bool (bytes->string/utf-8 (response-body response)))])
+           [payload (hash 'latex1 correct-answer-latex 'latex2 submission)]
+           [response (post url #:json payload)])
 
       (response-close! response)
 
-      (hash 'uid
-            uid
-            'latex
-            submission-latex
-            'correct-answer-latex
-            correct-answer-latex
-            'is-correct
-            is-correct)))
+      ; TODO: add error handling in here for this error: #"{\"error\":\"Both latex1 and latex2 are required.\"}"
 
-  (define processed-submissions (map process-submission submissions))
+      (string-bool->racket-bool (bytes->string/utf-8 (response-body response)))))
 
-  ; TODO: add to student DB
+  ; TODO: pass question-id
+  (upsert-free-response-submission uid username "" submission is-corrent)
 
-  (render-free-response #:results processed-submissions req uid))
+  (define (correct-style-tag uid)
+    (string-append (string-append "#" uid " {")
+                   "outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);"
+                   "}"))
+
+  (define (incorrect-style-tag uid)
+    (string-append (string-append "#" uid " {")
+                   "outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);"
+                   "}"))
+
+  (define style-tag (if is-corrent (correct-style-tag field-uid) (incorrect-style-tag field-uid)))
+
+  (response/xexpr style-tag))
