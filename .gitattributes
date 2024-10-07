@@ -1,2 +1,4 @@
 *.pm linguist-language=Racket
+*.poly.pm linguist-language=Racket
 *.p linguist-language=Racket
+*.html.p linguist-language=Racket
