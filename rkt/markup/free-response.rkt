@@ -61,10 +61,3 @@
                        (hx-swap "innerHTML")
                        (style "display: block")])
           (style [(id ,field-style-uid)]))))
-
-; (free-response
-;  #:uid "Lzpw5LEviNx4INfuN3W5p"
-;  "This is some good stuff!!! Yahoo!!"
-;  ; (fr-field #:uid "WkRqouD4ql1-kAqYnxBMS" #:placeholders (hash 'numerator "5" 'denominator "4") "\\frac{15}{12} = \\frac{\\placeholder[numerator]{?}}{\\placeholder[denominator]{?}}")
-;  (fr-field #:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "3")
-;  (fr-field #:uid "smBDN0w0DyGLhrE0OB5Db" #:answer "7"))

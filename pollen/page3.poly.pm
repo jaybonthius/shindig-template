@@ -1,19 +1,27 @@
 #lang pollen
 
-☉(require math)
-
-☉(define-meta title     "Page 3")
+◊(define-meta title     "Page 3")
 
 Here comes a question!
 
-☉free-response[#:uid "d5902827-5929-4347-a6b3-21499a5ecd03"]{
-    What is the square-root of 9?
+◊free-response[#:uid "YdPhBaK5eigz6xLy8_Ozh"]{
+    What is the square-root of 3?
 
-    ☉fr-field[#:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "3"]{}
-    
-    And here is even more!
+    ◊fr-field[#:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "\\sqrt{3}"]{}
+
+    What is the square-root of 16?
+
+    ◊fr-field[#:uid "AdAG-dcDP_HhzDTtDJN_n" #:answer "4"]{}
+
+    What is the square-root of 25?
+
+    ◊fr-field[#:uid "nNne1PkQ7KRok_wfre5WH" #:answer "5"]{}
+
+    What is the square-root of 36?
+
+    ◊fr-field[#:uid "sF1wkj-ZJRU_G4beOF18c" #:answer "6"]{}
 }
 
 This is other information.
 
-☉span[#:class "text-red-500"]{This should be red}
+◊span[#:class "text-red-500"]{This should be red}

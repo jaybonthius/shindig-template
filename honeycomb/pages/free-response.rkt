@@ -32,9 +32,9 @@
                        [post-free-response (-> request? string? response?)]))
 
 (define (try-create-empty-file path)
-  (with-handlers ([exn:fail? (lambda (e) 
-                              ;  (printf "Error creating empty file: ~a\n" (exn-message e))
-                              (void)
+  (with-handlers ([exn:fail? (lambda (e)
+                               ;  (printf "Error creating empty file: ~a\n" (exn-message e))
+                               (void)
                                #f)])
     (call-with-output-file path (lambda (out) (void)))
     (printf "Successfully created empty file.\n")
@@ -48,7 +48,6 @@
     (define conn (sqlite3-connect #:database db-path))
     (printf "Successfully connected to the database.\n")
     conn))
-
 
 (define (upsert-free-response-submission field-id user-id question-id submission is-corrent)
   (define current-dir (current-directory))
@@ -89,80 +88,43 @@
 
       (printf "Database operations completed successfully.\n"))))
 
+(define (get-free-response req uid)
+  (displayln "GET /free-response")
+  (define current-user-info (current-user))
+  (define username (user-username current-user-info))
+  (define db-connection (sqlite3-connect #:database "free-response-submissions.sqlite"))
+  (match-define (vector latest-submission is-correct)
+    (query-row
+     db-connection
+     "select submission, is_correct from free_response_submissions where field_id = $1 and user_id = $2"
+     uid
+     username))
+  (set! is-correct (if (equal? is-correct 1) #t #f))
 
+  (define is-correct-style
+    " {outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);}")
 
+  (define is-not-correct-style
+    " {outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);}")
 
-(define (free-response-template path . args)
-  (for ([i (in-range 0 (length args) 2)])
-    (when (< (+ i 1) (length args))
-      (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1)))))
-  (eval #`(include-template #:command-char #\● #,path)))
+  (define field-uid (string-append "fr-field-" uid))
+  (define field-style-uid (string-append "fr-style-" uid))
 
-(define (extract-value data key)
-  (define pattern (string-append key "=([^&]+)"))
-  (define match (regexp-match pattern data))
-  (if match (cadr match) #f))
+  (define style
+    `(style [(id ,field-style-uid)]
+            ,(string-append "#" field-uid (if is-correct is-correct-style is-not-correct-style))))
 
-(define (plain-text-response content)
+  (define math-field `(math-field [(id ,field-uid)] ,latest-submission))
+
+  (define response-full-input
+    (list (string->bytes/utf-8 (string-append (xexpr->string math-field) (xexpr->string style)))))
+
   (response/full 200 ; HTTP status code
                  #"OK" ; Status message
                  (current-seconds) ; Timestamp
                  #"text/plain" ; MIME type (plain text)
                  '() ; Additional headers
-                 (list (string->bytes/utf-8 content))))
-
-(define (get-free-response req uid)
-  (define current-user-info (current-user))
-  (define username (user-username current-user-info))
-  (define db-connection (sqlite3-connect #:database "free-response-submissions.sqlite"))
-  (match-define (vector latest-submission is-correct)
-    (query-row db-connection
-              "select submission, is_correct from free_response_submissions where field_id = $1 and user_id = $2"
-              uid username))
-  (set! is-correct (if (equal? is-correct 1) #t #f))
-
-  (define is-correct-style 
-    " {outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);}"
-  )
-
-  (define is-not-correct-style
-    " {outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);}"
-  )
-
-
-  (define field-uid (string-append "fr-field-" uid))
-  (define field-style-uid (string-append "fr-style-" uid))
-
-  (define style 
-    `(style [(id ,field-style-uid)]
-      ,(string-append "#" field-uid (if is-correct
-        is-correct-style
-        is-not-correct-style
-      ))
-    )
-  )
-
-  (define math-field 
-    `(math-field [(id ,field-uid)]
-      ,latest-submission
-    )
-  )
-
-  (define response-full-input 
-      (list (string->bytes/utf-8 (string-append (xexpr->string math-field) (xexpr->string style))))
-  )
-
-  (response/full
-    200 ; HTTP status code
-    #"OK" ; Status message
-    (current-seconds) ; Timestamp
-    #"text/plain" ; MIME type (plain text)
-    '() ; Additional headers
-    response-full-input)
-)
-
-(define (bytes-string->string value)
-  (if (bytes? value) (bytes->string/utf-8 value) value))
+                 response-full-input))
 
 (define (string-bool->racket-bool str-value)
   (cond
@@ -171,16 +133,14 @@
     [else (error "Invalid boolean string")]))
 
 (define (post-free-response req uid)
+  (displayln "POST /free-response")
   (define field-uid (string-append "fr-field-" uid))
   (define current-user-info (current-user))
   (define username (user-username current-user-info))
   (define post-data (uri-decode (bytes->string/utf-8 (request-post-data/raw req))))
 
   (define (extract-submission s)
-  (let ((pos (string-index s #\=)))
-    (if pos
-        (substring s (+ pos 1))
-        "")))
+    (let ([pos (string-index s #\=)]) (if pos (substring s (+ pos 1)) "")))
   (define submission (extract-submission post-data))
 
   ; check if submissions are correct
@@ -196,8 +156,6 @@
            [response (post url #:json payload)])
 
       (response-close! response)
-
-      ; TODO: add error handling in here for this error: #"{\"error\":\"Both latex1 and latex2 are required.\"}"
 
       (string-bool->racket-bool (bytes->string/utf-8 (response-body response)))))
 
