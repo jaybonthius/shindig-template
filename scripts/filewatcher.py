@@ -9,10 +9,9 @@ from watchdog.observers.polling import PollingObserver
 
 # File patterns to watch
 WATCH_PATTERNS = [
-    "pollen/**/*.html",
     "pollen/**/*.html.p",
     "pollen/**/*.pm",
-    "./**/*.rkt",
+    "rkt/**/*.rkt",
     "./media/images/tldraw/*.tldr",
 ]
 
@@ -20,22 +19,15 @@ WATCH_PATTERNS = [
 # Use lists to store multiple commands
 # Use {file} as a placeholder for the filename
 EXTENSIONS = {
-    ".html": [
-        "poetry run djlint {file} --reformat",
-    ],
     ".html.p": [
-        "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
-        "poetry run djlint {file} --reformat",
         "raco pollen render {file}",
     ],
     ".pm": [
-        "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
         "raco pollen render {file}",
     ],
     ".rkt": [
         "raco fmt -i --width 88 {file}",
-        # "python -m scripts.tailwind_sorter.tailwind_sorter --file_path {file}",
-        # "raco pollen render pollen",
+        # "raco pollen reset && raco pollen render pollen",
     ],
     ".tldr": [
         "pnpm tldraw export {file} --transparent --output {file_dir}/light.svg",
@@ -83,7 +75,7 @@ if __name__ == "__main__":
     event_handler = FileChangeHandler()
     observer = (
         PollingObserver()
-    )  # Use PollingObserver for better cross-platform support
+    )
 
     for watch_dir in get_watch_dirs():
         observer.schedule(event_handler, watch_dir, recursive=True)

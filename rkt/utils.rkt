@@ -1,7 +1,7 @@
 #lang racket/base
 
 (require racket/match
-        db
+         db
          json
          pollen/decode
          pollen/render
@@ -20,8 +20,7 @@
 
 (define (validate-uid uid)
   (when (or (not (string? uid)) (string=? uid ""))
-    (raise-argument-error 'fr-field "non-empty string" uid))
-)
+    (raise-argument-error 'fr-field "non-empty string" uid)))
 
 (define (quote-xexpr-attributes xexpr)
   (match xexpr
@@ -59,7 +58,8 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n"
+                                         (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
@@ -81,7 +81,6 @@
 
       (printf "Database operations completed successfully.\n"))))
 
-
 (define (upsert-free-response field-id question-id answer)
   (define current-dir (current-directory))
   (define db-file (build-path current-dir "free-response-questions.sqlite"))
@@ -91,7 +90,8 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n"
+                                         (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn

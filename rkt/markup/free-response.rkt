@@ -28,7 +28,8 @@
       (map (lambda (x) (if (procedure? x) (x) x)) content)))
 
   (define question-content
-    `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))
+    `(div (div ,@evaluated-content)
+          (button [(class "btn") (id ,buttion-id)] "Submit!")))
 
   ; TODO: uncomment this to enable HTMX loading
   ; (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
@@ -37,21 +38,23 @@
 
   question-content)
 
-(define (fr-field #:uid [uid ""] #:answer [answer ""] #:placeholders [placeholders (hash)] . content)
+(define (fr-field #:uid [uid ""]
+                  #:answer [answer ""]
+                  #:placeholders [placeholders (hash)]
+                  . content)
   (lambda ()
     (validate-uid uid)
     (define field-uid (string-append "fr-field-" uid))
     (define field-style-uid (string-append "fr-style-" uid))
     (define buttion-id (string-append "fr-button-" (question-id-param)))
 
-    (displayln (format "Question ID: ~a" (question-id-param)))
-
     (upsert-free-response uid (question-id-param) answer)
 
     `(div [(hx-get ,(format "/free-response/~a" uid))
            (hx-trigger "load")
            (hx-swap "none")
-           (hx-select-oob ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
+           (hx-select-oob
+            ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
            (hx-ext "debug")]
           (math-field [(id ,field-uid)
                        (name ,field-uid)

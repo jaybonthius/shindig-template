@@ -22,6 +22,8 @@ Here comes a question!
     ◊fr-field[#:uid "sF1wkj-ZJRU_G4beOF18c" #:answer "6"]{}
 }
 
-This is other information.
+◊free-response[#:uid "auMmVt4zxnL-bCR7StSzW"]{
+    Do you know the answer to this? (Hint: it's 0)
 
-◊span[#:class "text-red-500"]{This should be red}
+    ◊fr-field[#:uid "JwVevKrgnyz7YTTjJR2Sn" #:answer "0"]{}
+}

@@ -2,4 +2,4 @@
 
 ◊(define-meta title     "Index")
 
-Holy shit it's the index!!!
+Wow look at this!
