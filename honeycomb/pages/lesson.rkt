@@ -12,6 +12,8 @@
          racket/pretty
          racket/set
          racket/list
+         net/uri-codec
+         (only-in net/http-easy post response-status-code response-body response-close!)
          racket/string
          json
          db
@@ -77,14 +79,17 @@
   (define is-post-request (equal? (request-method req) #"POST"))
 
   (define-values (correct-answers selected-answers)
-    (if is-post-request
-        (process-post-request req question-id)
-        (values null null)))
+    (if is-post-request (process-post-request req question-id) (values null null)))
 
   (define file-path (format "pollen/question/~a.html" question-id))
   (define rendered-page
-    (response/output
-     (λ (op) (display (question-template file-path 'correct-answers correct-answers 'selected-answers selected-answers) op))))
+    (response/output (λ (op)
+                       (display (question-template file-path
+                                                   'correct-answers
+                                                   correct-answers
+                                                   'selected-answers
+                                                   selected-answers)
+                                op))))
 
   rendered-page)
 
@@ -96,11 +101,10 @@
       answers))
 
   (define db-connection (sqlite3-connect #:database "pollen/questions.sqlite"))
-  (define correct-answers 
-    (list->set (string->jsexpr 
-                (query-value db-connection 
-                             "select answer from questions where id = $1" 
-                             question-id))))
+  (define correct-answers
+    (list->set (string->jsexpr (query-value db-connection
+                                            "select answer from questions where id = $1"
+                                            question-id))))
 
   (values correct-answers selected-answers))
 
@@ -109,3 +113,70 @@
     (when (< (+ i 1) (length args))
       (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1)))))
   (eval #`(include-template #:command-char #\● #,path)))
+
+; (define (check-free-response req)
+;   (define post-data (uri-decode (bytes->string/utf-8 (request-post-data/raw req))))
+
+;   (define latex (extract-value post-data "latex"))
+;   (define uuid (format "question-~a" (extract-value post-data "uuid")))
+
+;   (define db-connection (sqlite3-connect #:database "pollen/questions.sqlite"))
+;   (define correct-answer
+;     (string->jsexpr (query-value db-connection "select answer from questions where id = $1" uuid)))
+;   (define escaped-correct-answer (regexp-replace* #px"([$#%&])" correct-answer "\\\\\\1"))
+
+;   (define url "http://localhost:5200/compare")
+;   (define payload (hash 'latex1 escaped-correct-answer 'latex2 latex))
+;   (define response (post url #:json payload))
+;   (define is-correct (string-bool->racket-bool (bytes-string->string (response-body response))))
+
+;   (displayln (format "Is correct?: ~a" is-correct))
+
+;   (response-close! response)
+
+;   (define css 
+;     (if (equal? is-correct #t)
+;         `(style 
+;           ,(format "#~a {outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);}" uuid)
+;         )
+;         `(style 
+;           ,(format "#~a {outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);}" uuid)
+;         )
+;     )
+;   )
+
+;   (define server-response 
+;     (if (equal? is-correct #t)
+;         `(i ((class "fa-solid fa-circle-check text-green-500 text-xl")))
+;         `(i ((class "fa-solid fa-circle-xmark text-red-500 text-xl")))
+;     )
+;   )
+
+;   ; log the css we're sending 
+;   (displayln css)
+
+;   (define rendered-page
+;     (response/xexpr css
+;     ))
+                       
+
+;   rendered-page)
+
+(define (extract-value data key)
+  (define pattern (string-append key "=([^&]+)"))
+  (define match (regexp-match pattern data))
+  (if match (cadr match) #f))
+
+
+; Function to convert byte string to regular string
+(define (bytes-string->string value)
+  (if (bytes? value)
+      (bytes->string/utf-8 value)
+      value))
+
+; Function to convert string boolean to Racket boolean
+(define (string-bool->racket-bool str-value)
+  (cond
+    [(equal? str-value "true") #t]
+    [(equal? str-value "false") #f]
+    [else (error "Invalid boolean string")]))

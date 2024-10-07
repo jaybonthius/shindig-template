@@ -2466,6 +2466,12 @@ html {
   margin-top: 0;
 }
 
+.mockup-phone .display {
+  overflow: hidden;
+  border-radius: 40px;
+  margin-top: -25px;
+}
+
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
   margin-left: auto;
@@ -2927,6 +2933,16 @@ html:has(.drawer-toggle:checked) {
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgb(34 197 94 / var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -2934,6 +2950,16 @@ html:has(.drawer-toggle:checked) {
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+math-view {
+  outline: 2px dashed lightgray;
+  border-radius: 4px;
+  /* background: rgba(251,	187,	182, .1);  */
+}
+
+math-field:not(:defined) {
+  display: none;
 }
 
 @font-face {

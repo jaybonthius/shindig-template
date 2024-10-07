@@ -19,10 +19,18 @@
   "scripts": {
     "build": "NODE_ENV=production node build.mjs",
     "lint": "tsc -noEmit -p .",
-    "watch": "node build.mjs"
+    "watch": "node build.mjs",
+    "app": "node app.js"
   },
   "dependencies": {
+    "@cortex-js/compute-engine": "^0.25.1",
+    "@fastify/cors": "^10.0.1",
+    "@fastify/formbody": "^8.0.1",
+    "@fastify/static": "^8.0.1",
+    "cors": "^2.8.5",
     "daisyui": "^4.12.10",
+    "express": "^4.21.0",
+    "fastify": "^5.0.0",
     "theme-change": "^2.5.0",
     "unpoly": "^3.8.0"
   },

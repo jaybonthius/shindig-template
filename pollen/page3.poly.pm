@@ -1,39 +1,27 @@
 #lang pollen
 
-○(require math)
+◊(define-meta title     "Page 3")
 
-○(define-meta title     "Page 3")
+Here comes a question!
 
-○new-question[#:uuid "dbcf89c7-839c-424c-ba8e-048267c5e305" #:multichoice #t]{
-    This is a multiple-choice question
+◊free-response[#:uid "YdPhBaK5eigz6xLy8_Ozh"]{
+    What is the square-root of 3?
 
-    ○option[#:id "1" #:correct #t]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "2"]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "3"]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "4" #:correct #t]{
-        Lorem ipsum dolor sit amet
-    }
+    ◊fr-field[#:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "\\sqrt{3}"]{}
+
+    What is the square-root of 16?
+
+    ◊fr-field[#:uid "AdAG-dcDP_HhzDTtDJN_n" #:answer "4"]{}
+
+    What is the square-root of 25?
+
+    ◊fr-field[#:uid "nNne1PkQ7KRok_wfre5WH" #:answer "5"]{}
+
+    What is the square-root of 36?
+
+    ◊fr-field[#:uid "sF1wkj-ZJRU_G4beOF18c" #:answer "6"]{}
 }
 
-○new-question[#:uuid "33050d6d-05ff-4c6c-8b93-b84b3f8c0dcd"]{
-    This is a multiple-choice question
+This is other information.
 
-    ○option[#:id "1" #:correct #t]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "2"]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "3"]{
-        Lorem ipsum dolor sit amet
-    }
-    ○option[#:id "4"]{
-        Lorem ipsum dolor sit amet
-    }
-}
+◊span[#:class "text-red-500"]{This should be red}

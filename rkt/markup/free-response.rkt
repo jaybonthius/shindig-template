@@ -1,0 +1,63 @@
+#lang racket/base
+
+(require db
+         json
+         pollen/decode
+         pollen/render
+         pollen/template
+         racket/file
+         racket/list
+         racket/pretty
+         racket/set
+         racket/string
+         xml
+         "sqlite.rkt"
+         "../utils.rkt")
+
+(provide (all-defined-out))
+
+(define question-id-param (make-parameter ""))
+
+(define (free-response #:uid (uid "") . content)
+  (validate-uid uid)
+  (define question-id (string-append "fr-question-" uid))
+  (define buttion-id (string-append "fr-button-" uid))
+
+  (define evaluated-content
+    (parameterize ([question-id-param uid])
+      (map (lambda (x) (if (procedure? x) (x) x)) content)))
+
+  (define question-content
+    `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))
+
+  ; TODO: uncomment this to enable HTMX loading
+  ; (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
+  ; `(div ((id ,uid) (hx-get ,(format "/free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
+  ;       "Loading...")
+
+  question-content)
+
+(define (fr-field #:uid [uid ""] #:answer [answer ""] #:placeholders [placeholders (hash)] . content)
+  (lambda ()
+    (validate-uid uid)
+    (define field-uid (string-append "fr-field-" uid))
+    (define field-style-uid (string-append "fr-style-" uid))
+    (define buttion-id (string-append "fr-button-" (question-id-param)))
+
+    (displayln (format "Question ID: ~a" (question-id-param)))
+
+    (upsert-free-response uid (question-id-param) answer)
+
+    `(div [(hx-get ,(format "/free-response/~a" uid))
+           (hx-trigger "load")
+           (hx-swap "none")
+           (hx-select-oob ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
+           (hx-ext "debug")]
+          (math-field [(id ,field-uid)
+                       (name ,field-uid)
+                       (hx-post ,(format "/free-response/~a" uid))
+                       (hx-trigger ,(format "click from:#~a" buttion-id))
+                       (hx-target ,(format "#~a" field-style-uid))
+                       (hx-swap "innerHTML")
+                       (style "display: block")])
+          (style [(id ,field-style-uid)]))))

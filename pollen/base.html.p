@@ -7,8 +7,9 @@
         <meta name="keywords" content="keyword1, keyword2, keyword3" />
         <title>Honeycomb</title>
         <link href="../static/css/output.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
-    <body class="antialiased leading-tight">
+    <body class="antialiased leading-tight" hx-boost="true" hx-ext="multi-swap">
         <div class="drawer" x-data="{ activePage: window.location.pathname }">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -98,6 +99,15 @@
         <script src="https://unpkg.com/htmx.org@1.9.10"
                 integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
                 crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"></script>
+        <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+        <script defer type="module">
+            window.addEventListener('DOMContentLoaded', () => 
+              import('//unpkg.com/mathlive?module').then((mathlive) => 
+                mathlive.renderMathInDocument()
+              )
+            );
+        </script>
     </body>
 </html>
