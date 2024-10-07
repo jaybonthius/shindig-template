@@ -9,25 +9,12 @@
          racket/runtime-path
          web-server/http/id-cookie)
 
-;; locales ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(provide
- reload-locales!)
-
-(define-runtime-path locales-path
-  (build-path 'up "resources" "locales"))
+;; pollen ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide pollen-path)
 
 (define-runtime-path pollen-path
   (simplify-path (path->complete-path (build-path 'up "pollen"))))
-
-(current-locale-specifier 'honeycomb)
-(load-locales! locales-path)
-
-(define (reload-locales!)
-  (load-locales! locales-path))
-
 
 ;; config values ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

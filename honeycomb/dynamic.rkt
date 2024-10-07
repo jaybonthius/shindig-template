@@ -116,7 +116,6 @@
     (stop-logger)))
 
 (define (before-reload)
-  (config:reload-locales!)
   (schema-registry-allow-conflicts? #t))
 
 

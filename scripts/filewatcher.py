@@ -11,7 +11,7 @@ from watchdog.observers.polling import PollingObserver
 WATCH_PATTERNS = [
     "pollen/**/*.html.p",
     "pollen/**/*.pm",
-    "rkt/**/*.rkt",
+    "./**/*.rkt",
     "./media/images/tldraw/*.tldr",
 ]
 

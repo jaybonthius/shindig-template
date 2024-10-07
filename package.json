@@ -17,9 +17,6 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "build": "NODE_ENV=production node build.mjs",
-    "lint": "tsc -noEmit -p .",
-    "watch": "node build.mjs",
     "app": "node app.js"
   },
   "dependencies": {

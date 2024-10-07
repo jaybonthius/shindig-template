@@ -7,7 +7,7 @@ const fastify = Fastify({
   }
 });
 
-const port = process.env.PORT || 3000;
+const port = 5200;
 const ce = new ComputeEngine();
 
 function compareLatexExpressions(latex1, latex2) {

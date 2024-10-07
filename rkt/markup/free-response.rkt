@@ -46,6 +46,7 @@
     (validate-uid uid)
     (define field-uid (string-append "fr-field-" uid))
     (define field-style-uid (string-append "fr-style-" uid))
+    (define field-alerts-id (string-append "fr-alerts-" uid))
     (define buttion-id (string-append "fr-button-" (question-id-param)))
 
     (upsert-free-response uid (question-id-param) answer)
@@ -60,7 +61,11 @@
                        (name ,field-uid)
                        (hx-post ,(format "/free-response/~a" uid))
                        (hx-trigger ,(format "click from:#~a" buttion-id))
-                       (hx-target ,(format "#~a" field-style-uid))
-                       (hx-swap "innerHTML")
+                       ;  (hx-target ,(format "#~a" field-style-uid))
+                       ;  (hx-swap "innerHTML")
+                       (hx-select-oob ,(format "#~a:textContent,#~a:innerHTML"
+                                               field-style-uid
+                                               field-alerts-id))
                        (style "display: block")])
-          (style [(id ,field-style-uid)]))))
+          (style [(id ,field-style-uid)])
+          (div [(id ,field-alerts-id)]))))

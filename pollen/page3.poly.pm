@@ -9,13 +9,13 @@ Here comes a question!
 
     ◊fr-field[#:uid "zZWCtZ7J3FGeC7l2awieT" #:answer "\\sqrt{3}"]{}
 
-    What is the square-root of 16?
+    ◊; What is the square-root of 16?
 
-    ◊fr-field[#:uid "AdAG-dcDP_HhzDTtDJN_n" #:answer "4"]{}
+    ◊; ◊fr-field[#:uid "AdAG-dcDP_HhzDTtDJN_n" #:answer "4"]{}
 
-    What is the square-root of 25?
+    ◊; What is the square-root of 25?
 
-    ◊fr-field[#:uid "nNne1PkQ7KRok_wfre5WH" #:answer "5"]{}
+    ◊; ◊fr-field[#:uid "nNne1PkQ7KRok_wfre5WH" #:answer "5"]{}
 
     What is the square-root of 36?
 
