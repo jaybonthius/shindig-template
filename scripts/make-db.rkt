@@ -3,13 +3,11 @@
 (require koyo/haml
          racket/path
          racket/file
-         db
-         )
-
+         db)
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
-                                (printf "Error creating empty file: ~a\n" (exn-message e))
+                               (printf "Error creating empty file: ~a\n" (exn-message e))
                                (void)
                                #f)])
     (call-with-output-file path (lambda (out) (void)))
@@ -32,12 +30,12 @@
 
 (define conn (try-connect db-file))
 (when new-file-created
-    (with-handlers ([exn:fail? (lambda (e)
-                                    (printf "Error during database operations: ~a\n" (exn-message e)))])
+  (with-handlers ([exn:fail? (lambda (e)
+                               (printf "Error during database operations: ~a\n" (exn-message e)))])
 
-        (query-exec
-        conn
-        "CREATE TABLE IF NOT EXISTS free_response_submissions (
+    (query-exec
+     conn
+     "CREATE TABLE IF NOT EXISTS free_response_submissions (
                 field_id TEXT NOT NULL,
                 user_id TEXT NOT NULL,
                 question_id TEXT,
@@ -46,8 +44,6 @@
                 PRIMARY KEY (field_id, user_id)
             )")
 
-        (disconnect conn)
+    (disconnect conn)
 
-        (printf "Table created successfully.\n"))
-        
-        )
+    (printf "Table created successfully.\n")))

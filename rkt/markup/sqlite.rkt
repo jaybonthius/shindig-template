@@ -5,9 +5,9 @@
 (provide (all-defined-out))
 
 (define (try-create-empty-file path)
-  (with-handlers ([exn:fail? (lambda (e) 
-                              ;  (printf "Error creating empty file: ~a\n" (exn-message e))
-                              (void)
+  (with-handlers ([exn:fail? (lambda (e)
+                               ;  (printf "Error creating empty file: ~a\n" (exn-message e))
+                               (void)
                                #f)])
     (call-with-output-file path (lambda (out) (void)))
     (printf "Successfully created empty file.\n")

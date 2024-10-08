@@ -5,8 +5,7 @@
 (provide (all-defined-out))
 
 (define-syntax-rule (define-heading heading-name tag)
-  (define heading-name
-    (default-tag-function tag #:class (symbol->string 'heading-name))))
+  (define heading-name (default-tag-function tag #:class (symbol->string 'heading-name))))
 
 (define-heading chapter 'h1)
 (define-heading section 'h2)

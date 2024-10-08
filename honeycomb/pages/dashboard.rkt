@@ -5,12 +5,7 @@
          web-server/http
          "../components/template.rkt")
 
-(provide
- (contract-out
-  [dashboard-page (-> request? response?)]))
+(provide (contract-out [dashboard-page (-> request? response?)]))
 
 (define (dashboard-page _req)
-  (page
-   (haml
-    (.container
-     (:h1 "Hello World!")))))
+  (page (haml (.container (:h1 "Hello World!")))))

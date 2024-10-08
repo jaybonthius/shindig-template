@@ -7,19 +7,12 @@
     [(pair? expr)
      (cond
        ;; Handle unquote expressions
-       [(eq? (car expr) 'unquote)
-        (let ([val (cadr expr)])
-          (format "~s" val))]
+       [(eq? (car expr) 'unquote) (let ([val (cadr expr)]) (format "~s" val))]
        ;; Handle quote expressions
-       [(eq? (car expr) 'quote)
-        ;; Process the quoted content directly
-        (let ([quoted-expr (cadr expr)])
-          (process-expr quoted-expr))]
+       ;; Process the quoted content directly
+       [(eq? (car expr) 'quote) (let ([quoted-expr (cadr expr)]) (process-expr quoted-expr))]
        ;; Recursively process the list
-       [else
-        (string-append "("
-                       (string-join (map process-expr expr) " ")
-                       ")")])]
+       [else (string-append "(" (string-join (map process-expr expr) " ") ")")])]
     ;; Handle strings
     [(string? expr) (format "\"~a\"" expr)]
     ;; Handle symbols

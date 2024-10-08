@@ -134,31 +134,30 @@
 
 ;   (response-close! response)
 
-;   (define css 
+;   (define css
 ;     (if (equal? is-correct #t)
-;         `(style 
+;         `(style
 ;           ,(format "#~a {outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);}" uuid)
 ;         )
-;         `(style 
+;         `(style
 ;           ,(format "#~a {outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);}" uuid)
 ;         )
 ;     )
 ;   )
 
-;   (define server-response 
+;   (define server-response
 ;     (if (equal? is-correct #t)
 ;         `(i ((class "fa-solid fa-circle-check text-green-500 text-xl")))
 ;         `(i ((class "fa-solid fa-circle-xmark text-red-500 text-xl")))
 ;     )
 ;   )
 
-;   ; log the css we're sending 
+;   ; log the css we're sending
 ;   (displayln css)
 
 ;   (define rendered-page
 ;     (response/xexpr css
 ;     ))
-                       
 
 ;   rendered-page)
 
@@ -167,12 +166,9 @@
   (define match (regexp-match pattern data))
   (if match (cadr match) #f))
 
-
 ; Function to convert byte string to regular string
 (define (bytes-string->string value)
-  (if (bytes? value)
-      (bytes->string/utf-8 value)
-      value))
+  (if (bytes? value) (bytes->string/utf-8 value) value))
 
 ; Function to convert string boolean to Racket boolean
 (define (string-bool->racket-bool str-value)

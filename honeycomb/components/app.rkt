@@ -15,72 +15,45 @@
          "mail.rkt"
          "user.rkt")
 
-(provide
- make-app
- app?
- app-dispatcher)
+(provide make-app
+         app?
+         app-dispatcher)
 
-(struct app (dispatcher)
-  #:transparent)
+(struct app (dispatcher) #:transparent)
 
-(define/contract (make-app auth broker flashes mailer _migrator sessions users
+(define/contract (make-app auth
+                           broker
+                           flashes
+                           mailer
+                           _migrator
+                           sessions
+                           users
                            #:debug? [debug? #f]
                            #:memory-threshold [memory-threshold (* 1 1024 1024 1024)]
                            #:static-path [static-path #f]
-                           #:media-path [media-path #f]
-                           )
+                           #:media-path [media-path #f])
   (->* [auth-manager? broker? flash-manager? mailer? migrator? session-manager? user-manager?]
        [#:debug? boolean?
         #:memory-threshold exact-positive-integer?
         #:static-path (or/c #f path-string?)
-        #:media-path (or/c #f path-string?)
-        ]
+        #:media-path (or/c #f path-string?)]
        app?)
   (define-values (dispatch reverse-uri req-roles)
     (dispatch-rules+roles
-      [("")
-      index-page]
-
-     [("dashboard")
-      #:roles (user)
-      dashboard-page]
-
-    [("lesson" (string-arg))
-      lesson-page]
-
-    [("question_detail" (string-arg))
-      question-detail]
-
-    [("check_answers" (string-arg))
-      #:method "post"
-      question-detail]
-
-    [("free-response" (string-arg))
-      #:roles (user)
-      get-free-response]
-
-    [("free-response" (string-arg))
-      #:method "post"
-      #:roles (user)
-      post-free-response]
-
-     [("login")
-      (login-page auth)]
-
-     [("logout")
-      (logout-page auth)]
-
-     [("password-reset")
-      (request-password-reset-page mailer users)]
-
-     [("password-reset" (integer-arg) (string-arg))
-      (password-reset-page users)]
-
-     [("signup")
-      (signup-page auth mailer users)]
-
-     [("verify" (integer-arg) (string-arg))
-      (verify-page users)]))
+     [("") index-page]
+     [("dashboard") #:roles (user) dashboard-page]
+     [("lesson" (string-arg)) lesson-page]
+     [("question_detail" (string-arg)) question-detail]
+     [("check_answers" (string-arg)) #:method "post" question-detail]
+     [("get-free-response" (string-arg)) get-free-response-container]
+     [("free-response" (string-arg)) #:roles (user) get-free-response-field]
+     [("free-response" (string-arg)) #:method "post" #:roles (user) post-free-response-field]
+     [("login") (login-page auth)]
+     [("logout") (logout-page auth)]
+     [("password-reset") (request-password-reset-page mailer users)]
+     [("password-reset" (integer-arg) (string-arg)) (password-reset-page users)]
+     [("signup") (signup-page auth mailer users)]
+     [("verify" (integer-arg) (string-arg)) (verify-page users)]))
 
   (define ((wrap-params handler) req)
     (parameterize ([current-broker broker]
@@ -103,14 +76,12 @@
         ((wrap-errors debug?))
         (wrap-params)))
 
-  (define manager
-    (make-threshold-LRU-manager (stack expired-page) memory-threshold))
+  (define manager (make-threshold-LRU-manager (stack expired-page) memory-threshold))
 
   (define dispatchers
-    (list
-     (and media-path (make-static-dispatcher media-path))
-     (and static-path (make-static-dispatcher static-path))
-     (dispatch/servlet #:manager manager (stack dispatch))
-     (dispatch/servlet #:manager manager (stack not-found-page))))
+    (list (and media-path (make-static-dispatcher media-path))
+          (and static-path (make-static-dispatcher static-path))
+          (dispatch/servlet #:manager manager (stack dispatch))
+          (dispatch/servlet #:manager manager (stack not-found-page))))
 
   (app (apply sequencer:make (filter-map values dispatchers))))

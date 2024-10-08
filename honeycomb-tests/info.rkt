@@ -3,14 +3,13 @@
 (define collection "tests")
 
 (define deps '())
-(define build-deps '("base"
-                     "component-lib"
-                     "db-lib"
-                     "koyo-lib"
-                     "koyo-north"
-                     "threading-lib"
-                     "rackunit-lib"
-
-                     "honeycomb"))
+(define build-deps
+  '("base" "component-lib"
+           "db-lib"
+           "koyo-lib"
+           "koyo-north"
+           "threading-lib"
+           "rackunit-lib"
+           "honeycomb"))
 
 (define update-implies '("honeycomb"))

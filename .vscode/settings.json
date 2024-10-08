@@ -1,8 +1,14 @@
 {
+  "material-icon-theme.files.associations": {
+      "Procfile.preprocess": "heroku",
+      "*.pm": "racket",
+      "*.p": "racket",
+  },
   "liveServer.settings.port": 7070,
   "files.associations": {
     "*.css": "tailwindcss",
-    "*.html.p": "html"
+    "*.html.p": "html",
+    "Profile.*": "procfile"
   },
   "tailwindCSS.includeLanguages": {
     "racket": "txt",

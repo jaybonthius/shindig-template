@@ -28,20 +28,16 @@
       (map (lambda (x) (if (procedure? x) (x) x)) content)))
 
   (define question-content
-    `(div (div ,@evaluated-content)
-          (button [(class "btn") (id ,buttion-id)] "Submit!")))
+    `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))
 
   ; TODO: uncomment this to enable HTMX loading
-  ; (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
-  ; `(div ((id ,uid) (hx-get ,(format "/free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
-  ;       "Loading...")
+  (render-x-expression (quote-xexpr-attributes question-content) "free-response" uid)
+  `(div ((hx-get ,(format "/get-free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
+        "Loading...")
+  ; question-content
+  )
 
-  question-content)
-
-(define (fr-field #:uid [uid ""]
-                  #:answer [answer ""]
-                  #:placeholders [placeholders (hash)]
-                  . content)
+(define (fr-field #:uid [uid ""] #:answer [answer ""] #:placeholders [placeholders (hash)] . content)
   (lambda ()
     (validate-uid uid)
     (define field-uid (string-append "fr-field-" uid))
@@ -54,18 +50,16 @@
     `(div [(hx-get ,(format "/free-response/~a" uid))
            (hx-trigger "load")
            (hx-swap "none")
-           (hx-select-oob
-            ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
+           (hx-select-oob ,(format "#~a:textContent,#~a:textContent" field-uid field-style-uid))
            (hx-ext "debug")]
-          (math-field [(id ,field-uid)
-                       (name ,field-uid)
-                       (hx-post ,(format "/free-response/~a" uid))
-                       (hx-trigger ,(format "click from:#~a" buttion-id))
-                       ;  (hx-target ,(format "#~a" field-style-uid))
-                       ;  (hx-swap "innerHTML")
-                       (hx-select-oob ,(format "#~a:textContent,#~a:innerHTML"
-                                               field-style-uid
-                                               field-alerts-id))
-                       (style "display: block")])
+          (math-field
+           [(id ,field-uid)
+            (name ,field-uid)
+            (hx-post ,(format "/free-response/~a" uid))
+            (hx-trigger ,(format "click from:#~a" buttion-id))
+            ;  (hx-target ,(format "#~a" field-style-uid))
+            ;  (hx-swap "innerHTML")
+            (hx-select-oob ,(format "#~a:textContent,#~a:innerHTML" field-style-uid field-alerts-id))
+            (style "display: block")])
           (style [(id ,field-style-uid)])
           (div [(id ,field-alerts-id)]))))

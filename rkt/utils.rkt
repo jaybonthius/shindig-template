@@ -58,8 +58,7 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n"
-                                         (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
@@ -90,8 +89,7 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n"
-                                         (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
