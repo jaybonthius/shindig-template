@@ -22,6 +22,10 @@ run:
 pollen-server:
 	raco chief start -f Procfile.preprocess
 
+zap-sqlite:
+	find . -name "*.sqlite" -type f -delete
+	racket scripts/make-db.rkt
+
 zap:
 	find pollen -name "*.html" -type f -delete
 	find pollen -name "temp" -type d -exec rm -rf {} +
