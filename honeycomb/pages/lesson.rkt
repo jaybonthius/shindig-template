@@ -1,25 +1,15 @@
 #lang racket/base
 
-(require koyo/haml
-         racket/contract/base
+(require racket/contract/base
          (for-syntax racket/base) ; to make command char work
-         web-server/http
          web-server/servlet
          web-server/templates
          web-server/http/request-structs
-         racket/path
-         racket/runtime-path
-         racket/pretty
          racket/set
-         racket/list
-         net/uri-codec
          (only-in net/http-easy post response-status-code response-body response-close!)
          racket/string
          json
-         db
-         xml
-         (prefix-in config: "../config.rkt")
-         "../components/template.rkt")
+         db)
 
 (provide (contract-out [lesson-page (-> request? string? response?)]
                        [index-page (-> request? response?)]
@@ -36,7 +26,8 @@
 
   (define file-path "pollen/index.html")
 
-  (define rendered-page (response/output (λ (op) (display (dynamic-include-template file-path) op))))
+  (define rendered-page
+    (response/output (λ (op) (display (dynamic-include-template file-path) op))))
   (define (get-response-content response)
     (let ([output (open-output-string)])
       ((response-output response) output)
@@ -64,7 +55,8 @@
 
   (define file-path (format "pollen/~a.html" lesson-name))
 
-  (define rendered-page (response/output (λ (op) (display (dynamic-include-template file-path) op))))
+  (define rendered-page
+    (response/output (λ (op) (display (dynamic-include-template file-path) op))))
   (define (get-response-content response)
     (let ([output (open-output-string)])
       ((response-output response) output)

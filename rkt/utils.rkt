@@ -2,16 +2,9 @@
 
 (require db
          json
-         pollen/decode
          pollen/render
-         pollen/template
          racket/file
-         racket/list
          racket/match
-         racket/pretty
-         racket/set
-         racket/string
-         xml
          "markup/sqlite.rkt")
 
 (provide (all-defined-out))
@@ -58,7 +51,8 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n"
+                                         (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
@@ -89,7 +83,8 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n"
+                                         (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
