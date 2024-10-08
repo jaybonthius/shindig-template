@@ -19,14 +19,14 @@ We begin with a simple problem: a ball is tossed straight up in the air. How is 
 
 ◊section{Position and average velocity}
 
-Any moving object has a ◊index{position} that can be considered a function of ◊emph{time}. When the motion is along a straight line, the position is given by a single variable, which we denote by ◊${s(t)}.
+Any moving object has a ◊index{position} that can be considered a function of ◊emph{time}. When the motion is along a straight line, the position is given by a single variable, which we denote by ◊im{s(t)}.
 
-For example, ◊${s(t)} might give the mile marker of a car traveling on a straight highway at time ◊${t} in hours. Similarly, the function ◊${s} described in ◊ref{pa-1-1} is a position function, where position is measured vertically relative to the ground.
+For example, ◊im{s(t)} might give the mile marker of a car traveling on a straight highway at time ◊im{t} in hours. Similarly, the function ◊im{s} described in ◊ref{pa-1-1} is a position function, where position is measured vertically relative to the ground.
 
 In general, we make the following definition:
 
 ◊definition[#:name "Average Velocity"]{
-    For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊${t=a} to ◊${t=b}, denoted ◊${AV_{[a,b]}}, is given by the formula
+    For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊im{t=a} to ◊im{t=b}, denoted ◊im{AV_{[a,b]}}, is given by the formula
 
-    ◊$${AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}
+    ◊dm{AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}
 }

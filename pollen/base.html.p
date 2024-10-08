@@ -31,7 +31,12 @@
                             </label>
                         </div>
                         <div class="flex-1">
-                            <a class="btn btn-ghost text-xl">Honeycomb</a>
+                            <a class="btn btn-ghost text-xl" href="/" 
+                            hx-get="/" 
+                            hx-target="#main" 
+                            hx-push-url="true"
+                            @click="activePage = '/'"
+                            :class="{ 'active': activePage === '/' }">Honeycomb</a>
                         </div>
                         <div class="flex-none">
                             <button class="btn btn-square btn-ghost">
@@ -92,6 +97,14 @@
                            hx-push-url="true"
                            @click="activePage = '/lesson/page3'"
                            :class="{ 'active': activePage === '/lesson/page3' }">Page 3</a>
+                    </li>
+                    <li>
+                        <a href="/lesson/how-do-we-measure-velocity" 
+                           hx-get="/lesson/how-do-we-measure-velocity" 
+                           hx-target="#main" 
+                           hx-push-url="true"
+                           @click="activePage = '/lesson/how-do-we-measure-velocity'"
+                           :class="{ 'active': activePage === '/lesson/page3' }">How do we measure velocity?</a>
                     </li>
                 </ul>
             </div>

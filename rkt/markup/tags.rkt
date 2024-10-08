@@ -29,3 +29,9 @@
 ;     )
 ;     (p ,@text))
 ; )
+
+(define (im math)
+  `(script [(type "math/tex; mode=text")] ,(format "\\(~a\\)" math)))
+
+(define (dm math)
+  `(div (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" math))))
