@@ -2,51 +2,68 @@
 
 (require file-watchers
          file/glob
-         racket/list
-         racket/path
-         racket/string
          racket/system
-         racket/async-channel)
+         racket/string)
 
-(define (glob->paths pattern)
-  (for/list ([p (in-directory ".")]
-             #:when (glob-match? pattern (path->string p)))
-    p))
+(define (path->basename path)
+  (let-values ([(dir name _) (split-path path)])
+    (path->string name)))
 
-(define (run-commands-for-file file-path commands)
-  (for ([cmd commands])
-    (define formatted-cmd (string-replace cmd "{filename}" (path->string file-path)))
-    (displayln (string-append "Running command: " formatted-cmd))
-    (system formatted-cmd)))
+(define (path->dirname path)
+  (let-values ([(dir name _) (split-path path)])
+    (path->string dir)))
 
-(define (watch-glob pattern commands)
-  (let ([current-paths (glob->paths pattern)]
-        [change-channel (make-async-channel)])
-    (let loop ([paths current-paths])
-      (watch paths (lambda (activity) (async-channel-put change-channel (caddr activity))))
-      (let process-changes ()
-        (define maybe-file-path (async-channel-try-get change-channel))
-        (when maybe-file-path
-          (when (glob-match? pattern (path->string maybe-file-path))
-            (displayln (format "Change detected for ~a" (path->string maybe-file-path)))
-            (run-commands-for-file maybe-file-path commands))
-          (process-changes)))
-      (sleep 1) ; Short sleep to prevent busy-waiting
-      (define new-paths (glob->paths pattern))
-      (when (not (equal? paths new-paths))
-        (displayln (format "New files detected for pattern: ~a" pattern))
-        (for ([new-path (set-subtract new-paths paths)])
-          (displayln (format "New file: ~a" (path->string new-path)))
-          (run-commands-for-file new-path commands)))
-      (loop new-paths))))
+(define (string-replace-all str replacements)
+  (foldl (λ (replacement acc) (string-replace acc (car replacement) (cdr replacement)))
+         str
+         replacements))
 
-(define glob-command-map
-  #hash(("pollen/*.pm" . ("raco pollen render {filename}" "echo 'Pollen file {filename} updated'"))
-        ("**/*.rkt" . ("raco fmt -i {filename}"))))
+(define (replace-variables command path)
+  (string-replace-all command
+                      (list (cons "{filename}" (path->string path))
+                            (cons "{basename}" (path->basename path))
+                            (cons "{dirname}" (path->dirname path)))))
 
-(define (start-watchers)
-  (for ([(glob commands) (in-hash glob-command-map)])
-    (thread (lambda () (watch-glob glob commands)))))
+(define rules
+  (hash
+   '("**.rkt" (add change))
+   (list "raco fmt -i {filename}" "echo 'Racket file reformatted {filename}'")
+   '("rkt/**.rkt" (add change))
+   (list "raco pollen reset" "raco pollen render" "echo 'Pollen files re-rendered'")
+   '("**.html.p" (add change))
+   (list "raco pollen reset" "raco pollen render" "echo 'Pollen files re-rendered'")
+   '("**.poly.pm" (add change))
+   (list "raco pollen render {filename}" "echo 'Pollen file rendered {filename}'")
+   '("**.tldr" (add change))
+   (list "pnpm tldraw export {filename} --transparent --output {dirname}/light.svg"
+         "pnpm tldraw export {filename} --transparent --output {dirname}/dark.svg --dark"
+         "pnpm tldraw export {filename} --transparent --output {dirname}/light.png --format png"
+         "pnpm tldraw export {filename} --transparent --output {dirname}/dark.png --format png --dark"
+         "echo 'tldraw file rendered'")))
 
-(start-watchers)
-(sync never-evt)
+(define (find-matching-rules path event-type)
+  (for/list ([(pattern+events commands) (in-hash rules)]
+             #:when (and (glob-match? (car pattern+events) path)
+                         (member event-type (cadr pattern+events))))
+    commands))
+
+(define (execute-commands commands path)
+  (for ([command commands])
+    (let ([formatted-command (replace-variables command path)]) (system formatted-command))))
+
+(define (handle-event event)
+  (match event
+    [(list 'robust type path)
+     (let ([matching-commands (find-matching-rules path type)])
+       (when (not (null? matching-commands))
+         (for-each (λ (commands) (execute-commands commands path)) matching-commands)))]
+    [_ (void)]))
+
+(define watcher-thread
+  (watch (list (current-directory)) handle-event void (λ (path) (robust-watch path #:batch? #f))))
+
+(printf "Watching directory: ~a~n" (current-directory))
+(printf "Press Ctrl+C to stop...~n")
+
+(with-handlers ([exn:break? (λ (e) (printf "Stopping watcher...~n"))])
+  (sync watcher-thread))
