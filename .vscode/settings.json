@@ -29,7 +29,7 @@
     "inlineFold.maskChar": "◦◦◦"
   },
   "[pollen-markup]": {
-    "inlineFold.regex": "class\\s*[\"'](.*?)[\"']",
+    "inlineFold.regex": "uid\\s*[\"'](.*?)[\"']",
     "inlineFold.unfoldedOpacity": 1,
     "inlineFold.regexFlags": "g",
     "inlineFold.regexGroup": 1,

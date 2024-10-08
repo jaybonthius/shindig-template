@@ -7,9 +7,9 @@
          racket/list
          threading
          web-server/dispatch
-         (prefix-in sequencer: web-server/dispatchers/dispatch-sequencer)
          web-server/managers/lru
          web-server/servlet-dispatch
+         (prefix-in sequencer: web-server/dispatchers/dispatch-sequencer)
          "../pages/all.rkt"
          "auth.rkt"
          "mail.rkt"

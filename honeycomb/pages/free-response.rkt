@@ -19,30 +19,24 @@
                        [get-free-response-container (-> request? string? response?)]))
 
 (define (try-create-empty-file path)
-  (with-handlers ([exn:fail?
-                   (lambda (e)
-                     ;  (printf "Error creating empty file: ~a\n" (exn-message e))
-                     (void)
-                     #f)])
+  (with-handlers ([exn:fail? (lambda (e)
+                               ;  (printf "Error creating empty file: ~a\n" (exn-message e))
+                               (void)
+                               #f)])
     (call-with-output-file path (lambda (out) (void)))
     (printf "Successfully created empty file.\n")
     #t))
 
 (define (try-connect db-path)
   (with-handlers ([exn:fail? (lambda (e)
-                               (printf "Error connecting to database: ~a\n"
-                                       (exn-message e))
+                               (printf "Error connecting to database: ~a\n" (exn-message e))
                                #f)])
     (printf "Attempting to connect to the database at: ~a\n" db-path)
     (define conn (sqlite3-connect #:database db-path))
     (printf "Successfully connected to the database.\n")
     conn))
 
-(define (upsert-free-response-submission field-id
-                                         user-id
-                                         question-id
-                                         submission
-                                         is-corrent)
+(define (upsert-free-response-submission field-id user-id question-id submission is-corrent)
   (define current-dir (current-directory))
   (define db-file (build-path current-dir "free-response-submissions.sqlite"))
   ; todo: have this be a separate thing upon local setup
@@ -54,8 +48,7 @@
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
-                                 (printf "Error during database operations: ~a\n"
-                                         (exn-message e)))])
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
       ; todo: have this be a separate thing upon local setup
       (query-exec
        conn
@@ -122,14 +115,12 @@
       [is-correct is-correct-style]
       [else is-not-correct-style]))
 
-  (define style
-    `(style [(id ,field-style-uid)] ,(string-append "#" field-uid style-content)))
+  (define style `(style [(id ,field-style-uid)] ,(string-append "#" field-uid style-content)))
 
   (define math-field `(math-field [(id ,field-uid)] ,latest-submission))
 
   (define response-full-input
-    (list (string->bytes/utf-8 (string-append (xexpr->string math-field)
-                                              (xexpr->string style)))))
+    (list (string->bytes/utf-8 (string-append (xexpr->string math-field) (xexpr->string style)))))
 
   (response/full 200 ; HTTP status code
                  #"OK" ; Status message
@@ -158,16 +149,14 @@
      (define style-tag `(style [(id ,field-style-id)] ""))
      (define alerts-tag
        `(div [(id ,alerts-id)]
-             (div [(role "alert") (class "alert alert-error")]
-                  "Your submission cannot be empty.")))
+             (div [(role "alert") (class "alert alert-error")] "Your submission cannot be empty.")))
      (response/full 200
                     #"OK"
                     (current-seconds)
                     #"text/plain"
                     '()
-                    (list (string->bytes/utf-8
-                           (string-append (xexpr->string style-tag)
-                                          (xexpr->string alerts-tag)))))]
+                    (list (string->bytes/utf-8 (string-append (xexpr->string style-tag)
+                                                              (xexpr->string alerts-tag)))))]
     [else (process-submission uid submission)]))
 
 (define (process-submission uid submission)
@@ -177,16 +166,13 @@
   (define field-alerts-id (string-append "fr-alerts-" uid))
   (define field-style-id (string-append "fr-style-" uid))
   (define url "http://localhost:5200/compare")
-  (define db-connection
-    (sqlite3-connect #:database "pollen/free-response-questions.sqlite"))
+  (define db-connection (sqlite3-connect #:database "pollen/free-response-questions.sqlite"))
   (define is-corrent
     (let* ([correct-answer-latex
-            (query-value
-             db-connection
-             "select answer from free_response_questions where field_id = $1"
-             uid)]
-           [correct-answer-latex
-            (regexp-replace* #px"([$#%&])" correct-answer-latex "\\\\\\1")]
+            (query-value db-connection
+                         "select answer from free_response_questions where field_id = $1"
+                         uid)]
+           [correct-answer-latex (regexp-replace* #px"([$#%&])" correct-answer-latex "\\\\\\1")]
            [payload (hash 'latex1 correct-answer-latex 'latex2 submission)]
            [response (post url #:json payload)])
 
@@ -198,26 +184,22 @@
   (upsert-free-response-submission uid username "" submission is-corrent)
 
   (define (correct-style-tag uid)
-    (string-append
-     (string-append "#" uid " {")
-     "outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);"
-     "}"))
+    (string-append (string-append "#" uid " {")
+                   "outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);"
+                   "}"))
 
   (define (incorrect-style-tag uid)
-    (string-append
-     (string-append "#" uid " {")
-     "outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);"
-     "}"))
+    (string-append (string-append "#" uid " {")
+                   "outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);"
+                   "}"))
 
   (define style-tag
-    `(style
-      [(id ,field-style-id)]
-      ,(if is-corrent (correct-style-tag field-uid) (incorrect-style-tag field-uid))))
+    `(style [(id ,field-style-id)]
+            ,(if is-corrent (correct-style-tag field-uid) (incorrect-style-tag field-uid))))
 
   (define response-full-input
-    (list (string->bytes/utf-8
-           (string-append (xexpr->string style-tag)
-                          (xexpr->string `(div [(id ,field-alerts-id)] ""))))))
+    (list (string->bytes/utf-8 (string-append (xexpr->string style-tag)
+                                              (xexpr->string `(div [(id ,field-alerts-id)] ""))))))
 
   (response/full 200 ; HTTP status code
                  #"OK" ; Status message

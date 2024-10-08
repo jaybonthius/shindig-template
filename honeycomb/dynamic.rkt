@@ -14,11 +14,11 @@
          koyo/server
          koyo/session
          racket/runtime-path
+         (prefix-in config: "config.rkt")
          "components/app.rkt"
          "components/auth.rkt"
          "components/mail.rkt"
-         "components/user.rkt"
-         (prefix-in config: "config.rkt"))
+         "components/user.rkt")
 
 ;; System ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

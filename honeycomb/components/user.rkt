@@ -15,16 +15,15 @@
 
 (provide (schema-out user))
 
-(define-schema
- user
- ([id id/f #:primary-key #:auto-increment]
-  [username string/f #:contract non-empty-string? #:wrapper string-downcase]
-  [(password-hash "") string/f]
-  [(verified? #f) boolean/f]
-  [(verification-code (generate-random-string)) string/f #:contract non-empty-string?]
-  [(created-at (now/moment)) datetime-tz/f]
-  [(updated-at (now/moment)) datetime-tz/f])
- #:pre-persist-hook (lambda (u) (set-user-updated-at u (now/moment))))
+(define-schema user
+               ([id id/f #:primary-key #:auto-increment]
+                [username string/f #:contract non-empty-string? #:wrapper string-downcase]
+                [(password-hash "") string/f]
+                [(verified? #f) boolean/f]
+                [(verification-code (generate-random-string)) string/f #:contract non-empty-string?]
+                [(created-at (now/moment)) datetime-tz/f]
+                [(updated-at (now/moment)) datetime-tz/f])
+               #:pre-persist-hook (lambda (u) (set-user-updated-at u (now/moment))))
 
 (define (set-password um u p)
   (set-user-password-hash u (hasher-make-hash (user-manager-hasher um) p)))
@@ -47,28 +46,26 @@
 (provide exn:fail:user-manager?
          exn:fail:user-manager:username-taken?
 
-         (contract-out
-          [make-user-manager (-> database? hasher? user-manager?)]
-          [user-manager? (-> any/c boolean?)]
-          [user-manager-create! (-> user-manager? string? string? user?)]
-          [user-manager-create-reset-token!
-           (-> user-manager?
-               #:username non-empty-string?
-               #:ip-address non-empty-string?
-               #:user-agent non-empty-string?
-               (values (or/c #f user?) (or/c #f string?)))]
-          [user-manager-lookup/id
-           (-> user-manager? exact-positive-integer? (or/c #f user?))]
-          [user-manager-lookup/username (-> user-manager? string? (or/c #f user?))]
-          [user-manager-login (-> user-manager? string? string? (or/c #f user?))]
-          [user-manager-verify!
-           (-> user-manager? exact-positive-integer? string? void?)]
-          [user-manager-reset-password!
-           (-> user-manager?
-               #:user-id id/c
-               #:token non-empty-string?
-               #:password non-empty-string?
-               boolean?)]))
+         (contract-out [make-user-manager (-> database? hasher? user-manager?)]
+                       [user-manager? (-> any/c boolean?)]
+                       [user-manager-create! (-> user-manager? string? string? user?)]
+                       [user-manager-create-reset-token!
+                        (-> user-manager?
+                            #:username non-empty-string?
+                            #:ip-address non-empty-string?
+                            #:user-agent non-empty-string?
+                            (values (or/c #f user?) (or/c #f string?)))]
+                       [user-manager-lookup/id
+                        (-> user-manager? exact-positive-integer? (or/c #f user?))]
+                       [user-manager-lookup/username (-> user-manager? string? (or/c #f user?))]
+                       [user-manager-login (-> user-manager? string? string? (or/c #f user?))]
+                       [user-manager-verify! (-> user-manager? exact-positive-integer? string? void?)]
+                       [user-manager-reset-password!
+                        (-> user-manager?
+                            #:user-id id/c
+                            #:token non-empty-string?
+                            #:password non-empty-string?
+                            boolean?)]))
 
 (struct exn:fail:user-manager exn:fail ())
 (struct exn:fail:user-manager:username-taken exn:fail:user-manager ())
@@ -81,13 +78,12 @@
 (define (user-manager-create! um username password)
   (define the-user (~> (make-user #:username username) (set-password um _ password)))
 
-  (with-handlers ([exn:fail:sql:constraint-violation?
-                   (lambda (_e)
-                     (raise (exn:fail:user-manager:username-taken
-                             (format "username '~a' is taken" username)
-                             (current-continuation-marks))))])
-    (with-database-transaction [conn (user-manager-db um)]
-                               (insert-one! conn the-user))))
+  (with-handlers ([exn:fail:sql:constraint-violation? (lambda (_e)
+                                                        (raise (exn:fail:user-manager:username-taken
+                                                                (format "username '~a' is taken"
+                                                                        username)
+                                                                (current-continuation-marks))))])
+    (with-database-transaction [conn (user-manager-db um)] (insert-one! conn the-user))))
 
 (define (user-manager-create-reset-token! um
                                           #:username username
@@ -126,8 +122,7 @@
                (format "(user-manager-lookup/username ~v)" username)
                (with-database-connection [conn (user-manager-db um)]
                                          (~> (from user #:as u)
-                                             (where (= u.username
-                                                       ,(string-downcase username)))
+                                             (where (= u.username ,(string-downcase username)))
                                              (lookup conn _)))))
 
 (define (user-manager-login um username password)
@@ -139,13 +134,12 @@
 (define (user-manager-verify! um id verification-code)
   (with-timing 'user-manager
                "user-manager-verify!"
-               (void (with-database-transaction [conn (user-manager-db um)]
-                                                (~> (from user #:as u)
-                                                    (update [verified? #t])
-                                                    (where (and (= u.id ,id)
-                                                                (= u.verification-code
-                                                                   ,verification-code)))
-                                                    (query-exec conn _))))))
+               (void (with-database-transaction
+                      [conn (user-manager-db um)]
+                      (~> (from user #:as u)
+                          (update [verified? #t])
+                          (where (and (= u.id ,id) (= u.verification-code ,verification-code)))
+                          (query-exec conn _))))))
 
 (define (user-manager-reset-password! um #:user-id id #:token token #:password password)
   (with-timing 'user-manager
@@ -170,7 +164,4 @@
       (lookup conn _)))
 
 (define (clear-password-reset! conn id)
-  (~> (from password-reset #:as pr)
-      (where (= pr.user-id ,id))
-      (delete)
-      (query-exec conn _)))
+  (~> (from password-reset #:as pr) (where (= pr.user-id ,id)) (delete) (query-exec conn _)))

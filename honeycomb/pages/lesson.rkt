@@ -26,12 +26,11 @@
 
   (define file-path "pollen/index.html")
 
-  (define rendered-page
-    (response/output (λ (op) (display (dynamic-include-template file-path) op))))
+  (define rendered-page (response/output (λ (op) (display (dynamic-include-template file-path) op))))
   (define (get-response-content response)
-    (let ([output (open-output-string)])
-      ((response-output response) output)
-      (get-output-string output)))
+    (define output (open-output-string))
+    ((response-output response) output)
+    (get-output-string output))
   (define lesson-content (get-response-content rendered-page))
 
   (if is-hx-request
@@ -55,12 +54,11 @@
 
   (define file-path (format "pollen/~a.html" lesson-name))
 
-  (define rendered-page
-    (response/output (λ (op) (display (dynamic-include-template file-path) op))))
+  (define rendered-page (response/output (λ (op) (display (dynamic-include-template file-path) op))))
   (define (get-response-content response)
-    (let ([output (open-output-string)])
-      ((response-output response) output)
-      (get-output-string output)))
+    (define output (open-output-string))
+    ((response-output response) output)
+    (get-output-string output))
   (define lesson-content (get-response-content rendered-page))
 
   (if is-hx-request
@@ -74,16 +72,13 @@
     (if is-post-request (process-post-request req question-id) (values null null)))
 
   (define file-path (format "pollen/question/~a.html" question-id))
-  (define rendered-page
-    (response/output (λ (op)
-                       (display (question-template file-path
-                                                   'correct-answers
-                                                   correct-answers
-                                                   'selected-answers
-                                                   selected-answers)
-                                op))))
-
-  rendered-page)
+  (response/output (λ (op)
+                     (display (question-template file-path
+                                                 'correct-answers
+                                                 correct-answers
+                                                 'selected-answers
+                                                 selected-answers)
+                              op))))
 
 (define (process-post-request req question-id)
   (define selected-answers
@@ -101,9 +96,9 @@
   (values correct-answers selected-answers))
 
 (define (question-template path . args)
-  (for ([i (in-range 0 (length args) 2)])
-    (when (< (+ i 1) (length args))
-      (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1)))))
+  (for ([i (in-range 0 (length args) 2)]
+        #:when (< (+ i 1) (length args)))
+    (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1))))
   (eval #`(include-template #:command-char #\● #,path)))
 
 ; (define (check-free-response req)
@@ -156,7 +151,7 @@
 (define (extract-value data key)
   (define pattern (string-append key "=([^&]+)"))
   (define match (regexp-match pattern data))
-  (if match (cadr match) #f))
+  (and match (cadr match)))
 
 ; Function to convert byte string to regular string
 (define (bytes-string->string value)
