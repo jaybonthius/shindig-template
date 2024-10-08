@@ -2,16 +2,16 @@
 
 (require file-watchers
          file/glob
-         racket/system
-         racket/string)
+         racket/string
+         racket/system)
 
 (define (path->basename path)
-  (let-values ([(dir name _) (split-path path)])
-    (path->string name)))
+  (define-values (dir name _) (split-path path))
+  (path->string name))
 
 (define (path->dirname path)
-  (let-values ([(dir name _) (split-path path)])
-    (path->string dir)))
+  (define-values (dir name _) (split-path path))
+  (path->string dir))
 
 (define (string-replace-all str replacements)
   (foldl (λ (replacement acc) (string-replace acc (car replacement) (cdr replacement)))
@@ -49,14 +49,15 @@
 
 (define (execute-commands commands path)
   (for ([command commands])
-    (let ([formatted-command (replace-variables command path)]) (system formatted-command))))
+    (define formatted-command (replace-variables command path))
+    (system formatted-command)))
 
 (define (handle-event event)
   (match event
     [(list 'robust type path)
-     (let ([matching-commands (find-matching-rules path type)])
-       (when (not (null? matching-commands))
-         (for-each (λ (commands) (execute-commands commands path)) matching-commands)))]
+     (define matching-commands (find-matching-rules path type))
+     (unless (null? matching-commands)
+       (for-each (λ (commands) (execute-commands commands path)) matching-commands))]
     [_ (void)]))
 
 (define watcher-thread

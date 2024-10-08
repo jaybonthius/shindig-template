@@ -30,7 +30,7 @@ zap:
 refactor:
 	@echo "Refactoring Racket files..."
 	@find . -name "*.rkt" | while read -r file; do \
-		if /home/jay/.local/share/racket/8.14/bin/resyntax fix --file "$$file"; then \
+		if resyntax fix --file "$$file"; then \
 			echo "Successfully refactored \"$$file\""; \
 		else \
 			echo "Failed on \"$$file\""; \
