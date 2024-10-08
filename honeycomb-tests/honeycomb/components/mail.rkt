@@ -2,13 +2,12 @@
 
 (require component
          component/testing
-         koyo/url
-         koyo/testing
-         rackunit
-         threading
-
          honeycomb/components/mail
          honeycomb/components/user
+         koyo/testing
+         koyo/url
+         rackunit
+         threading
          "../common.rkt")
 
 (provide mail-tests)

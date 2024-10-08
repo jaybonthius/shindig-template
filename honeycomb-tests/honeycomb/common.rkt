@@ -2,15 +2,14 @@
 
 (require (for-syntax racket/base)
          db
+         honeycomb/components/mail
+         honeycomb/components/user
          koyo/database
          koyo/database/migrator
          koyo/hasher
          koyo/session
          racket/runtime-path
          rackunit/text-ui
-
-         honeycomb/components/mail
-         honeycomb/components/user
          (prefix-in config: honeycomb/config))
 
 ;; database ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

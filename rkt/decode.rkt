@@ -18,11 +18,9 @@
     (decode-elements elements
                      #:txexpr-elements-proc decode-paragraphs
                      #:exclude-tags '(script style figure)))
-  (define body
-    (make-txexpr 'body
-                 null
-                 (decode-elements first-pass
-                                  #:inline-txexpr-proc hyperlink-decoder
-                                  #:string-proc smart-dashes
-                                  #:exclude-tags '(script style))))
-  body)
+  (make-txexpr 'body
+               null
+               (decode-elements first-pass
+                                #:inline-txexpr-proc hyperlink-decoder
+                                #:string-proc smart-dashes
+                                #:exclude-tags '(script style))))

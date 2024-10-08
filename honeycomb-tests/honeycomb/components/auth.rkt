@@ -1,12 +1,11 @@
 #lang racket/base
 
 (require component/testing
+         honeycomb/components/auth
+         honeycomb/components/user
          koyo/session
          koyo/testing
          rackunit
-
-         honeycomb/components/auth
-         honeycomb/components/user
          "../common.rkt")
 
 (provide auth-tests)

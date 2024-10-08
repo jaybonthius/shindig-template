@@ -1,18 +1,18 @@
 #lang racket/base
 
-(require racket/match
-         db
+(require db
          json
          pollen/decode
          pollen/render
          pollen/template
          racket/file
          racket/list
+         racket/match
          racket/pretty
          racket/set
          racket/string
-         "markup/sqlite.rkt"
-         xml)
+         xml
+         "markup/sqlite.rkt")
 
 (provide (all-defined-out))
 

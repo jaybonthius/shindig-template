@@ -1,11 +1,10 @@
 #lang racket/base
 
 (require component/testing
+         honeycomb/components/user
          koyo/testing
          racket/match
          rackunit
-
-         honeycomb/components/user
          "../common.rkt")
 
 (provide user-tests)

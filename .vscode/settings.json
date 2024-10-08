@@ -1,8 +1,8 @@
 {
   "material-icon-theme.files.associations": {
       "Procfile.preprocess": "heroku",
-      "*.pm": "racket",
-      "*.p": "racket",
+      "*.pm": "document",
+      "*.p": "template",
   },
   "liveServer.settings.port": 7070,
   "files.associations": {

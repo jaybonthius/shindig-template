@@ -90,17 +90,14 @@
       (printf "Database operations completed successfully.\n"))))
 
 (define (custom-template path . args)
-  (for ([i (in-range 0 (length args) 2)])
-    (when (< (+ i 1) (length args))
-      (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1)))))
+  (for ([i (in-range 0 (length args) 2)]
+        #:when (< (+ i 1) (length args)))
+    (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1))))
   (eval #`(include-template #:command-char #\● #,path)))
 
 (define (get-free-response-container req question-id)
   (define file-path (format "pollen/free-response/~a.html" question-id))
-
-  (define rendered-page (response/output (λ (op) (display (custom-template file-path) op))))
-
-  rendered-page)
+  (response/output (λ (op) (display (custom-template file-path) op))))
 
 (define (get-free-response-field req uid)
   (define current-user-info (current-user))
@@ -114,7 +111,7 @@
      username))
   (match-define (vector latest-submission is-correct) (if result result (vector "" 0)))
 
-  (set! is-correct (if (equal? is-correct 1) #t #f))
+  (set! is-correct (equal? is-correct 1))
 
   (define no-submission-style " {}")
   (define is-correct-style
@@ -127,9 +124,10 @@
   (define field-style-uid (string-append "fr-style-" uid))
 
   (define style-content
-    (if (equal? latest-submission "")
-        no-submission-style
-        (if is-correct is-correct-style is-not-correct-style)))
+    (cond
+      [(equal? latest-submission "") no-submission-style]
+      [is-correct is-correct-style]
+      [else is-not-correct-style]))
 
   (define style `(style [(id ,field-style-uid)] ,(string-append "#" field-uid style-content)))
 
@@ -154,24 +152,26 @@
 (define (post-free-response-field req uid)
   (define post-data (uri-decode (bytes->string/utf-8 (request-post-data/raw req))))
   (define (extract-submission s)
-    (let ([pos (string-index s #\=)]) (if pos (substring s (+ pos 1)) "")))
+    (define pos (string-index s #\=))
+    (if pos (substring s (+ pos 1)) ""))
   (define submission (extract-submission post-data))
   (define alerts-id (string-append "fr-alerts-" uid))
   (define field-style-id (string-append "fr-style-" uid))
 
-  (if (string=? submission "")
-      (let ([style-tag `(style [(id ,field-style-id)] "")]
-            [alerts-tag `(div [(id ,alerts-id)]
-                              (div [(role "alert") (class "alert alert-error")]
-                                   "Your submission cannot be empty."))])
-        (response/full 200
-                       #"OK"
-                       (current-seconds)
-                       #"text/plain"
-                       '()
-                       (list (string->bytes/utf-8 (string-append (xexpr->string style-tag)
-                                                                 (xexpr->string alerts-tag))))))
-      (process-submission uid submission)))
+  (cond
+    [(string=? submission "")
+     (define style-tag `(style [(id ,field-style-id)] ""))
+     (define alerts-tag
+       `(div [(id ,alerts-id)]
+             (div [(role "alert") (class "alert alert-error")] "Your submission cannot be empty.")))
+     (response/full 200
+                    #"OK"
+                    (current-seconds)
+                    #"text/plain"
+                    '()
+                    (list (string->bytes/utf-8 (string-append (xexpr->string style-tag)
+                                                              (xexpr->string alerts-tag)))))]
+    [else (process-submission uid submission)]))
 
 (define (process-submission uid submission)
   (define current-user-info (current-user))

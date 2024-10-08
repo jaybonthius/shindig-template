@@ -1,9 +1,9 @@
 #lang racket/base
 
-(require koyo/haml
-         racket/path
+(require db
+         koyo/haml
          racket/file
-         db)
+         racket/path)
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
