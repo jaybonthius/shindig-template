@@ -9,7 +9,8 @@ math-field {
 }
 
 math-field:not(:defined) {
-  display: none;
+  display: none !important;
+  /* outline: 2px dashed red !important; */
 }
 
 @font-face {

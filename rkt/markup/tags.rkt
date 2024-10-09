@@ -19,19 +19,10 @@
 (define (emph . text)
   `(em ,@text))
 
-; TODO: I decided that I don't wanna do paragraph links, but there's some good content in here that I should save for other uses.
-; (define (p #:uid [uid ""] . text)
-;   `(div [(class "relative group")]
-;     (aside [(class "absolute -left-10 top-1 opacity-0 group-hover:opacity-100 transition-opacity")]
-;       (a [(href ,(format "#~a" uid)) (class "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300")]
-;         (i [(class "fa-solid fa-link")])
-;       )
-;     )
-;     (p ,@text))
-; )
+(define ($ latex)
+  `(script [(type "math/tex; mode=text")] ,(format "\\(~a\\)" latex)))
 
-(define (im math)
-  `(script [(type "math/tex; mode=text")] ,(format "\\(~a\\)" math)))
-
-(define (dm math)
-  `(div (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" math))))
+(define ($$ latex)
+  `(div [(class "flex justify-center")]
+        (div [(class "inline-block")]
+             (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" latex)))))

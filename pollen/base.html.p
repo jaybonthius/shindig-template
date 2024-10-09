@@ -116,11 +116,10 @@
         <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
         <script defer type="module">
-            window.addEventListener('DOMContentLoaded', () => 
-              import('//unpkg.com/mathlive?module').then((mathlive) => 
-                mathlive.renderMathInDocument()
-              )
-            );
+            const renderMath = () => import('//unpkg.com/mathlive?module').then(mathlive => mathlive.renderMathInDocument());
+            
+            window.addEventListener('DOMContentLoaded', renderMath);
+            document.addEventListener('htmx:afterRequest', renderMath);
         </script>
     </body>
 </html>

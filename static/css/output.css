@@ -2780,6 +2780,14 @@ html:has(.drawer-toggle:checked) {
   flex-direction: column;
 }
 
+.content-center {
+  align-content: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
 .bg-base-100 {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
@@ -2858,7 +2866,8 @@ math-field {
 }
 
 math-field:not(:defined) {
-  display: none;
+  display: none !important;
+  /* outline: 2px dashed red !important; */
 }
 
 @font-face {
