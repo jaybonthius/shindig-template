@@ -2780,10 +2780,6 @@ html:has(.drawer-toggle:checked) {
   flex-direction: column;
 }
 
-.content-center {
-  align-content: center;
-}
-
 .justify-center {
   justify-content: center;
 }

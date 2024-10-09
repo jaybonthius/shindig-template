@@ -16,7 +16,8 @@
 
 (provide (contract-out [get-free-response-field (-> request? string? response?)]
                        [post-free-response-field (-> request? string? response?)]
-                       [get-free-response-container (-> request? string? response?)]))
+                       [get-free-response-container (-> request? string? response?)]
+                       [get-component (-> request? string? response?)]))
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
@@ -80,6 +81,10 @@
         #:when (< (+ i 1) (length args)))
     (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1))))
   (eval #`(include-template #:command-char #\● #,path)))
+
+(define (get-component req uid)
+  (define file-path (format "pollen/definition/~a.html" uid))
+  (response/output (λ (op) (display (custom-template file-path) op))))
 
 (define (get-free-response-container req question-id)
   (define file-path (format "pollen/free-response/~a.html" question-id))

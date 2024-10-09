@@ -45,6 +45,7 @@
      [("lesson" (string-arg)) lesson-page]
      [("question_detail" (string-arg)) question-detail]
      [("check_answers" (string-arg)) #:method "post" question-detail]
+     [("get-definition" (string-arg)) get-component]
      [("get-free-response" (string-arg)) get-free-response-container]
      [("free-response" (string-arg)) #:roles (user) get-free-response-field]
      [("free-response" (string-arg)) #:method "post" #:roles (user) post-free-response-field]
