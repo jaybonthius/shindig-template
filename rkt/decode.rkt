@@ -1,7 +1,8 @@
 #lang racket/base
 
 (require pollen/decode
-         txexpr)
+         txexpr
+         "decoders.rkt")
 
 (provide (all-defined-out))
 
@@ -15,7 +16,7 @@
 (define (root . elements)
   (define first-pass
     (decode-elements elements
-                     #:txexpr-elements-proc decode-paragraphs
+                     #:txexpr-elements-proc (compose1 extract-divs-from-paragraphs decode-paragraphs)
                      #:exclude-tags '(script style figure)))
   (make-txexpr 'body
                null

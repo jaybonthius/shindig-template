@@ -121,5 +121,40 @@
             window.addEventListener('DOMContentLoaded', renderMath);
             document.addEventListener('htmx:afterRequest', renderMath);
         </script>
+        <!-- for scrolling to references -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                function scrollToElement(targetId) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+
+                document.body.addEventListener('htmx:afterSwap', function(event) {
+                    const url = new URL(window.location.href);
+                    const targetId = url.hash.slice(1);
+                    
+                    if (targetId) {
+                        // Wait a brief moment to ensure the DOM is updated
+                        setTimeout(() => scrollToElement(targetId), 100);
+                    }
+                });
+
+                document.body.addEventListener('click', function(e) {
+                    const anchor = e.target.closest('a[href^="#"]');
+                    if (anchor) {
+                        e.preventDefault();
+                        const targetId = anchor.getAttribute('href').slice(1);
+                        scrollToElement(targetId);
+                    }
+                });
+
+                if (window.location.hash) {
+                    const initialTargetId = window.location.hash.slice(1);
+                    setTimeout(() => scrollToElement(initialTargetId), 100);
+                }
+            });
+        </script>
     </body>
 </html>

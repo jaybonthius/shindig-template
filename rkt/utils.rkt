@@ -3,8 +3,10 @@
 (require db
          json
          pollen/render
+         pollen/setup
          racket/file
          racket/match
+         (prefix-in config: "../common/config.rkt")
          "markup/sqlite.rkt")
 
 (provide (all-defined-out))
@@ -23,7 +25,7 @@
     [else xexpr]))
 
 (define (render-x-expression xexpr prefix filename)
-  (define output-dir (build-path (current-directory) prefix))
+  (define output-dir (build-path config:pollen-dir prefix))
   (define temp-dir (build-path output-dir "temp"))
   (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
   (define output-path (build-path output-dir (string-append filename ".html")))
@@ -43,11 +45,7 @@
   output-path)
 
 (define (upsert-question question-id answers)
-  (define current-dir (current-directory))
-  (define db-file (build-path current-dir "questions.sqlite"))
-  ; todo: have this be a separate thing upon local setup
-  (try-create-empty-file db-file)
-
+  (define db-file (build-path config:sqlite-path "questions.sqlite"))
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
@@ -74,11 +72,7 @@
       (printf "Database operations completed successfully.\n"))))
 
 (define (upsert-free-response field-id question-id answer)
-  (define current-dir (current-directory))
-  (define db-file (build-path current-dir "free-response-questions.sqlite"))
-  ; todo: have this be a separate thing upon local setup
-  (try-create-empty-file db-file)
-
+  (define db-file (build-path config:sqlite-path "free-response-questions.sqlite"))
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
@@ -99,6 +93,26 @@
        field-id
        question-id
        answer)
+
+      (disconnect conn)
+
+      (printf "Database operations completed successfully.\n"))))
+
+(define (upsert-xref type id source)
+  (define db-file (build-path config:sqlite-path "cross-references.sqlite"))
+
+  (define conn (try-connect db-file))
+  (when conn
+    (with-handlers ([exn:fail? (lambda (e)
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
+
+      (query-exec
+       conn
+       "INSERT OR REPLACE INTO cross_references (type, id, source)
+                   VALUES (?, ?, ?)"
+       (symbol->string type)
+       id
+       source)
 
       (disconnect conn)
 

@@ -12,21 +12,13 @@
          (only-in net/http-easy post response-status-code response-body response-close!)
          db
          xml
+         (prefix-in common-config: "../../common/config.rkt")
          "../components/auth.rkt")
 
 (provide (contract-out [get-free-response-field (-> request? string? response?)]
                        [post-free-response-field (-> request? string? response?)]
                        [get-free-response-container (-> request? string? response?)]
                        [get-component (-> request? string? response?)]))
-
-(define (try-create-empty-file path)
-  (with-handlers ([exn:fail? (lambda (e)
-                               ;  (printf "Error creating empty file: ~a\n" (exn-message e))
-                               (void)
-                               #f)])
-    (call-with-output-file path (lambda (out) (void)))
-    (printf "Successfully created empty file.\n")
-    #t))
 
 (define (try-connect db-path)
   (with-handlers ([exn:fail? (lambda (e)
@@ -38,10 +30,7 @@
     conn))
 
 (define (upsert-free-response-submission field-id user-id question-id submission is-corrent)
-  (define current-dir (current-directory))
-  (define db-file (build-path current-dir "free-response-submissions.sqlite"))
-  ; todo: have this be a separate thing upon local setup
-  (try-create-empty-file db-file)
+  (define db-file (build-path common-config:project-root "sqlite" "free-response-submissions.sqlite"))
 
   ; convert is-correct from bool to int
   (define is-corrent-int (if is-corrent 1 0))

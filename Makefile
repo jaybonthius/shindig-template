@@ -1,4 +1,4 @@
-.PHONY: lint
+.PHONY: lint sqlite
 
 lint:
 	@echo "Linting Racket files..."
@@ -28,16 +28,19 @@ render-from-scratch:
 	make render
 
 run:
-	make render-from-scratch
 	raco chief start
 
 pollen-server:
 	raco chief start -f Procfile.preprocess
 
-zap-sqlite:
-	find . -name "*.sqlite" -type f -delete
+
+sqlite:
+	mkdir -p sqlite
 	racket scripts/make-db.rkt
 
+zap-sqlite:
+	find . -name "*.sqlite" -type f -delete
+	make sqlite
 
 refactor:
 	@echo "Refactoring Racket files..."

@@ -13,6 +13,8 @@
 
 Calculus can be viewed broadly as the study of change. A natural and important question to ask about any changing quantity is “how fast is the quantity changing?”
 
+I'd like to reference something on another page ◊ref[#:type 'definition #:uid "avg-velocity"] and hopefully this thing turns out OK!
+
 We begin with a simple problem: a ball is tossed straight up in the air. How is the ball moving? Questions like this one are central to our study of differential calculus.
 
 ◊preview-activity[#:name "1.1"]{
@@ -23,7 +25,9 @@ We begin with a simple problem: a ball is tossed straight up in the air. How is 
 
 Any moving object has a ◊index{position} that can be considered a function of ◊emph{time}. When the motion is along a straight line, the position is given by a single variable, which we denote by ◊${s(t)}.
 
-For example, ◊${s(t)} might give the mile marker of a car traveling on a straight highway at time ◊${t} in hours. Similarly, the function ◊${s} described in ◊xref[#:type 'preview-activity #:uid "1.1"]{} is a position function, where position is measured vertically relative to the ground.
+For example, ◊${s(t)} might give the mile marker of a car traveling on a straight highway at time ◊${t} in hours. Similarly, the function ◊${s} described in 
+◊; ◊ref[#:type 'preview-activity #:uid "1.1"]{} 
+is a position function, where position is measured vertically relative to the ground.
 
 In general, we make the following definition:
 

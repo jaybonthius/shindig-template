@@ -3,7 +3,8 @@
 (require db
          koyo/haml
          racket/file
-         racket/path)
+         racket/path
+         (prefix-in config: "../common/config.rkt"))
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
@@ -23,27 +24,53 @@
     (printf "Successfully connected to the database.\n")
     conn))
 
-(define current-dir (current-directory))
-(define db-file (build-path current-dir "free-response-submissions.sqlite"))
+(define (create-db sqlite-filepath sql-string)
+  (define new-file-created (try-create-empty-file sqlite-filepath))
 
-(define new-file-created (try-create-empty-file db-file))
+  (define conn (try-connect sqlite-filepath))
+  (when new-file-created
+    (with-handlers ([exn:fail? (lambda (e)
+                                 (printf "Error during database operations: ~a\n" (exn-message e)))])
 
-(define conn (try-connect db-file))
-(when new-file-created
-  (with-handlers ([exn:fail? (lambda (e)
-                               (printf "Error during database operations: ~a\n" (exn-message e)))])
+      (query-exec conn sql-string)
 
-    (query-exec
-     conn
-     "CREATE TABLE IF NOT EXISTS free_response_submissions (
-                field_id TEXT NOT NULL,
-                user_id TEXT NOT NULL,
-                question_id TEXT,
-                submission TEXT,
-                is_correct INT,
-                PRIMARY KEY (field_id, user_id)
-            )")
+      (disconnect conn)
 
-    (disconnect conn)
+      (printf "Table created successfully.\n"))))
 
-    (printf "Table created successfully.\n")))
+(define free-response-submissions-sqlite-filepath
+  (build-path config:sqlite-path "free-response-submissions.sqlite"))
+(define free-response-submissions-sql-string
+  "CREATE TABLE IF NOT EXISTS free_response_submissions (
+                  field_id TEXT NOT NULL,
+                  user_id TEXT NOT NULL,
+                  question_id TEXT,
+                  submission TEXT,
+                  is_correct INT,
+                  PRIMARY KEY (field_id, user_id)
+              )")
+
+; TODO: only do this if config:backend (or whatever) is enabled
+(create-db free-response-submissions-sqlite-filepath free-response-submissions-sql-string)
+
+(define free-response-questions-sqlite-filepath
+  (build-path config:sqlite-path "free-response-questions.sqlite"))
+(define free-response-questions-sql-string
+  "CREATE TABLE IF NOT EXISTS free_response_questions (
+                field_id TEXT PRIMARY KEY NOT NULL,
+                question_id TEXT NOT NULL,
+                answer TEXT
+              )")
+
+(create-db free-response-questions-sqlite-filepath free-response-questions-sql-string)
+
+(define cross-references-sqlite-filepatch (build-path config:sqlite-path "cross-references.sqlite"))
+(define cross-references-sql-string
+  "CREATE TABLE IF NOT EXISTS cross_references (
+                  type TEXT NOT NULL,
+                  id TEXT NOT NULL,
+                  source TEXT NOT NULL,
+                  PRIMARY KEY (type, id)
+              )")
+
+(create-db cross-references-sqlite-filepatch cross-references-sql-string)
