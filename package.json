@@ -1,5 +1,5 @@
 {
-  "name": "honeycomb",
+  "name": "backend",
   "type": "module",
   "engines": {
     "node": ">=18",
@@ -17,7 +17,7 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "app": "node app.js"
+    "app": "node backend/app.js"
   },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.25.1",

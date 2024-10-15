@@ -1,5 +1,30 @@
 .PHONY: lint sqlite
 
+render:
+	cd content && raco pollen render . && raco pollen render lesson
+
+generate-xrefs:
+	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
+
+reset:
+	cd content && raco pollen reset
+
+zap:
+	find content -name "*.html" -type f -delete
+	find content -name "temp" -type d -exec rm -rf {} +
+	make reset
+
+run:
+	raco chief start
+
+sqlite:
+	mkdir -p sqlite
+	racket scripts/make-db.rkt
+
+zap-sqlite:
+	find . -name "*.sqlite" -type f -delete
+	make sqlite
+
 lint:
 	@echo "Linting Racket files..."
 	@find . -name "*.rkt" | while read -r file; do \
@@ -11,36 +36,6 @@ lint:
 		fi; \
 	done
 	@echo "Linting complete."
-
-render:
-	raco pollen render pollen
-
-reset:
-	raco pollen reset
-
-zap:
-	find pollen -name "*.html" -type f -delete
-	find pollen -name "temp" -type d -exec rm -rf {} +
-	make reset
-
-render-from-scratch:
-	make zap
-	make render
-
-run:
-	raco chief start
-
-pollen-server:
-	raco chief start -f Procfile.preprocess
-
-
-sqlite:
-	mkdir -p sqlite
-	racket scripts/make-db.rkt
-
-zap-sqlite:
-	find . -name "*.sqlite" -type f -delete
-	make sqlite
 
 refactor:
 	@echo "Refactoring Racket files..."

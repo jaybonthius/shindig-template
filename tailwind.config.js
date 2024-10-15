@@ -19,7 +19,7 @@ const hexToRgb = (hex) => {
 };
 
 module.exports = {
-  content: ["pollen/**/*.{html,js}"],
+  content: ["content/**/*.{html,js}"],
   theme: {
     extend: {
       fontFamily: {
