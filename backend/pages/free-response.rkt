@@ -164,8 +164,10 @@
   (define field-alerts-id (string-append "fr-alerts-" uid))
   (define field-style-id (string-append "fr-style-" uid))
   (define url "http://localhost:5200/compare")
-  
-  (define db-connection (sqlite3-connect #:database (build-path common-config:sqlite-path "free-response-questions.sqlite")))
+
+  (define db-connection
+    (sqlite3-connect #:database (build-path common-config:sqlite-path
+                                            "free-response-questions.sqlite")))
   (define is-corrent
     (let* ([correct-answer-latex
             (query-value db-connection

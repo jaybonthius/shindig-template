@@ -6,9 +6,10 @@
          web-server/templates
          web-server/http/request-structs
          racket/set
-         (only-in net/http-easy post response-status-code response-body response-close!)
+         (only-in net/http-easy get post response-status-code response-body response-close!)
          racket/string
          json
+         (prefix-in config: "../config.rkt")
          db)
 
 (provide (contract-out [lesson-page (-> request? string? response?)]
@@ -43,27 +44,34 @@
   (and hx-request-header (equal? (cdr hx-request-header) "true")))
 
 (define (lesson-page _req lesson-name)
+  (cond
+    [(equal? config:version "dev")
+     (define request (format "http://localhost:8081/lesson/~a.html" lesson-name))
+     (define pollen-response (get request))
+     (response/output (λ (op) (display (response-body pollen-response) op)))]
+    [else
 
-  (define is-hx-request (hx-request? _req))
+     (define is-hx-request (hx-request? _req))
 
-  (define (dynamic-include-template path)
-    (eval #`(include-template #:command-char #\● #,path)))
+     (define (dynamic-include-template path)
+       (eval #`(include-template #:command-char #\● #,path)))
 
-  (define (include-base-template lesson-content)
-    (include-template #:command-char #\● "../../content/base.html"))
+     (define (include-base-template lesson-content)
+       (include-template #:command-char #\● "../../content/base.html"))
 
-  (define file-path (format "content/lesson/~a.html" lesson-name))
+     (define file-path (format "content/lesson/~a.html" lesson-name))
 
-  (define rendered-page (response/output (λ (op) (display (dynamic-include-template file-path) op))))
-  (define (get-response-content response)
-    (define output (open-output-string))
-    ((response-output response) output)
-    (get-output-string output))
-  (define lesson-content (get-response-content rendered-page))
+     (define rendered-page
+       (response/output (λ (op) (display (dynamic-include-template file-path) op))))
+     (define (get-response-content response)
+       (define output (open-output-string))
+       ((response-output response) output)
+       (get-output-string output))
+     (define lesson-content (get-response-content rendered-page))
 
-  (if is-hx-request
-      rendered-page
-      (response/output (λ (op) (display (include-base-template lesson-content) op)))))
+     (if is-hx-request
+         rendered-page
+         (response/output (λ (op) (display (include-base-template lesson-content) op))))]))
 
 (define (question-detail req question-id)
   (define is-post-request (equal? (request-method req) #"POST"))

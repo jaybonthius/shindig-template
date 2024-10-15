@@ -146,6 +146,7 @@
            `(a [(href ,(format "/lesson/~a#~a" source id))
                 (hx-get ,(format "/lesson/~a#~a" source id))
                 (hx-target "#main")
+                (hx-select "#main")
                 (hx-push-url "true")
                 (@click ,(format "activePage = '/lesson/~a'" current-source))
                 (:class ,(format "{ 'active': activePage === '/lesson/~a' }" current-source))]

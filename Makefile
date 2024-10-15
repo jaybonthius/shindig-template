@@ -17,6 +17,9 @@ zap:
 run:
 	raco chief start
 
+pollen-server:
+	cd content && raco pollen setup -p && raco pollen start . 8081
+
 sqlite:
 	mkdir -p sqlite
 	racket scripts/make-db.rkt
