@@ -24,9 +24,9 @@
 
 (define-runtime-path migrations-path (build-path 'up "migrations"))
 
-(define-runtime-path static-path (build-path 'up "content" "static"))
+(define-runtime-path static-path (build-path 'up "static"))
 
-(define-runtime-path media-path (build-path 'up "content" "media"))
+(define-runtime-path media-path (build-path 'up "media"))
 
 (define mail-adapter
   (if config:postmark-token

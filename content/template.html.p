@@ -7,7 +7,8 @@
         <meta name="description" content="Your description here" />
         <meta name="keywords" content="keyword1, keyword2, keyword3" />
         <title>Honeycomb</title>
-        <link href="../static/css/output.css" rel="stylesheet" />
+        <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+        <link href="/static/css/output.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     </head>

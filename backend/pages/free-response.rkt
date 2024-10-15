@@ -30,7 +30,7 @@
     conn))
 
 (define (upsert-free-response-submission field-id user-id question-id submission is-corrent)
-  (define db-file (build-path common-config:project-root "sqlite" "free-response-submissions.sqlite"))
+  (define db-file (build-path common-config:sqlite-path "free-response-submissions.sqlite"))
 
   ; convert is-correct from bool to int
   (define is-corrent-int (if is-corrent 1 0))
@@ -85,7 +85,7 @@
 (define (get-free-response-field req uid)
   (define current-user-info (current-user))
   (define username (user-username current-user-info))
-  (define db-file (build-path common-config:project-root "sqlite" "free-response-submissions.sqlite"))
+  (define db-file (build-path common-config:sqlite-path "free-response-submissions.sqlite"))
   (define db-connection (sqlite3-connect #:database db-file))
   (define result
     (query-maybe-row
