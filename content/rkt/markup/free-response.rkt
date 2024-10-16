@@ -14,7 +14,11 @@
 
   (define evaluated-content
     (parameterize ([question-id-param uid])
-      (map (lambda (x) (if (procedure? x) (x) x)) content)))
+      (map (lambda (x)
+             (if (procedure? x)
+                 (x)
+                 x))
+           content)))
 
   (define question-content
     `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))

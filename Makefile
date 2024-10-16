@@ -3,7 +3,7 @@
 render:
 	cd content && raco pollen render . && raco pollen render lesson
 
-generate-xrefs:
+xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
 
 reset:
@@ -19,6 +19,9 @@ run:
 
 pollen-server:
 	cd content && raco pollen setup -p && raco pollen start . 8081
+
+publish:
+	cd content && raco pollen publish .
 
 sqlite:
 	mkdir -p sqlite

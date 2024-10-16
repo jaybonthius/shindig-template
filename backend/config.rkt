@@ -30,7 +30,7 @@
 
 (define-option http-host #:default "127.0.0.1")
 (define-option http-port
-               #:default "8080" ; (or (getenv "PORT") "8000") not working
+               #:default "8082" ; (or (getenv "PORT") "8000") not working
                (string->number http-port))
 
 (define-option url-scheme
@@ -44,7 +44,7 @@
                  (current-application-url-host url-host)))
 
 (define-option url-port
-               #:default "8080" ; (or (getenv "PORT") "8000") not working
+               #:default "8082" ; (or (getenv "PORT") "8000") not working
                (begin0 url-port
                  (current-application-url-port (string->number url-port))))
 

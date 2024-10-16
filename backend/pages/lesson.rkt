@@ -77,7 +77,9 @@
   (define is-post-request (equal? (request-method req) #"POST"))
 
   (define-values (correct-answers selected-answers)
-    (if is-post-request (process-post-request req question-id) (values null null)))
+    (if is-post-request
+        (process-post-request req question-id)
+        (values null null)))
 
   (define file-path (format "content/question/~a.html" question-id))
   (response/output (λ (op)
@@ -163,7 +165,9 @@
 
 ; Function to convert byte string to regular string
 (define (bytes-string->string value)
-  (if (bytes? value) (bytes->string/utf-8 value) value))
+  (if (bytes? value)
+      (bytes->string/utf-8 value)
+      value))
 
 ; Function to convert string boolean to Racket boolean
 (define (string-bool->racket-bool str-value)

@@ -18,11 +18,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac purus sit amet n
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac purus sit amet nisl tincidunt tincidunt. Nullam nec sapien nec nunc ultricies ultricies. Nullam nec sapien nec nunc
 
-◊definition[#:uid "avg-velocity" #:name "Average Velocity"]{
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac purus sit amet nisl tincidunt tincidunt. Nullam nec sapien nec nunc ultricies ultricies. Nullam nec sapien nec nunc
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac purus sit amet nisl tincidunt tincidunt. Nullam nec sapien nec nunc ultricies ultricies. Nullam nec sapien nec nunc
-
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac purus sit amet nisl tincidunt tincidunt. Nullam nec sapi.
-}
 

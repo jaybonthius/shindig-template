@@ -27,7 +27,9 @@
 (define (filename-without-extension path)
   (define filename (path->string (file-name-from-path path)))
   (define name-parts (string-split filename "."))
-  (if (> (length name-parts) 1) (car name-parts) filename))
+  (if (> (length name-parts) 1)
+      (car name-parts)
+      filename))
 
 (define (strong . text)
   `(strong ,@text))
@@ -38,13 +40,13 @@
 (define (emph . text)
   `(em ,@text))
 
-(define ($ latex)
-  `(script [(type "math/tex; mode=text")] ,(format "\\(~a\\)" latex)))
+(define ($ . latex)
+  `(script [(type "math/tex; mode=text")] ,(format "\\(~a\\)" (string-join latex ""))))
 
-(define ($$ latex)
+(define ($$ . latex)
   `(div [(class "flex justify-center")]
         (div [(class "inline-block")]
-             (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" latex)))))
+             (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" (string-join latex ""))))))
 
 (define (render-component xexpr type uid)
   (define prefix (symbol->string type))
@@ -87,10 +89,12 @@
   (string-join (map string-downcase (regexp-split #rx"[^a-zA-Z0-9]+" (string-trim str))) "-"))
 
 (define (definition #:name name #:uid (uid "") . body)
-  (set! uid (if (string=? uid "") (to-kebab-case name) uid))
+  (set! uid
+        (if (string=? uid "")
+            (to-kebab-case name)
+            uid))
   (define type 'definition)
   (define id (format "~a-~a" (symbol->string type) uid))
-  (define load-asynchronously? #t)
   (define component `(div [(class "block")] (strong ,name) (div ,@body)))
   (define placeholder (default-placeholder type id))
 
@@ -105,15 +109,11 @@
   (define db-connection
     (sqlite3-connect #:database (build-path config:sqlite-path "cross-references.sqlite")))
 
-  (displayln (format "Checking for cross-reference: ~a ~a" type id))
-
   (define result
     (query-maybe-row db-connection
                      "select source from cross_references where type = $1 and id = $2"
                      (symbol->string type)
                      id))
-
-  (displayln (format "Result: ~a" result))
 
   (vector-ref result 0))
 

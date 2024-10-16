@@ -1,5 +1,6 @@
 
 TODOS:
+- IDEA: On a change to a Pollen .rkt file, “save” every Pollen markup file. This will tell the Pollen project server that it needs to re-render the file the next time you request it. For some reason, `raco pollen reset` doesn't work for that.
 - [Manim slides](https://manim-slides.eertmans.be/latest/)
 - Reveal.js support
 - as an alternative (or in addition) to Reveal.js support, what about a feature where between every paragraph, youo can click a button that expands a drawing region? and just generally being able to annotate the page?
@@ -10,6 +11,9 @@ TODOS:
   - check this out: https://docs.racket-lang.org/marionette/index.html#%28def._%28%28lib._marionette%2Fmain..rkt%29._call-with-page-pdf%21%29%29
 - quiz questions
   - question answers in a sqlite file, written by pollen
+
+ISSUES:
+- Pollen paragraph decoder relies on there being at least two paragraphs.
 
 
 ssh -i "backend.pem" ubuntu@ec2-13-59-116-135.us-east-2.compute.amazonaws.com

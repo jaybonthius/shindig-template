@@ -62,8 +62,7 @@
        is-corrent-int)
 
       (disconnect conn)
-
-      (printf "Database operations completed successfully.\n"))))
+      )))
 
 (define (custom-template path . args)
   (for ([i (in-range 0 (length args) 2)]
@@ -93,7 +92,10 @@
      "select submission, is_correct from free_response_submissions where field_id = $1 and user_id = $2"
      uid
      username))
-  (match-define (vector latest-submission is-correct) (if result result (vector "" 0)))
+  (match-define (vector latest-submission is-correct)
+    (if result
+        result
+        (vector "" 0)))
 
   (set! is-correct (equal? is-correct 1))
 
@@ -137,7 +139,9 @@
   (define post-data (uri-decode (bytes->string/utf-8 (request-post-data/raw req))))
   (define (extract-submission s)
     (define pos (string-index s #\=))
-    (if pos (substring s (+ pos 1)) ""))
+    (if pos
+        (substring s (+ pos 1))
+        ""))
   (define submission (extract-submission post-data))
   (define alerts-id (string-append "fr-alerts-" uid))
   (define field-style-id (string-append "fr-style-" uid))
@@ -196,7 +200,9 @@
 
   (define style-tag
     `(style [(id ,field-style-id)]
-            ,(if is-corrent (correct-style-tag field-uid) (incorrect-style-tag field-uid))))
+            ,(if is-corrent
+                 (correct-style-tag field-uid)
+                 (incorrect-style-tag field-uid))))
 
   (define response-full-input
     (list (string->bytes/utf-8 (string-append (xexpr->string style-tag)

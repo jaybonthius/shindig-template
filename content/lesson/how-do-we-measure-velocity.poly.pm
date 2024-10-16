@@ -3,13 +3,16 @@
 ◊(define-meta title "How do we measure velocity?")
 ◊(define-meta section "1.1")
 
-◊motivating-questions{
+◊; motivating-questions
+◊div{
     How is the average velocity of a moving object connected to the values of its position function?
 
     How do we interpret the average velocity of an object geometrically on the graph of its position function?
     
     How is the notion of instantaneous velocity connected to average velocity?
 }
+
+◊strong{Wow look at me!!!} I'm so impressive!
 
 Here's another!! ◊ref[#:type 'definition #:uid "avg-velocity"]{} and hopefully this thing turns out OK!
 
@@ -35,7 +38,7 @@ is a position function, where position is measured vertically relative to the gr
 
 In general, we make the following definition:
 
-◊definition[#:name "Average Velocity"]{
+◊definition[#:uid "avg-velocity" #:name "Average Velocity"]{
     For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊${t=a} to ◊${t=b}, denoted ◊${AV_{[a,b]}}, is given by the formula
 
     ◊$${AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}

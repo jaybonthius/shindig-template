@@ -46,7 +46,6 @@
        (define id (string-join (list uuid (cadr (assq 'id attrs))) "-"))
        (define option-content (cddr item))
        (define correct-option "btn-success")
-       (define incorrect-option "btn-error")
        `(div
          ((class "flex items-center"))
          (label
@@ -81,7 +80,9 @@
       (cond
         [(null? items) result]
         [(and (string? (car items)) (string=? (car items) "\n"))
-         (if (null? result) (loop (cdr items) result) (reverse items))]
+         (if (null? result)
+             (loop (cdr items) result)
+             (reverse items))]
         [else (reverse items)])))
 
   (define-values (question-content options) (split-content content))
