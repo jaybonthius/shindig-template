@@ -1,22 +1,9 @@
 #lang racket/base
 
-(require "pollen-src/decode.rkt")
-(require "pollen-src/questions.rkt")
-(require "pollen-src/free-response.rkt")
-(require "pollen-src/media.rkt")
-(require "pollen-src/tags.rkt")
-(require "pollen-src/utils.rkt")
-(require "pollen-src/math.rkt")
-(require "pollen-src/cross-references.rkt")
+(require reprovide/reprovide
+         reprovide/require-transformer/glob-in)
 
-(provide (all-from-out "pollen-src/decode.rkt"))
-(provide (all-from-out "pollen-src/questions.rkt"))
-(provide (all-from-out "pollen-src/free-response.rkt"))
-(provide (all-from-out "pollen-src/media.rkt"))
-(provide (all-from-out "pollen-src/tags.rkt"))
-(provide (all-from-out "pollen-src/utils.rkt"))
-(provide (all-from-out "pollen-src/math.rkt"))
-(provide (all-from-out "pollen-src/cross-references.rkt"))
+(reprovide (glob-in "pollen-src/*.rkt"))
 (provide (all-defined-out))
 
 (module setup racket/base

@@ -69,6 +69,7 @@
   "CREATE TABLE IF NOT EXISTS cross_references (
                   type TEXT NOT NULL,
                   id TEXT NOT NULL,
+                  title TEXT NOT NULL,
                   source TEXT NOT NULL,
                   PRIMARY KEY (type, id)
               )")

@@ -2,9 +2,7 @@
 
 (require db
          pollen/core
-         pollen/render
-         racket/file
-         racket/path
+         sugar
          racket/port
          racket/string
          (prefix-in config: "../common/config.rkt")
@@ -12,83 +10,19 @@
 
 (provide (all-defined-out))
 
-
-(define (filename-without-extension path)
-  (define filename (path->string (file-name-from-path path)))
-  (define name-parts (string-split filename "."))
-  (if (> (length name-parts) 1)
-      (car name-parts)
-      filename))
-
-
-(define (render-component xexpr type uid)
-  (define prefix (symbol->string type))
-  (define output-dir (build-path config:pollen-dir prefix))
-  (define temp-dir (build-path output-dir "temp"))
-  (define temp-path (build-path temp-dir (string-append uid ".html.pm")))
-  (define temp-rkt-path (build-path temp-dir (string-append uid ".rkt")))
-  (define output-path (build-path output-dir (string-append uid ".html")))
-  (define template-path (build-path output-dir "template.html.p"))
-
-  (make-directory* temp-dir)
-  (make-directory* output-dir)
-
-  (with-output-to-file temp-path
-                       (lambda ()
-                         (displayln "#lang pollen")
-                         (display "◊")
-                         (write (quote-xexpr-attributes xexpr)))
-                       #:exists 'replace)
-
-  (with-output-to-file temp-rkt-path
-                       (lambda ()
-                         (displayln "#lang racket/base")
-                         (display "`")
-                         (write xexpr))
-                       #:exists 'replace)
-
-  (render-to-file-if-needed temp-path template-path output-path)
-  output-path
-
-  "")
-
-(define (default-placeholder type uid)
-  `(div ((hx-get ,(format "/get-~a/~a" (symbol->string type) uid)) (hx-trigger "load")
-                                                                   (hx-target "this")
-                                                                   (hx-swap "outerHTML"))
-        "Loading..."))
-
-(define (to-kebab-case str)
-  (string-join (map string-downcase (regexp-split #rx"[^a-zA-Z0-9]+" (string-trim str))) "-"))
-
-(define (definition #:name name #:uid (uid "") . body)
-  (set! uid
-        (if (string=? uid "")
-            (to-kebab-case name)
-            uid))
-  (define type 'definition)
-  (define id (format "~a-~a" (symbol->string type) uid))
-  (define component `(div [(class "block")] (strong ,name) (div ,@body)))
-  (define placeholder (default-placeholder type id))
-
-  (define source (filename-without-extension (hash-ref (current-metas) 'here-path)))
-
-  (upsert-xref type id source)
-  (render-component component type id)
-  ; (if load-asynchronously? placeholder component)
-  `(div ((id ,id)) ,component))
-
-(define (get-xref-source type id)
+(define (get-xref-source-and-title type id)
   (define db-connection
     (sqlite3-connect #:database (build-path config:sqlite-path "cross-references.sqlite")))
 
   (define result
     (query-maybe-row db-connection
-                     "select source from cross_references where type = $1 and id = $2"
+                     "SELECT source, title FROM cross_references WHERE type = $1 AND id = $2"
                      (symbol->string type)
                      id))
 
-  (vector-ref result 0))
+  (if result
+      (values (vector-ref result 0) (vector-ref result 1))
+      (values #f #f)))
 
 (define (extract-pollen-content str)
   (define prefix "#lang racket/base\n`")
@@ -105,28 +39,23 @@
   (cond
     [generate-references `(button [(class "btn")] "References have not been generated yet!!")]
     [else
-     (define id (format "~a-~a" (symbol->string type) uid))
-     (define source (get-xref-source type id))
-     (define current-source (filename-without-extension (hash-ref (current-metas) 'here-path)))
-
-     (define ref-name (string-append (string-titlecase (symbol->string type)) " " uid))
-
-     (define reference-class (format "~a-preview" id))
-     (define reference-container-class (format "~a-preview-container" id))
+     (define type-id (format "~a-~a" (symbol->string type) uid))
+     (define-values (source title) (get-xref-source-and-title type type-id))
+     (define current-source (remove-ext* (hash-ref (current-metas) 'here-path)))
+     (define reference-class (format "~a-preview" type-id))
+     (define reference-container-class (format "~a-preview-container" type-id))
+     ;  TODO: don't hardcode "lesson"
      (define reference-link
        (if (equal? source current-source)
-           `(a [(href ,(format "#~a" id))] "View in context")
-           `(a [(href ,(format "/lesson/~a#~a" source id))
-                (hx-get ,(format "/lesson/~a#~a" source id))
+           `(a [(href ,(format "#~a" type-id))] "View in context")
+           `(a [(href ,(format "/lesson/~a#~a" source type-id))
+                (hx-get ,(format "/lesson/~a#~a" source type-id))
                 (hx-target "#main")
                 (hx-select "#main")
                 (hx-push-url "true")
                 (@click ,(format "activePage = '/lesson/~a'" current-source))
                 (:class ,(format "{ 'active': activePage === '/lesson/~a' }" current-source))]
                "View in context")))
-     (define reference-path
-       (build-path config:pollen-dir (symbol->string type) "temp" (format "~a.rkt" id)))
-     (define reference-content (extract-pollen-content (file->string reference-path)))
 
      (@
       `(a
@@ -136,11 +65,11 @@
             "on click get the next .~a toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .~a"
             reference-container-class
             reference-container-class))
-         (hx-get ,(format "/get-~a/~a" (symbol->string type) id))
+         (hx-get ,(format "/get-~a/~a" (symbol->string type) type-id))
          (hx-target ,(format "next .~a" reference-class))
          (hx-trigger "click once")
          (preload "mouseover")]
-        ,ref-name)
+        ,title)
       `(div [(class ,(format "reference-container ~a" reference-container-class))]
             (div (div [(class "prose-md p-3")]
                       (div [(class ,(format "~a" reference-class))])

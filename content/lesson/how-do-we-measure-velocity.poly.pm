@@ -38,7 +38,7 @@ is a position function, where position is measured vertically relative to the gr
 
 In general, we make the following definition:
 
-◊definition[#:uid "avg-velocity" #:name "Average Velocity"]{
+◊definition[#:uid "avg-velocity" #:title "Average Velocity"]{
     For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊${t=a} to ◊${t=b}, denoted ◊${AV_{[a,b]}}, is given by the formula
 
     ◊$${AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}

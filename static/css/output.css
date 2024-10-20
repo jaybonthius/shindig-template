@@ -2782,9 +2782,19 @@ html:has(.drawer-toggle:checked) {
   position: relative;
 }
 
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .mt-4 {
@@ -2863,6 +2873,25 @@ html:has(.drawer-toggle:checked) {
   justify-content: center;
 }
 
+.border-l-2 {
+  border-left-width: 2px;
+}
+
+.border-blue-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
+
+.border-pink-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(219 39 119 / var(--tw-border-opacity));
+}
+
+.border-purple-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(147 51 234 / var(--tw-border-opacity));
+}
+
 .bg-base-100 {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
@@ -2873,21 +2902,65 @@ html:has(.drawer-toggle:checked) {
   background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
 }
 
-.stroke-current {
-  stroke: currentColor;
+.bg-\[linear-gradient\(to_right\2c var\(--tw-gradient-stops\)\)\] {
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
 }
 
-.p-4 {
-  padding: 1rem;
+.from-blue-200 {
+  --tw-gradient-from: #bfdbfe var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(191 219 254 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-pink-200 {
+  --tw-gradient-from: #fbcfe8 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(251 207 232 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-purple-200 {
+  --tw-gradient-from: #e9d5ff var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(233 213 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-\[length\:0_1\%\] {
+  --tw-gradient-from-position: 0 1%;
+}
+
+.to-transparent {
+  --tw-gradient-to: transparent var(--tw-gradient-to-position);
+}
+
+.to-\[length\:1\%_100\%\] {
+  --tw-gradient-to-position: 1% 100%;
+}
+
+.stroke-current {
+  stroke: currentColor;
 }
 
 .p-3 {
   padding: 0.75rem;
 }
 
+.p-4 {
+  padding: 1rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .py-6 {
@@ -2972,6 +3045,8 @@ body {
   border-bottom-width: 1px;
   grid-template-rows: 1fr;
 }
+
+/* TODO: make the top margin of the first paragraph of components (e.g. definition) 0 */
 
 p:has(+ .reference-container) {
   margin-bottom: 0;

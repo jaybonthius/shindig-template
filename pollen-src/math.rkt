@@ -11,5 +11,3 @@
   `(div [(class "flex justify-center")]
         (div [(class "inline-block")]
              (script [(type "math/tex; mode=display")] ,(format "\\[~a\\]" (string-join latex ""))))))
-
-

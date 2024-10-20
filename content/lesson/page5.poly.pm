@@ -91,3 +91,11 @@ This is a numbered equation:
         E = mc^2
     \end{equation}
 }
+
+This is a test from the PreText page:
+
+◊$${
+    \begin{equation}
+        A\xmapsto[\text{bijection}]{\Phi+\Psi+\Theta}B
+    \end{equation}
+}

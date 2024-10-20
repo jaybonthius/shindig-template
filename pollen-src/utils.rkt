@@ -5,6 +5,7 @@
          pollen/render
          pollen/setup
          racket/file
+         racket/string
          racket/match
          (prefix-in config: "../common/config.rkt")
          "sqlite.rkt")
@@ -24,15 +25,11 @@
     [(list tag content ...) (cons tag (map quote-xexpr-attributes content))]
     [else xexpr]))
 
-(define (render-x-expression xexpr prefix filename)
-  (define output-dir (build-path config:pollen-dir prefix))
+(define (render-component xexpr type uid)
+  (define output-dir (build-path config:pollen-dir (symbol->string type)))
   (define temp-dir (build-path output-dir "temp"))
-  (define temp-path (build-path temp-dir (string-append filename ".html.pm")))
-  (define output-path (build-path output-dir (string-append filename ".html")))
-  (define template-path (build-path output-dir (format "~a-template.html.p" prefix)))
-
-  (make-directory* temp-dir)
-  (make-directory* output-dir)
+  (define temp-path (build-path temp-dir (string-append uid ".html.pm")))
+  (map make-directory* (list temp-dir output-dir))
 
   (with-output-to-file temp-path
                        (lambda ()
@@ -41,8 +38,18 @@
                          (write xexpr))
                        #:exists 'replace)
 
+  (define output-path (build-path output-dir (string-append uid ".html")))
+  (define template-path (build-path output-dir "template.html.p"))
+  (when (not (file-exists? template-path))
+    (with-output-to-file template-path
+                         (lambda ()
+                           (displayln "◊(require html-printer)")
+                           (displayln "◊(map xexpr->html5 (select-from-doc 'body here))"))
+                         #:exists 'replace))
+
   (render-to-file-if-needed temp-path template-path output-path)
-  output-path)
+  output-path
+  "")
 
 (define (upsert-question question-id answers)
   (define db-file (build-path config:sqlite-path "questions.sqlite"))
@@ -98,7 +105,7 @@
 
       (printf "Database operations completed successfully.\n"))))
 
-(define (upsert-xref type id source)
+(define (upsert-xref type id title source)
   (define db-file (build-path config:sqlite-path "cross-references.sqlite"))
 
   (define conn (try-connect db-file))
@@ -108,12 +115,16 @@
 
       (query-exec
        conn
-       "INSERT OR REPLACE INTO cross_references (type, id, source)
-                   VALUES (?, ?, ?)"
+       "INSERT OR REPLACE INTO cross_references (type, id, title, source)
+                   VALUES (?, ?, ?, ?)"
        (symbol->string type)
        id
-       source)
+       title
+       (path->string source))
 
       (disconnect conn)
 
       (printf "Database operations completed successfully.\n"))))
+
+(define (to-kebab-case str)
+  (string-join (map string-downcase (regexp-split #rx"[^a-zA-Z0-9]+" (string-trim str))) "-"))

@@ -18,7 +18,7 @@
 (provide (contract-out [get-free-response-field (-> request? string? response?)]
                        [post-free-response-field (-> request? string? response?)]
                        [get-free-response-container (-> request? string? response?)]
-                       [get-definition (-> request? string? response?)]))
+                       [get-component (-> request? string? string? response?)]))
 
 (define (try-connect db-path)
   (with-handlers ([exn:fail? (lambda (e)
@@ -61,8 +61,7 @@
        submission
        is-corrent-int)
 
-      (disconnect conn)
-      )))
+      (disconnect conn))))
 
 (define (custom-template path . args)
   (for ([i (in-range 0 (length args) 2)]
@@ -70,11 +69,9 @@
     (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1))))
   (eval #`(include-template #:command-char #\● #,path)))
 
-(define (get-definition req uid)
-  (get-component 'definition req uid))
-
-(define (get-component type req uid)
-  (define file-path (format "content/~a/~a.html" (symbol->string type) uid))
+(define (get-component req type uid)
+  (println (format "type: ~a, uid: ~a" type uid))
+  (define file-path (format "content/~a/~a.html" type uid))
   (response/output (λ (op) (display (custom-template file-path) op))))
 
 (define (get-free-response-container req question-id)

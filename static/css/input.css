@@ -25,6 +25,8 @@ body { overflow-y: scroll; }
   grid-template-rows: 1fr;
 }
 
+/* TODO: make the top margin of the first paragraph of components (e.g. definition) 0 */
+
 p:has(+ .reference-container) {
   margin-bottom: 0;
 }
