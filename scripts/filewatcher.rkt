@@ -29,7 +29,7 @@
    '("**.rkt" (add change))
    (list "raco fmt -i {filename}" "echo 'Racket file reformatted {filename}'")
    '("rkt/**.rkt" (add change))
-   (list "make render" "echo 'Pollen files re-rendered'")
+   (list "make reset" "make render" "echo 'Pollen files re-rendered'")
    '("**.html.p" (add change))
    (list "make render" "echo 'Pollen files re-rendered'")
    '("**.poly.pm" (add change))

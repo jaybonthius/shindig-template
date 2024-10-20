@@ -4,6 +4,11 @@
       "*.pm": "document",
       "*.p": "template",
   },
+  "material-icon-theme.folders.associations": {
+      "sqlite": "database",
+      "migrations": "database",
+      "pollen-src": "src",
+  },
   "liveServer.settings.port": 7070,
   "files.associations": {
     "*.css": "tailwindcss",
@@ -44,11 +49,8 @@
   },
   "files.exclude": {
     "**/__pycache__": true,
-    ".venv": true,
-    "compiled": true,
-    "rkt/compiled": true,
+    "**/compiled": true,
     "node_modules": true,
-    "pollen/compiled": true,
   },
   "excalidraw.image": {
     "exportScale": 1,

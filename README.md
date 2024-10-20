@@ -1,4 +1,4 @@
-# honeycomb
+# backend
 
 ## Setup
 
@@ -7,15 +7,14 @@
 * You need [Racket] since this is a Racket application.
 * You need [Node.js] version 18 or higher to build the assets.
 * You need access to a couple local [Postgres] databases.  One named
-  `honeycomb` and the other `honeycomb_tests`.  The latter is
+  `backend` and the other `backend_tests`.  The latter is
   exercised by unit tests.
 
 ### First-time Setup
 
     npm install && npm run build
     raco pkg install chief
-    raco pkg install honeycomb/        # install and build the application and its deps
-    raco pkg install honeycomb-tests/  # install and build the tests and their deps
+    raco pkg install backend/        # install and build the application and its deps
 
 ### Development environment
 
