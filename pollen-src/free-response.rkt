@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require "../utils.rkt"
+(require "utils.rkt"
          "sqlite.rkt")
 
 (provide (all-defined-out))

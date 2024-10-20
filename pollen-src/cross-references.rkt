@@ -7,8 +7,8 @@
          racket/path
          racket/port
          racket/string
-         (prefix-in config: "../../../common/config.rkt")
-         "../utils.rkt")
+         (prefix-in config: "../common/config.rkt")
+         "utils.rkt")
 
 (provide (all-defined-out))
 

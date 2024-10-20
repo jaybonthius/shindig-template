@@ -11,7 +11,7 @@
          racket/set
          racket/string
          xml
-         "../utils.rkt"
+         "utils.rkt"
          "sqlite.rkt")
 
 (provide (all-defined-out))

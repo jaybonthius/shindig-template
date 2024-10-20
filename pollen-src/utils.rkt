@@ -6,8 +6,8 @@
          pollen/setup
          racket/file
          racket/match
-         (prefix-in config: "../../common/config.rkt")
-         "markup/sqlite.rkt")
+         (prefix-in config: "../common/config.rkt")
+         "sqlite.rkt")
 
 (provide (all-defined-out))
 
