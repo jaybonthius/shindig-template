@@ -2,8 +2,8 @@
 
 (require pollen/core
          pollen/tag
-         sugar
          racket/path
+         sugar
          (prefix-in config: "../common/config.rkt")
          "utils.rkt")
 
@@ -11,34 +11,35 @@
 
 (define (default-placeholder type uid)
   (default-tag-function 'div
-                        #:hx-get (format "/get-~a/~a" (symbol->string type) uid)
+                        #:hx-get (format "/get-component/~a/~a" (symbol->string type) uid)
                         #:hx-trigger "load"
                         #:hx-target "this"
                         #:hx-swap "outerHTML"))
 
-(define (make-component-function type tailwind)
-  (λ (#:title title #:uid [uid ""] . body)
-    (set! uid
-          (if (string=? uid "")
-              (to-kebab-case title)
-              uid))
-    (define id (format "~a-~a" (symbol->string type) uid))
-    (define component
-      `(div [(class "block")]
-            (strong ,(if (eq? type 'definition)
-                         title
-                         (apply string-append
-                                (list (string-titlecase (symbol->string type)) ": " title))))
-            (div ,@body)))
-    (define placeholder (default-placeholder type id))
+(define ((make-component-function type tailwind) #:title title #:uid [uid ""] . body)
+  (set! uid
+        (if (string=? uid "")
+            (to-kebab-case title)
+            uid))
+  (define id (format "~a-~a" (symbol->string type) uid))
+  (define component
+    `(div [(class "block")]
+          (strong ,(if (eq? type 'definition)
+                       title
+                       (apply string-append
+                              (list (string-titlecase (symbol->string type)) ": " title))))
+          (div ,@body)))
+  (define placeholder (default-placeholder type id))
 
-    (define source (remove-ext* (file-name-from-path (hash-ref (current-metas) 'here-path))))
-    (when (eq? type 'theorem)
-      (printf (format "Source: ~a\n" source)))
+  (define source (remove-ext* (file-name-from-path (hash-ref (current-metas) 'here-path))))
+  (when (eq? type 'theorem)
+    (printf (format "Source: ~a\n" source)))
 
-    (upsert-xref type id title source)
-    (render-component (quote-xexpr-attributes component) type id)
-    `(div ((id ,id) (class ,(format "px-6 py-0 mx-0 my-6 ~a" tailwind))) ,component)))
+  (upsert-xref type id title source)
+  `(div ((id ,id) (class ,(format "px-6 py-0 mx-0 my-6 ~a" tailwind))
+                  (component-type ,(symbol->string type))
+                  (component-id ,uid))
+        ,component))
 
 (define (theorem-tailwind color)
   (format

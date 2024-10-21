@@ -20,9 +20,10 @@
     (decode-elements elements
                      #:txexpr-elements-proc (compose1 extract-divs-from-paragraphs decode-paragraphs)
                      #:exclude-tags '(script style figure)))
-  (make-txexpr 'body
-               null
-               (decode-elements first-pass
-                                #:inline-txexpr-proc hyperlink-decoder
-                                #:string-proc smart-dashes
-                                #:exclude-tags '(script style))))
+  (define second-pass
+    (decode-elements first-pass
+                     #:inline-txexpr-proc hyperlink-decoder
+                     #:string-proc smart-dashes
+                     #:exclude-tags '(script style)))
+  (define third-pass (decode-elements second-pass #:txexpr-proc extract-components))
+  (make-txexpr 'body null third-pass))

@@ -1,9 +1,10 @@
 #lang racket/base
 
 (require racket/list
-         txexpr)
+         txexpr
+         "utils.rkt")
 
-(provide extract-divs-from-paragraphs)
+(provide (all-defined-out))
 
 (define (extract-divs-from-paragraphs elements)
   (append-map (λ (e)
@@ -30,3 +31,25 @@
       ;; Keep the element in acc-content
       [else (loop (rest es) (cons (first es) acc-content) acc-divs)]))
   (loop elems '() '()))
+
+(define (extract-components x)
+  (cond
+    [(txexpr? x)
+     (define tag (get-tag x))
+     (define attrs (get-attrs x))
+     (define elements (get-elements x))
+     (define component-type (attr-ref attrs 'component-type #f))
+     (define component-id (attr-ref attrs 'component-id #f))
+     (cond
+       [component-type
+        (render-component (quote-xexpr-attributes (car elements))
+                          (string->symbol component-type)
+                          component-id)
+        (txexpr tag
+                (filter (λ (attr)
+                          (and (not (equal? (car attr) 'component-type))
+                               (not (equal? (car attr) 'component-id))))
+                        attrs)
+                (map extract-components elements))]
+       [else (txexpr tag attrs (map extract-components elements))])]
+    [else x]))

@@ -32,25 +32,31 @@ zap-sqlite:
 	make sqlite
 
 lint:
-	@echo "Linting Racket files..."
-	@find . -name "*.rkt" | while read -r file; do \
-		if raco fmt -i "$$file"; then \
-			echo "Successfully formatted \"$$file\""; \
-		else \
-			echo "Failed on \"$$file\""; \
-			exit 1; \
+	@echo "Linting Racket files with uncommitted changes (staged and unstaged)..."
+	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+		echo "Linting \"$$file\"..."; \
+		if [ -f "$$file" ]; then \
+			if raco fmt -i "$$file"; then \
+				echo "Successfully formatted \"$$file\""; \
+			else \
+				echo "Failed on \"$$file\""; \
+				exit 1; \
+			fi; \
 		fi; \
 	done
 	@echo "Linting complete."
 
 refactor:
-	@echo "Refactoring Racket files..."
-	@find . -name "*.rkt" | while read -r file; do \
-		if resyntax fix --file "$$file"; then \
-			echo "Successfully refactored \"$$file\""; \
-		else \
-			echo "Failed on \"$$file\""; \
-			exit 1; \
+	@echo "Refactoring Racket files with uncommitted changes (staged and unstaged)..."
+	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+		echo "Refactoring \"$$file\"..."; \
+		if [ -f "$$file" ]; then \
+			if resyntax fix --file "$$file"; then \
+				echo "Successfully refactored \"$$file\""; \
+			else \
+				echo "Failed on \"$$file\""; \
+				exit 1; \
+			fi; \
 		fi; \
 	done
 	@echo "Refactor complete."

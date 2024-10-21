@@ -5,8 +5,8 @@
          pollen/render
          pollen/setup
          racket/file
-         racket/string
          racket/match
+         racket/string
          (prefix-in config: "../common/config.rkt")
          "sqlite.rkt")
 
@@ -29,7 +29,7 @@
   (define output-dir (build-path config:pollen-dir (symbol->string type)))
   (define temp-dir (build-path output-dir "temp"))
   (define temp-path (build-path temp-dir (string-append uid ".html.pm")))
-  (map make-directory* (list temp-dir output-dir))
+  (for-each make-directory* (list temp-dir output-dir))
 
   (with-output-to-file temp-path
                        (lambda ()
@@ -40,12 +40,11 @@
 
   (define output-path (build-path output-dir (string-append uid ".html")))
   (define template-path (build-path output-dir "template.html.p"))
-  (when (not (file-exists? template-path))
+  (unless (file-exists? template-path)
     (with-output-to-file template-path
                          (lambda ()
                            (displayln "◊(require html-printer)")
-                           (displayln "◊(map xexpr->html5 (select-from-doc 'body here))"))
-                         #:exists 'replace))
+                           (displayln "◊(map xexpr->html5 (select-from-doc 'body here))"))))
 
   (render-to-file-if-needed temp-path template-path output-path)
   output-path

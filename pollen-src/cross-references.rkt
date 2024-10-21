@@ -2,9 +2,9 @@
 
 (require db
          pollen/core
-         sugar
          racket/port
          racket/string
+         sugar
          (prefix-in config: "../common/config.rkt")
          "utils.rkt")
 
@@ -65,7 +65,7 @@
             "on click get the next .~a toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .~a"
             reference-container-class
             reference-container-class))
-         (hx-get ,(format "/get-~a/~a" (symbol->string type) type-id))
+         (hx-get ,(format "/get-component/~a/~a" (symbol->string type) uid))
          (hx-target ,(format "next .~a" reference-class))
          (hx-trigger "click once")
          (preload "mouseover")]
