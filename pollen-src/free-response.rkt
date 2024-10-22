@@ -25,7 +25,7 @@
 
   ; TODO: uncomment this to enable HTMX loading
   (render-component (quote-xexpr-attributes question-content) 'free-response uid)
-  `(div ((hx-get ,(format "/get-free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
+  `(div ((hx-get ,(format "/free-response/~a.html" uid)) (hx-trigger "load") (hx-target "this"))
         "Loading...")
   ; question-content
   )

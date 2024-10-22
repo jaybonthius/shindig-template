@@ -82,7 +82,7 @@
                     </li>
                     <li>
                         <a href="/lesson/page1" 
-                           hx-get="/lesson/page1" 
+                           hx-get="page1.html" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
@@ -91,7 +91,7 @@
                     </li>
                     <li>
                         <a href="/lesson/page2" 
-                           hx-get="/lesson/page2" 
+                           hx-get="page2.html" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
@@ -100,7 +100,7 @@
                     </li>
                     <li>
                         <a href="/lesson/page3" 
-                           hx-get="/lesson/page3" 
+                           hx-get="page3.html" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
@@ -109,7 +109,7 @@
                     </li>
                     <li>
                         <a href="/lesson/how-do-we-measure-velocity" 
-                           hx-get="/lesson/how-do-we-measure-velocity" 
+                           hx-get="how-do-we-measure-velocity.html" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"

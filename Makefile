@@ -1,7 +1,7 @@
 .PHONY: lint sqlite
 
 render:
-	cd content && raco pollen render . && raco pollen render lesson
+	cd content && raco pollen render -r
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
@@ -15,6 +15,7 @@ zap:
 	make reset
 
 run:
+	make render
 	raco chief start
 
 pollen-server:
