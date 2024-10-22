@@ -4,14 +4,14 @@
          koyo/haml
          racket/file
          racket/path
-         (prefix-in config: "../common/config.rkt"))
+         (prefix-in config: "../config.rkt"))
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
                                (printf "Error creating empty file: ~a\n" (exn-message e))
                                (void)
                                #f)])
-    (call-with-output-file path (lambda (out) (void)))
+    (call-with-output-file path (lambda (_) (void)))
     (printf "Successfully created empty file.\n")
     #t))
 

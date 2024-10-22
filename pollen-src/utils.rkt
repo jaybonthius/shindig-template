@@ -7,7 +7,7 @@
          racket/file
          racket/match
          racket/string
-         (prefix-in config: "../common/config.rkt")
+         (prefix-in config: "../config.rkt")
          "sqlite.rkt")
 
 (provide (all-defined-out))
@@ -23,7 +23,7 @@
     [(list tag (and attrs (list (list _ _) ...)) content ...)
      (list* tag `'(,@attrs) (map quote-xexpr-attributes content))]
     [(list tag content ...) (cons tag (map quote-xexpr-attributes content))]
-    [else xexpr]))
+    [_ xexpr]))
 
 (define (render-component xexpr type uid)
   (define output-dir (build-path config:pollen-dir (symbol->string type)))

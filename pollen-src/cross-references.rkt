@@ -5,7 +5,7 @@
          racket/port
          racket/string
          sugar
-         (prefix-in config: "../common/config.rkt")
+         (prefix-in config: "../config.rkt")
          "utils.rkt")
 
 (provide (all-defined-out))

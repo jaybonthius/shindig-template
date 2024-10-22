@@ -1,18 +1,18 @@
 #lang racket/base
 
-(require racket/contract/base
-         (for-syntax racket/base) ; to make command char work
+(require (for-syntax racket/base) ; to make command char work
+         backend/components/user
+         db
+         (only-in net/http-easy post response-status-code response-body response-close!)
+         net/uri-codec
+         racket/contract/base
+         racket/match
+         (only-in srfi/13 string-index)
+         web-server/http/request-structs
          web-server/servlet
          web-server/templates
-         backend/components/user
-         web-server/http/request-structs
-         racket/match
-         net/uri-codec
-         (only-in srfi/13 string-index)
-         (only-in net/http-easy post response-status-code response-body response-close!)
-         db
          xml
-         (prefix-in common-config: "../../common/config.rkt")
+         (prefix-in common-config: "../../config.rkt")
          "../components/auth.rkt")
 
 (provide (contract-out [get-free-response-field (-> request? string? response?)]
@@ -69,16 +69,16 @@
     (namespace-set-variable-value! (list-ref args i) (list-ref args (+ i 1))))
   (eval #`(include-template #:command-char #\● #,path)))
 
-(define (get-component req type uid)
+(define (get-component _req type uid)
   (println (format "type: ~a, uid: ~a" type uid))
   (define file-path (format "content/~a/~a.html" type uid))
   (response/output (λ (op) (display (custom-template file-path) op))))
 
-(define (get-free-response-container req question-id)
+(define (get-free-response-container _req question-id)
   (define file-path (format "content/free-response/~a.html" question-id))
   (response/output (λ (op) (display (custom-template file-path) op))))
 
-(define (get-free-response-field req uid)
+(define (get-free-response-field _req uid)
   (define current-user-info (current-user))
   (define username (user-username current-user-info))
   (define db-file (build-path common-config:sqlite-path "free-response-submissions.sqlite"))
@@ -185,12 +185,12 @@
   ; TODO: pass question-id
   (upsert-free-response-submission uid username "" submission is-corrent)
 
-  (define (correct-style-tag uid)
+  (define (correct-style-tag)
     (string-append (string-append "#" uid " {")
                    "outline:4px solid #98C379;border-radius:4px;background:rgba(152, 195, 121, 0.11);"
                    "}"))
 
-  (define (incorrect-style-tag uid)
+  (define (incorrect-style-tag)
     (string-append (string-append "#" uid " {")
                    "outline:4px solid #d7170b;border-radius:4px;background:rgba(251, 187, 182, 0.1);"
                    "}"))

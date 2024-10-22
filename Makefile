@@ -1,4 +1,4 @@
-.PHONY: lint sqlite
+.PHONY: format sqlite
 
 render:
 	cd content && raco pollen render . && raco pollen render lesson
@@ -31,16 +31,30 @@ zap-sqlite:
 	find . -name "*.sqlite" -type f -delete
 	make sqlite
 
-lint:
-	@echo "Linting Racket files with uncommitted changes (staged and unstaged)..."
+format:
+	@echo "Formatting Racket files with uncommitted changes (staged and unstaged)..."
 	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
-		echo "Linting \"$$file\"..."; \
+		echo "Formatting \"$$file\"..."; \
 		if [ -f "$$file" ]; then \
 			if raco fmt -i "$$file"; then \
 				echo "Successfully formatted \"$$file\""; \
 			else \
 				echo "Failed on \"$$file\""; \
 				exit 1; \
+			fi; \
+		fi; \
+	done
+	@echo "Formatting complete."
+
+lint:
+	@echo "Linting Racket files with uncommitted changes (staged and unstaged)..."
+	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+		if [ -f "$$file" ]; then \
+			if raco review "$$file"; then \
+				:; \
+			else \
+				echo "Failed on \"$$file\""; \
+				echo ""; \
 			fi; \
 		fi; \
 	done
@@ -60,4 +74,4 @@ refactor:
 		fi; \
 	done
 	@echo "Refactor complete."
-	make lint
+	make format

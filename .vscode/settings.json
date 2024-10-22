@@ -1,6 +1,6 @@
 {
   "material-icon-theme.files.associations": {
-      "Procfile.preprocess": "heroku",
+      "Procfile.static": "heroku",
       "*.pm": "document",
       "*.p": "template",
   },
