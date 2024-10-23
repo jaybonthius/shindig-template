@@ -4,7 +4,7 @@
 
 (provide (all-defined-out))
 
-(define project-root (find-system-path 'run-file))
+(define project-root "/home/jay/Code/honeycomb/") ; TODO: make this automatic
 (define pollen-dir (build-path project-root "content"))
 (define sqlite-path (build-path project-root "sqlite"))
 

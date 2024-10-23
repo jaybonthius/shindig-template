@@ -21,7 +21,7 @@ pollen-server:
 	cd content && raco pollen setup -p && raco pollen start . 8081
 
 publish:
-	cd content && raco pollen publish .
+	raco pollen publish content out
 
 sqlite:
 	mkdir -p sqlite
