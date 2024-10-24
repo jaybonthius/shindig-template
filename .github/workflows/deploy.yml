@@ -16,7 +16,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
@@ -37,11 +36,11 @@ jobs:
           exit 1
       
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag pollen-site:$(date +%s)
+        run: docker build . --file Dockerfile --tag pollen-site:latest
       
       - name: Copy built site from container
         run: |
-          container_id=$(docker create pollen-site:$(date +%s))
+          container_id=$(docker create pollen-site:latest)
           docker cp $container_id:/app/content ./public
           docker rm $container_id
           
@@ -50,7 +49,6 @@ jobs:
         with:
           path: ./public
 
-  # Deploy job
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main'
