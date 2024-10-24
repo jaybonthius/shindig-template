@@ -27,6 +27,7 @@
 
 ;; Import everything from all the files
 (require "components.rkt"
+         "config.rkt"
          "cross-references.rkt"
          "decode.rkt"
          "decoders.rkt"
@@ -41,6 +42,7 @@
 
 ;; Re-provide everything from those modules
 (provide (all-from-out "components.rkt")
+         (all-from-out "config.rkt")
          (all-from-out "cross-references.rkt")
          (all-from-out "decode.rkt")
          (all-from-out "decoders.rkt")

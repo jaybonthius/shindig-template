@@ -22,10 +22,8 @@ RUN ls -la && \
     ls -la shindig/
 
 # Build the site
-RUN cd content && \
-    raco pollen render && \
-    raco pollen publish && \
-    cd ..
+RUN raco pollen render -r content && \
+    raco pollen publish content out
 
 # Verify the built contents
 RUN echo "Final content directory:" && \

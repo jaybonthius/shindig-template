@@ -4,7 +4,6 @@
          pollen/tag
          racket/path
          sugar
-         (prefix-in config: "../config.rkt")
          "utils.rkt")
 
 (provide (all-defined-out))

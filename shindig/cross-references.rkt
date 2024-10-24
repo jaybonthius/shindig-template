@@ -5,14 +5,14 @@
          racket/port
          racket/string
          sugar
-         (prefix-in config: "../config.rkt")
+         (prefix-in config: "config.rkt")
          "utils.rkt")
 
 (provide (all-defined-out))
 
 (define (get-xref-source-and-title type id)
   (define db-connection
-    (sqlite3-connect #:database (build-path config:sqlite-path "cross-references.sqlite")))
+    (sqlite3-connect #:database (build-path (config:sqlite-path) "cross-references.sqlite")))
 
   (define result
     (query-maybe-row db-connection

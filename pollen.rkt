@@ -1,11 +1,14 @@
 #lang racket/base
 
 (require reprovide/reprovide
-         reprovide/require-transformer/glob-in)
+         reprovide/require-transformer/glob-in
+         racket/runtime-path)
 
 (reprovide shindig)
 
 (provide (all-defined-out))
+
+; (project-root )
 
 (module setup racket/base
   (require racket/string)

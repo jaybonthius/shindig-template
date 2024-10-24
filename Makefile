@@ -1,7 +1,7 @@
 .PHONY: format sqlite
 
 render:
-	cd content && raco pollen render . && raco pollen render lesson
+	raco pollen render -r content
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson

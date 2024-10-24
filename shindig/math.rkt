@@ -1,6 +1,7 @@
 #lang racket/base
 
-(require racket/string)
+(require racket/string
+"config.rkt")
 
 (provide (all-defined-out))
 

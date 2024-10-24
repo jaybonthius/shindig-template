@@ -7,7 +7,7 @@
          racket/file
          racket/match
          racket/string
-         (prefix-in config: "../config.rkt")
+         (prefix-in config: "config.rkt")
          "sqlite.rkt")
 
 (provide (all-defined-out))
@@ -26,7 +26,7 @@
     [_ xexpr]))
 
 (define (render-component xexpr type uid)
-  (define output-dir (build-path config:pollen-dir (symbol->string type)))
+  (define output-dir (build-path (config:pollen-dir) (symbol->string type)))
   (define temp-dir (build-path output-dir "temp"))
   (define temp-path (build-path temp-dir (string-append uid ".html.pm")))
   (for-each make-directory* (list temp-dir output-dir))
@@ -51,7 +51,7 @@
   "")
 
 (define (upsert-question question-id answers)
-  (define db-file (build-path config:sqlite-path "questions.sqlite"))
+  (define db-file (build-path (config:sqlite-path) "questions.sqlite"))
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
@@ -78,7 +78,7 @@
       (printf "Database operations completed successfully.\n"))))
 
 (define (upsert-free-response field-id question-id answer)
-  (define db-file (build-path config:sqlite-path "free-response-questions.sqlite"))
+  (define db-file (build-path (config:sqlite-path) "free-response-questions.sqlite"))
   (define conn (try-connect db-file))
   (when conn
     (with-handlers ([exn:fail? (lambda (e)
@@ -105,7 +105,7 @@
       (printf "Database operations completed successfully.\n"))))
 
 (define (upsert-xref type id title source)
-  (define db-file (build-path config:sqlite-path "cross-references.sqlite"))
+  (define db-file (build-path (config:sqlite-path) "cross-references.sqlite"))
 
   (define conn (try-connect db-file))
   (when conn
