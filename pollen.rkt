@@ -3,7 +3,8 @@
 (require reprovide/reprovide
          reprovide/require-transformer/glob-in)
 
-(reprovide (glob-in "pollen-src/*.rkt"))
+(reprovide shindig)
+
 (provide (all-defined-out))
 
 (module setup racket/base

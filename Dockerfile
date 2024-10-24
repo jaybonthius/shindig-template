@@ -1,22 +1,32 @@
 # Use the official Racket image as base
 FROM racket/racket:8.10
 
-# Install required packages
-RUN raco pkg install --auto --no-docs pollen
-
 # Set working directory
 WORKDIR /app
 
-# Copy your content directory
+# Copy your shindig package and pollen config first
+COPY shindig/ ./shindig/
+COPY pollen.rkt ./
+
+# Install shindig package which includes pollen as a dependency
+RUN raco pkg install --auto shindig/
+
+# Copy content directory
 COPY content/ ./content/
 
 # Show contents for debugging
-RUN ls -la content/
+RUN ls -la && \
+    echo "Content directory:" && \
+    ls -la content/ && \
+    echo "Shindig package:" && \
+    ls -la shindig/
 
-# Build the site with verbose output
-RUN raco pollen publish content && echo "Site built successfully!"
+# Build the site
+RUN cd content && \
+    raco pollen render && \
+    raco pollen publish && \
+    cd ..
 
-# Show the built contents
-RUN ls -la content/
-
-# The rendered site will be in content/
+# Verify the built contents
+RUN echo "Final content directory:" && \
+    ls -la content/

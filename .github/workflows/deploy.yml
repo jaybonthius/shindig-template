@@ -36,18 +36,32 @@ jobs:
           exit 1
       
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag pollen-site:latest
+        run: |
+          echo "Building Docker image..."
+          docker build . --file Dockerfile --tag pollen-site:latest 2>&1 | tee build.log
       
       - name: Copy built site from container
         run: |
+          echo "Creating container..."
           container_id=$(docker create pollen-site:latest)
+          echo "Copying files from container..."
           docker cp $container_id:/app/content ./public
+          echo "Removing container..."
           docker rm $container_id
+          echo "Built site contents:"
+          ls -la ./public
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-logs
+          path: build.log
 
   deploy:
     needs: build

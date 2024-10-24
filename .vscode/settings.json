@@ -7,7 +7,7 @@
   "material-icon-theme.folders.associations": {
       "sqlite": "database",
       "migrations": "database",
-      "pollen-src": "src",
+      "shindig": "src",
   },
   "liveServer.settings.port": 7070,
   "files.associations": {
