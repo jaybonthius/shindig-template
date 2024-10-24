@@ -10,7 +10,6 @@ WORKDIR /app
 # Copy your shindig package and pollen config first
 COPY shindig/ ./shindig/
 COPY pollen.rkt ./
-COPY config.rkt ./
 
 RUN echo "BASE_URL=${BASE_URL}"
 
