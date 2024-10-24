@@ -2,13 +2,14 @@
 
 (require reprovide/reprovide
          reprovide/require-transformer/glob-in
-         racket/runtime-path)
+         racket/runtime-path
+         racket/string)
 
 (reprovide shindig)
 
 (provide (all-defined-out))
 
-(baseurl (or (getenv "BASE_URL") "/"))
+(baseurl (string-replace (or (getenv "BASE_URL") "/") "http://" "https://"))
 
 (module setup racket/base
   (require racket/string)
