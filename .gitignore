@@ -9,4 +9,5 @@ __pycache__/
 temp/
 .env
 **/*.html
-*.sqlite
+sqlite/free-response-questions.sqlite
+sqlite/free-response-submissions.sqlite
