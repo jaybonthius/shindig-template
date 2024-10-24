@@ -13,6 +13,7 @@ RUN raco pkg install --auto shindig/
 
 # Copy content directory
 COPY content/ ./content/
+COPY sqlite/ ./sqlite/
 
 # Show contents for debugging
 RUN ls -la && \
