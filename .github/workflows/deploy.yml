@@ -45,7 +45,7 @@ jobs:
           echo "Creating container..."
           container_id=$(docker create pollen-site:latest)
           echo "Copying files from container..."
-          docker cp $container_id:/app/content ./public
+          docker cp $container_id:/app/out ./public
           echo "Removing container..."
           docker rm $container_id
           echo "Built site contents:"
