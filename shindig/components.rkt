@@ -4,13 +4,14 @@
          pollen/tag
          racket/path
          sugar
-         "utils.rkt")
+         "utils.rkt"
+         "config.rkt")
 
 (provide (all-defined-out))
 
 (define (default-placeholder type uid)
   (default-tag-function 'div
-                        #:hx-get (format "/~a/~a" (symbol->string type) uid)
+                        #:hx-get (format "~a/~a/~a" (baseurl) (symbol->string type) uid)
                         #:hx-trigger "load"
                         #:hx-target "this"
                         #:hx-swap "outerHTML"))

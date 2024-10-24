@@ -1,12 +1,18 @@
 # Use the official Racket image as base
 FROM racket/racket:8.14
 
+# Accept base_url as build argument
+ARG BASE_URL=""
+
 # Set working directory
 WORKDIR /app
 
 # Copy your shindig package and pollen config first
 COPY shindig/ ./shindig/
 COPY pollen.rkt ./
+COPY config.rkt ./
+
+RUN echo "BASE_URL=${BASE_URL}"
 
 # Install shindig package which includes pollen as a dependency
 RUN raco pkg install --auto shindig/
