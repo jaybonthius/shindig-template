@@ -48,13 +48,13 @@
      (define reference-link
        (if (equal? source current-source)
            `(a [(href ,(format "#~a" type-id))] "View in context")
-           `(a [(href ,(format "~a/lesson/~a#~a" (config:baseurl) source type-id))
-                (hx-get ,(format "~a/lesson/~a#~a" (config:baseurl) source type-id))
+           `(a [(href ,(format "~alesson/~a#~a" (config:baseurl) source type-id))
+                (hx-get ,(format "~alesson/~a#~a" (config:baseurl) source type-id))
                 (hx-target "#main")
                 (hx-select "#main")
                 (hx-push-url "true")
-                (@click ,(format "activePage = '~a/lesson/~a'" (config:baseurl) current-source))
-                (:class ,(format "{ 'active': activePage === '~a/lesson/~a' }" (config:baseurl) current-source))]
+                (@click ,(format "activePage = '~alesson/~a'" (config:baseurl) current-source))
+                (:class ,(format "{ 'active': activePage === '~alesson/~a' }" (config:baseurl) current-source))]
                "View in context")))
 
      (@
@@ -65,7 +65,7 @@
             "on click get the next .~a toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .~a"
             reference-container-class
             reference-container-class))
-         (hx-get ,(format "~a/~a/~a" (config:baseurl) (symbol->string type) uid))
+         (hx-get ,(format "~a~a/~a" (config:baseurl) (symbol->string type) uid))
          (hx-target ,(format "next .~a" reference-class))
          (hx-trigger "click once")
          (preload "mouseover")]

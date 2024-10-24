@@ -8,7 +8,7 @@
 
 (provide (all-defined-out))
 
-(baseurl (or (getenv "BASE_URL") ""))
+(baseurl (or (getenv "BASE_URL") "/"))
 
 (module setup racket/base
   (require racket/string)

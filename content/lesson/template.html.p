@@ -7,8 +7,8 @@
         <meta name="description" content="Your description here" />
         <meta name="keywords" content="keyword1, keyword2, keyword3" />
         <title>Honeycomb</title>
-        <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-        <link href="/static/css/output.css" rel="stylesheet" />
+        <link rel="icon" href="◊(baseurl)static/favicon.ico" type="image/x-icon">
+        <link href="◊(baseurl)static/css/output.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     </head>
@@ -34,13 +34,13 @@
                             </label>
                         </div>
                         <div class="flex-1">
-                            <a class="btn btn-ghost text-xl" href="◊(baseurl)/" 
+                            <a class="btn btn-ghost text-xl" href="◊(baseurl)" 
                             hx-get="/" 
                             hx-target="#main" 
                             hx-select="#main"
                             hx-push-url="true"
-                            @click="activePage = '◊(baseurl)/'"
-                            :class="{ 'active': activePage === '◊(baseurl)/' }">Honeycomb</a>
+                            @click="activePage = '◊(baseurl)'"
+                            :class="{ 'active': activePage === '◊(baseurl)' }">Honeycomb</a>
                         </div>
                         <div class="flex-none">
                             <button class="btn btn-square btn-ghost">
@@ -72,48 +72,48 @@
                 <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 text-base sm:text-sm lg:text-lg xl:text-xl">
                     <li>
-                        <a href="◊(baseurl)/" 
-                           hx-get="◊(baseurl)/" 
+                        <a href="◊(baseurl)" 
+                           hx-get="◊(baseurl)" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
-                           @click="activePage = '◊(baseurl)/'"
+                           @click="activePage = '◊(baseurl)'"
                            :class="{ 'active': activePage === '/' }">Home</a>
                     </li>
                     <li>
-                        <a href="◊(baseurl)/lesson/page1" 
-                           hx-get="◊(baseurl)/lesson/page1" 
+                        <a href="◊(baseurl)lesson/page1" 
+                           hx-get="◊(baseurl)lesson/page1" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
-                           @click="activePage = '◊(baseurl)/lesson/page1'"
+                           @click="activePage = '◊(baseurl)lesson/page1'"
                            :class="{ 'active': activePage === '/lesson/page1' }">Page 1</a>
                     </li>
                     <li>
-                        <a href="◊(baseurl)/lesson/page2" 
-                           hx-get="◊(baseurl)/lesson/page2" 
+                        <a href="◊(baseurl)lesson/page2" 
+                           hx-get="◊(baseurl)lesson/page2" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
-                           @click="activePage = '◊(baseurl)/lesson/page2'"
+                           @click="activePage = '◊(baseurl)lesson/page2'"
                            :class="{ 'active': activePage === '/lesson/page2' }">Page 2</a>
                     </li>
                     <li>
-                        <a href="◊(baseurl)/lesson/page3" 
-                           hx-get="◊(baseurl)/lesson/page3" 
+                        <a href="◊(baseurl)lesson/page3" 
+                           hx-get="◊(baseurl)lesson/page3" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
-                           @click="activePage = '◊(baseurl)/lesson/page3'"
+                           @click="activePage = '◊(baseurl)lesson/page3'"
                            :class="{ 'active': activePage === '/lesson/page3' }">Page 3</a>
                     </li>
                     <li>
-                        <a href="◊(baseurl)/lesson/how-do-we-measure-velocity" 
-                           hx-get="◊(baseurl)/lesson/how-do-we-measure-velocity" 
+                        <a href="◊(baseurl)lesson/how-do-we-measure-velocity" 
+                           hx-get="◊(baseurl)lesson/how-do-we-measure-velocity" 
                            hx-select="#main"
                            hx-target="#main" 
                            hx-push-url="true"
-                           @click="activePage = '◊(baseurl)/lesson/how-do-we-measure-velocity'"
+                           @click="activePage = '◊(baseurl)lesson/how-do-we-measure-velocity'"
                            :class="{ 'active': activePage === '/lesson/how-do-we-measure-velocity' }">How do we measure velocity?</a>
                     </li>
                 </ul>
