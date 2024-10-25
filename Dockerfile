@@ -22,18 +22,20 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml postcss.config.js ./
 
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git
+
 RUN pnpm install --frozen-lockfile --prod
 
-COPY shindig/ ./shindig/
 COPY pollen.rkt ./
 
 RUN echo "BASE_URL=${BASE_URL}"
 
-RUN raco pkg install --auto shindig/
+RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git
 
 COPY content/ ./content/
 COPY sqlite/ ./sqlite/
-
 
 RUN raco pollen render -r content
 
