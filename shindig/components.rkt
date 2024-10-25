@@ -9,13 +9,6 @@
 
 (provide (all-defined-out))
 
-(define (default-placeholder type uid)
-  (default-tag-function 'div
-                        #:hx-get (format "~a~a/~a" (baseurl) (symbol->string type) uid)
-                        #:hx-trigger "load"
-                        #:hx-target "this"
-                        #:hx-swap "outerHTML"))
-
 (define ((make-component-function type tailwind) #:title title #:uid [uid ""] . body)
   (set! uid
         (if (string=? uid "")
@@ -29,11 +22,8 @@
                        (apply string-append
                               (list (string-titlecase (symbol->string type)) ": " title))))
           (div ,@body)))
-  (define placeholder (default-placeholder type id))
 
   (define source (remove-ext* (file-name-from-path (hash-ref (current-metas) 'here-path))))
-  (when (eq? type 'theorem)
-    (printf (format "Source: ~a\n" source)))
 
   (upsert-xref type id title source)
   `(div ((id ,id) (class ,(format "px-6 py-0 mx-0 my-6 ~a" tailwind))

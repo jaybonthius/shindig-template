@@ -25,8 +25,8 @@
     [(list tag content ...) (cons tag (map quote-xexpr-attributes content))]
     [_ xexpr]))
 
-(define (render-component xexpr type uid)
-  (define output-dir (build-path (config:pollen-dir) (symbol->string type)))
+(define (render-knowl xexpr type uid)
+  (define output-dir (build-path (config:pollen-dir) "knowl" (symbol->string type)))
   (define temp-dir (build-path output-dir "temp"))
   (define temp-path (build-path temp-dir (string-append uid ".html.pm")))
   (for-each make-directory* (list temp-dir output-dir))

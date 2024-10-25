@@ -1,3 +1,6 @@
+@import "https://unpkg.com/open-props";
+@import "https://unpkg.com/open-props/normalize.min.css";
+@import "https://unpkg.com/open-props/buttons.min.css";
 
 /* to fix jerky motion on scrollbar appearance */
 body { overflow-y: scroll; }

@@ -111,7 +111,7 @@
           "Loading..."))
 
   (upsert-question uuid correct-answers)
-  (render-component (quote-xexpr-attributes expression) 'question uuid)
+  (render-knowl (quote-xexpr-attributes expression) 'question uuid)
 
   question-getter)
 

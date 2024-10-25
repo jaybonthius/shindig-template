@@ -32,7 +32,7 @@
       [else (loop (rest es) (cons (first es) acc-content) acc-divs)]))
   (loop elems '() '()))
 
-(define (extract-components x)
+(define (extract-knowls x)
   (cond
     [(txexpr? x)
      (define tag (get-tag x))
@@ -42,7 +42,7 @@
      (define component-id (attr-ref attrs 'component-id #f))
      (cond
        [component-type
-        (render-component (quote-xexpr-attributes (car elements))
+        (render-knowl (quote-xexpr-attributes (car elements))
                           (string->symbol component-type)
                           component-id)
         (txexpr tag
@@ -50,6 +50,6 @@
                           (and (not (equal? (car attr) 'component-type))
                                (not (equal? (car attr) 'component-id))))
                         attrs)
-                (map extract-components elements))]
-       [else (txexpr tag attrs (map extract-components elements))])]
+                (map extract-knowls elements))]
+       [else (txexpr tag attrs (map extract-knowls elements))])]
     [else x]))

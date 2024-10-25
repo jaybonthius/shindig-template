@@ -65,7 +65,7 @@
             "on click get the next .~a toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .~a"
             reference-container-class
             reference-container-class))
-         (hx-get ,(format "~a~a/~a" (config:baseurl) (symbol->string type) uid))
+         (hx-get ,(format "~aknowl/~a/~a" (config:baseurl) (symbol->string type) uid))
          (hx-target ,(format "next .~a" reference-class))
          (hx-trigger "click once")
          (preload "mouseover")]

@@ -25,5 +25,5 @@
                      #:inline-txexpr-proc hyperlink-decoder
                      #:string-proc smart-dashes
                      #:exclude-tags '(script style)))
-  (define third-pass (decode-elements second-pass #:txexpr-proc extract-components))
+  (define third-pass (decode-elements second-pass #:txexpr-proc extract-knowls))
   (make-txexpr 'body null third-pass))

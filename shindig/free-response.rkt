@@ -24,7 +24,7 @@
     `(div (div ,@evaluated-content) (button [(class "btn") (id ,buttion-id)] "Submit!")))
 
   ; TODO: uncomment this to enable HTMX loading
-  (render-component (quote-xexpr-attributes question-content) 'free-response uid)
+  (render-knowl (quote-xexpr-attributes question-content) 'free-response uid)
   `(div ((hx-get ,(format "/get-free-response/~a" uid)) (hx-trigger "load") (hx-target "this"))
         "Loading...")
   ; question-content

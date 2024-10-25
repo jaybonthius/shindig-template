@@ -6,6 +6,4 @@
 (define (pollen-dir) (build-path (project-root) "content"))
 (define (sqlite-path) (build-path (project-root) "sqlite"))
 
-(printf (format "THE PROJECT ROOT IS: ~a\n" (project-root)))
-
 (define baseurl (make-parameter ""))
