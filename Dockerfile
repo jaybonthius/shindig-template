@@ -1,36 +1,45 @@
-# Use the official Racket image as base
 FROM racket/racket:8.14
 
-# Accept base_url as build argument
 ARG BASE_URL=""
 
-# Set working directory
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get update && \
+    apt-get install -y \
+        nodejs=18.* \
+        curl \
+        && \
+    npm install -g pnpm@9.10.0 && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf \
+        /var/lib/apt/lists/* \
+        /var/cache/apt/archives/* \
+        /usr/share/doc \
+        /usr/share/man \
+        /tmp/*
+
 WORKDIR /app
 
-# Copy your shindig package and pollen config first
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile --prod
+
 COPY shindig/ ./shindig/
 COPY pollen.rkt ./
 
 RUN echo "BASE_URL=${BASE_URL}"
 
-# Install shindig package which includes pollen as a dependency
 RUN raco pkg install --auto shindig/
 
-# Copy content directory
 COPY content/ ./content/
 COPY sqlite/ ./sqlite/
 
-# Show contents for debugging
-RUN ls -la && \
-    echo "Content directory:" && \
-    ls -la content/ && \
-    echo "Shindig package:" && \
-    ls -la shindig/
 
-# Build the site
-RUN raco pollen render -r content && \
-    raco pollen publish content out
+RUN raco pollen render -r content
 
-# Verify the built contents
+RUN pnpm run build:css
+
+RUN raco pollen publish content out
+
 RUN echo "Final content directory:" && \
     ls -la content/
