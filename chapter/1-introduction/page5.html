@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Your description here" />
+        <meta name="keywords" content="keyword1, keyword2, keyword3" />
+        <title>Honeycomb</title>
+        <link rel="icon" href="/shindig-template/static/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/shindig-template/static/css/output.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    </head>
+    <body hx-boost="true" hx-ext="multi-swap,preload">
+        <main>
+            <div id="main">
+                <h1>Math rendering test</h1>
+                <div class="content"><p>Look how <strong>strong</strong> I am!</p>
+                                     <p>That's impressive!</p>
+                                     <p>And this should be some math: <script type=
+                                     "math/tex; mode=text">\(f(x) = x^2 + \int_0^x \sin(t) \, dt\)</script>
+                                     .</p>
+                                     <p>Now that's pretty fast!</p>
+                                     <p>And we could type even more math, if we wanted:</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type="math/tex; mode=display">\[\int_0^1 x^2 \, dx = \frac{1}{3}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>Look, we can even do matrices</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\begin{bmatrix}
+                                         1 & 2 \\
+                                         3 & 4
+                                     \end{bmatrix}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>In fact, we can do the craziest things with math in Pollen!</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\begin{bmatrix}
+                                         1 & 2 \\
+                                         3 & 4
+                                     \end{bmatrix}
+                                     \begin{bmatrix}
+                                         1 & 2 \\
+                                         3 & 4
+                                     \end{bmatrix}
+                                     =
+                                     \begin{bmatrix}
+                                         7 & 10 \\
+                                         15 & 22
+                                     \end{bmatrix}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>The Lorentz Equations</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\begin{aligned}
+                                         \dot{x} & = \sigma(y-x) \\ \dot{y}
+                                                 & = \rho x - y - xz \\ \dot{z}
+                                                 & = -\beta z + xy
+                                     \end{aligned}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>The Cauchy-Schwarz Inequality</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>A Cross Product Formula</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\ \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0 \end{vmatrix}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>The probability of getting <script type="math/tex; mode=text">\(k\)</script>
+                                     heads when flipping <script type="math/tex; mode=text">\(n\)</script>
+                                     coins</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type="math/tex; mode=display">\[P(E) = {n \choose k} p^k (1-p)^{ n-k}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>An Identity of Ramanujan</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\ldots} } } }\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>A Rogers-Ramanujan Identity</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[1 + \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots = \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \quad\quad \text{for $|q|<1$}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>
+                                     <h2>Maxwell's Equations</h2>
+                                     </p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\begin{aligned}
+                                         \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\
+                                         \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\ \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
+                                         \nabla \cdot \vec{\mathbf{B}} & = 0
+                                     \end{aligned}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>This is a numbered equation:</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type="math/tex; mode=display">\[\begin{equation}
+                                         E = mc^2
+                                     \end{equation}\]</script>
+                                       </div>
+                                     </div>
+                                     <p>This is a test from the PreText page:</p>
+                                     <div class="flex justify-center">
+                                       <div class="inline-block">
+                                         <script type=
+                                         "math/tex; mode=display">\[\begin{equation}
+                                         A\xmapsto[\text{bijection}]{\Phi+\Psi+\Theta}B
+                                     \end{equation}\]</script>
+                                       </div>
+                                     </div>
+                </div>
+            </div>
+        </main>
+        <script src="https://unpkg.com/htmx.org@1.9.10"
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+                crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"></script>
+        <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"></script>
+        <script src="https://unpkg.com/htmx-ext-preload@2.0.1/preload.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script defer type="module">
+            const renderMath = () => import('//unpkg.com/mathlive?module').then(mathlive => mathlive.renderMathInDocument());
+
+            window.addEventListener('DOMContentLoaded', renderMath);
+            document.addEventListener('htmx:afterRequest', renderMath);
+        </script>
+        <!-- for scrolling to references -->
+    </body>
+</html>

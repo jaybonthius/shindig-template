@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Your description here" />
+        <meta name="keywords" content="keyword1, keyword2, keyword3" />
+        <title>Honeycomb</title>
+        <link rel="icon" href="/shindig-template/static/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/shindig-template/static/css/output.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    </head>
+    <body hx-boost="true" hx-ext="multi-swap,preload">
+        <main>
+            <div id="main">
+                <h1>Page 4</h1>
+                <div class="content"><p>Hey it's working????</p>
+                                     <p>This is a paragraph and all of the sudden and now here is the rest of the paragraph.</p>
+                                     <div>
+                                       There's a random div in it, what!!!
+                                     </div>
+                                     <p>Now I'd like to reference the definition I just made: <a class="reference-link" script=
+                                     "on click get the next .definition-avg-velocity-preview-container toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .definition-avg-velocity-preview-container" 
+                                     hx-get="/shindig-template/knowl/definition/avg-velocity" hx-target=
+                                     "next .definition-avg-velocity-preview" hx-trigger="click once" preload="mouseover">Average
+                                     Velocity</a> And this is the rest of the paragraph here. Yahoo!!</p>
+                                     <div class="reference-container definition-avg-velocity-preview-container">
+                                       <div>
+                                         <div class="reference-subcontainer">
+                                           <div class="definition-avg-velocity-preview">
+
+                                           </div>
+                                           <a href="/shindig-template/lesson/how-do-we-measure-velocity#definition-avg-velocity" hx-get=
+                                           "/shindig-template/lesson/how-do-we-measure-velocity#definition-avg-velocity" hx-target=
+                                           "#main" hx-select="#main" hx-push-url="true" @click=
+                                           "activePage = '/shindig-template/lesson//app/content/chapter/1-introduction/page4'" :class=
+                                           "{ 'active': activePage === '/shindig-template/lesson//app/content/chapter/1-introduction/page4' }">View
+                                           in context</a>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <div id="theorem-ftc-2" class="knowl-container">
+                                       <div class="knowl">
+                                             <strong>Theorem: Second Version of FTC</strong><div>
+                                                 Suppose <script type="math/tex; mode=text">\(f(x)\)</script>
+                                     is a continuous function. Then<br>
+                                           <div class="flex justify-center">
+                                             <div class="inline-block">
+                                               <script type=
+                                               "math/tex; mode=display">\[\frac{d}{dx}\int_a^x f(t) dt = f(x)\text{.}\]</script>
+                                             </div>
+                                           </div>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <p>And now, I'm going to reference the theorem I just made: <a class="reference-link" script=
+                                     "on click get the next .theorem-ftc-2-preview-container toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .theorem-ftc-2-preview-container" 
+                                     hx-get="/shindig-template/knowl/theorem/ftc-2" hx-target="next .theorem-ftc-2-preview" hx-trigger=
+                                     "click once" preload="mouseover">Second Version of FTC</a> And this is the rest of the paragraph
+                                     here. Yahoo!!</p>
+                                     <div class="reference-container theorem-ftc-2-preview-container">
+                                       <div>
+                                         <div class="reference-subcontainer">
+                                           <div class="theorem-ftc-2-preview">
+
+                                           </div>
+                                           <a href="/shindig-template/lesson/page4#theorem-ftc-2" hx-get=
+                                           "/shindig-template/lesson/page4#theorem-ftc-2" hx-target="#main" hx-select="#main" 
+                                           hx-push-url="true" @click=
+                                           "activePage = '/shindig-template/lesson//app/content/chapter/1-introduction/page4'" :class=
+                                           "{ 'active': activePage === '/shindig-template/lesson//app/content/chapter/1-introduction/page4' }">View
+                                           in context</a>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <p>I'm going to create a definition here:<br>
+                                     </p>
+                                     <div id="definition-avg-velocity-2" class="knowl-container">
+                                       <div class="knowl">
+                                             <strong>Average Velocity</strong><div>
+                                           For an object moving in a straight line with position function, the average velocity of the
+                                           object       on the interval from <script type="math/tex; mode=text">\(t=a\)</script>
+                                           to <script type="math/tex; mode=text">\(t=b\)</script>
+                                           , denoted <script type="math/tex; mode=text">\(AV_{[a,b]}\)</script>
+                                     , is given by the formula<br>
+                                           <div class="flex justify-center">
+                                             <div class="inline-block">
+                                               <script type=
+                                               "math/tex; mode=display">\[AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.\]</script>
+                                             </div>
+                                           </div>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <p>And now here's a lemma</p>
+                                     <div id="lemma-1" class="knowl-container">
+                                       <div class="knowl">
+                                             <strong>Lemma: 1</strong><div>
+                                           This is a lemma.
+                                         </div>
+                                       </div>
+                                     </div>
+                </div>
+            </div>
+        </main>
+        <script src="https://unpkg.com/htmx.org@1.9.10"
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+                crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/multi-swap.js"></script>
+        <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"></script>
+        <script src="https://unpkg.com/htmx-ext-preload@2.0.1/preload.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script defer type="module">
+            const renderMath = () => import('//unpkg.com/mathlive?module').then(mathlive => mathlive.renderMathInDocument());
+
+            window.addEventListener('DOMContentLoaded', renderMath);
+            document.addEventListener('htmx:afterRequest', renderMath);
+        </script>
+        <!-- for scrolling to references -->
+    </body>
+</html>
