@@ -1,0 +1,92 @@
+{
+  "name": "Shindig-Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "updateContentCommand": "apt-get update && apt-get upgrade -y",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    }
+  },
+
+  "onCreateCommand": "sudo apt-get update && sudo apt-get install -y curl git && curl -fsSL https://download.racket-lang.org/installers/8.14/racket-8.14-x86_64-linux-cs.sh > racket.sh && sudo sh racket.sh --create-dir --unix-style --dest /usr/ && rm racket.sh && sudo npm install -g pnpm@9.10.0",
+
+  "postCreateCommand": "pnpm install && raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git",
+
+  "forwardPorts": [8085],
+  "portsAttributes": {
+    "8085": {
+      "label": "Proxy Server",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    },
+    "vscode": {
+      "settings": {
+        "material-icon-theme.files.associations": {
+          "Procfile.static": "heroku",
+          "*.pm": "document",
+          "*.p": "template"
+        },
+        "material-icon-theme.folders.associations": {
+          "sqlite": "database",
+          "shindig": "src"
+        },
+        "liveServer.settings.port": 7070,
+        "files.associations": {
+          "*.html.p": "html",
+          "Profile.*": "procfile"
+        },
+        "[racket]": {
+          "editor.rulers": [88]
+        },
+        "files.exclude": {
+          "**/compiled": true,
+          "node_modules": true
+        },
+        "magicRacket.languageServer.command": "xvfb-run",
+        "magicRacket.languageServer.arguments": [
+          "--auto-servernum",
+          "racket",
+          "--lib",
+          "racket-langserver"
+        ],
+        "cssvar.files": ["./node_modules/open-props/open-props.min.css"],
+        "cssvar.ignore": [],
+        "cssvar.extensions": ["css", "postcss", "jsx", "tsx"]
+      },
+      "extensions": [
+        "csstools.postcss",
+        "alexcvzz.vscode-sqlite",
+        "austenc.tailwind-docs",
+        "benspaulding.procfile",
+        "bradlc.vscode-tailwindcss",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "evzen-wybitul.magic-racket",
+        "george-alisson.html-preview-vscode",
+        "github.copilot",
+        "github.copilot-chat",
+        "hbenl.vscode-test-explorer",
+        "james-yu.latex-workshop",
+        "littlefoxteam.vscode-python-test-adapter",
+        "moalamri.inline-fold",
+        "ms-python.debugpy",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.live-server",
+        "ms-vscode.test-adapter-converter",
+        "otovo-oss.htmx-tags",
+        "phoenisx.cssvar",
+        "ritwickdey.liveserver",
+        "tldraw-org.tldraw-vscode",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  }
+}
