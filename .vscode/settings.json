@@ -7,6 +7,7 @@
   "material-icon-theme.folders.associations": {
       "sqlite": "database",
       "shindig": "src",
+      "shindig-docker": "docker",
   },
   "liveServer.settings.port": 7070,
   "files.associations": {

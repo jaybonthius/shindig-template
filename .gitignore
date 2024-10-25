@@ -12,4 +12,5 @@ temp/
 sqlite/free-response-questions.sqlite
 sqlite/free-response-submissions.sqlite
 content/static/css/output.css
-shindig
+shindig/
+shindig-docker/

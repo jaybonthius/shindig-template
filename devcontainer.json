@@ -1,39 +1,20 @@
 {
   "name": "Shindig-Codespaces",
-  // Use the universal image that Codespaces prefers
-  "image": "mcr.microsoft.com/devcontainers/universal:latest",
-  // Add required features
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "18"
-    }
-  },
-  // Install Racket and other dependencies
-  "onCreateCommand": [
-    "sudo add-apt-repository ppa:plt/racket -y",
-    "sudo apt-get update",
-    "sudo apt-get install -y racket xvfb",
-    "sudo npm install -g pnpm@9.10.0"
-  ],
-  // Project setup
-  "postCreateCommand": [
-    "pnpm install",
-    "raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git"
-  ],
-  "forwardPorts": [
-    8085
-  ],
+  "image": "nicheceviche/shindig-dev:latest",
+
+  "postCreateCommand": "pnpm install",
+
+  "forwardPorts": [8085],
   "portsAttributes": {
     "8085": {
       "label": "Pollen Server",
       "onAutoForward": "notify"
     }
   },
+
   "customizations": {
     "codespaces": {
-      "openFiles": [
-        "source/main.ptx"
-      ]
+      "openFiles": ["source/main.ptx"]
     },
     "vscode": {
       "settings": {
@@ -52,9 +33,7 @@
           "Profile.*": "procfile"
         },
         "[racket]": {
-          "editor.rulers": [
-            88
-          ]
+          "editor.rulers": [88]
         },
         "files.exclude": {
           "**/compiled": true,
@@ -72,10 +51,7 @@
         ],
         "cssvar.ignore": [],
         "cssvar.extensions": [
-          "css",
-          "postcss",
-          "jsx",
-          "tsx"
+          "css", "postcss", "jsx", "tsx"
         ]
       },
       "extensions": [
