@@ -20,7 +20,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml postcss.config.js ./
 
 RUN pnpm install --frozen-lockfile --prod
 
