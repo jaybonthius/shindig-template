@@ -59,7 +59,7 @@
 
      (@
       `(a
-        [(class "decoration-dashed cursor-pointer")
+        [(class "reference-link")
          (script
           ,(format
             "on click get the next .~a toggle .expanded on it on htmx:afterRequest add .htmx-added to the next .~a"
@@ -71,6 +71,6 @@
          (preload "mouseover")]
         ,title)
       `(div [(class ,(format "reference-container ~a" reference-container-class))]
-            (div (div [(class "prose-md p-3")]
+            (div (div [(class "reference-subcontainer")]
                       (div [(class ,(format "~a" reference-class))])
                       ,reference-link))))]))

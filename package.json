@@ -6,16 +6,17 @@
     "npm": ">=9"
   },
   "dependencies": {
-    "postcss": "^8.4.47",
-    "postcss-cli": "^11.0.0",
     "@fullhuman/postcss-purgecss": "^6.0.0",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.6",
-    "postcss-nested": "^6.2.0",
-    "postcss-preset-env": "^10.0.8",
+    "open-props": "^1.7.7",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
+    "postcss-custom-media": "^11.0.4",
     "postcss-jit-props": "^1.0.14",
     "postcss-minify": "^1.1.0",
-    "open-props": "^1.7.7"
+    "postcss-nested": "^6.2.0",
+    "postcss-preset-env": "^10.0.8"
   },
   "devDependencies": {
     "@kitschpatrol/tldraw-cli": "^4.6.13"

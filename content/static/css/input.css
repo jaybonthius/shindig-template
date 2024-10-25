@@ -1,28 +1,98 @@
-@import "https://unpkg.com/open-props";
-@import "https://unpkg.com/open-props/normalize.min.css";
-@import "https://unpkg.com/open-props/buttons.min.css";
+:root {
+  --brand: var(--red-6);
+  --text-primary: var(--gray-10);
+  --bg-primary: var(--choco-0);
+  --bg-primary-2: var(--choco-1);
+  --bg-primary-3: var(--choco-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand: var(--red-3);
+    --text-primary: var(--gray-5);
+    --bg-primary: var(--gray-10);
+    --bg-primary-2: var(--gray-11);
+    --bg-primary-3: var(--gray-12);
+  }
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+html {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-humanist);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-classical);
+}
+
+main {
+  width: 100%;
+  max-width: var(--size-content-3);
+}
+
+p {
+  margin-block: var(--size-4);
+}
+
+.knowl-container {
+  margin-top: var(--size-4);
+}
+
+.reference-link {
+  text-decoration: none;
+  color: var(--text-primary);
+  border-bottom: 1px dashed var(--text-primary);
+  cursor: pointer;
+}
+.reference-link:hover {
+  color: var(--brand);
+  background-color: var(--bg-primary-2);
+  border-bottom: 1px dashed var(--brand);
+}
 
 /* to fix jerky motion on scrollbar appearance */
-body { overflow-y: scroll; }
+body {
+  overflow-y: scroll;
+}
 .reference-container > * {
   overflow: hidden;
 }
 .reference-container {
+  border-style: solid;
   border-top-width: 0px;
   border-bottom-width: 0px;
-  border-color: oklch(var(--b3));
+  border-color: var(--bg-primary-3);
   background-color: none;
   display: grid;
   grid-template-rows: 0fr;
-  transition: 500ms grid-template-rows, 500ms margin, 500ms background-color, 100ms border-width;
+  transition: 500ms grid-template-rows, 500ms margin, 500ms background-color,
+    100ms border-width;
 }
 .reference-container.expanded.htmx-added {
-  margin-top: 1.5em; /* TODO: change to paragraph sep */
-  margin-bottom: 1.5em; /* TODO: change to paragraph sep */
-  background-color: oklch(var(--b2));
+  margin-block: var(--size-4);
+  background-color: var(--bg-primary-2);
   border-top-width: 1px;
   border-bottom-width: 1px;
   grid-template-rows: 1fr;
+}
+.reference-subcontainer {
+  padding: var(--size-2);
 }
 
 /* TODO: make the top margin of the first paragraph of components (e.g. definition) 0 */

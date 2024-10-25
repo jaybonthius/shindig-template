@@ -26,6 +26,9 @@ importers:
       postcss-cli:
         specifier: ^11.0.0
         version: 11.0.0(jiti@1.21.6)(postcss@8.4.47)
+      postcss-custom-media:
+        specifier: ^11.0.4
+        version: 11.0.4(postcss@8.4.47)
       postcss-jit-props:
         specifier: ^1.0.14
         version: 1.0.14(postcss@8.4.47)
