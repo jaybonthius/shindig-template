@@ -1,3 +1,0 @@
-shindig
-=======
-README text here.
