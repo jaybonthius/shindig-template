@@ -18,7 +18,7 @@ run:
 	raco chief start
 
 pollen-server:
-	cd content && raco pollen setup -p && raco pollen start . 8081
+	raco pollen start content 8081
 
 publish:
 	raco pollen publish content out
