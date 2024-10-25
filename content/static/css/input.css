@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* to fix jerky motion on scrollbar appearance */
 body { overflow-y: scroll; }

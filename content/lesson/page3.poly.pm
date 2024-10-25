@@ -2,7 +2,7 @@
 
 ◊(define-meta title     "Page 3")
 
-Here comes a question!
+Here comes a question.
 
 ◊free-response[#:uid "YdPhBaK5eigz6xLy8_Ozh"]{
     What is the square-root of 3?
