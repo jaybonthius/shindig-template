@@ -6,7 +6,6 @@
   },
   "material-icon-theme.folders.associations": {
       "sqlite": "database",
-      "migrations": "database",
       "shindig": "src",
   },
   "liveServer.settings.port": 7070,
@@ -16,35 +15,10 @@
   },
   "[racket]": {
     "editor.rulers": [88],
-    "inlineFold.regex": "class\\s*[\"'](.*?)[\"']",
-    "inlineFold.unfoldedOpacity": 1,
-    "inlineFold.regexFlags": "g",
-    "inlineFold.regexGroup": 1,
-    "inlineFold.maskChar": "◦◦◦"
-  },
-  "[pollen-markup]": {
-    "inlineFold.regex": "uid\\s*[\"'](.*?)[\"']",
-    "inlineFold.unfoldedOpacity": 1,
-    "inlineFold.regexFlags": "g",
-    "inlineFold.regexGroup": 1,
-    "inlineFold.maskChar": "◦◦◦"
-  },
-  "[pollen-template-html]": {
-    "inlineFold.regex": "class\\s*=\\s*[\"'](.*)[\"']",
-    "inlineFold.unfoldedOpacity": 1,
-    "inlineFold.regexFlags": "g",
-    "inlineFold.regexGroup": 1,
-    "inlineFold.maskChar": "◦◦◦"
   },
   "files.exclude": {
-    "**/__pycache__": true,
     "**/compiled": true,
     "node_modules": true,
-  },
-  "excalidraw.image": {
-    "exportScale": 1,
-    "exportBackground": false,
-    "exportWithDarkMode": false
   },
   // this is needed for the racket language server to work on a headless server
   "magicRacket.languageServer.command": "xvfb-run",
@@ -54,24 +28,12 @@
       "--lib",
       "racket-langserver"
   ],
-  "todohighlight.isEnable": true,
-  "todohighlight.isCaseSensitive": true,
-  "todohighlight.keywords": [
-      {
-          "text": "TODO:",
-          "color": "white",
-          "backgroundColor": "#865C67",
-      }
-  ],
   "cssvar.files": [
     "./node_modules/open-props/open-props.min.css",
-    // if you have an alternative path to where your styles are located
-    // you can add it in this array of files
-    "assets/styles/variables.css"
   ],
-  // Do not ignore node_modules css files, which is ignored by default
+   // do not ignore node_modules css files, which is ignored by default
   "cssvar.ignore": [],
-  // add support for autocomplete in JS or JS like files
+   // add support for autocomplete in JS or JS like files
   "cssvar.extensions": [
     "css", "postcss", "jsx", "tsx"
   ]

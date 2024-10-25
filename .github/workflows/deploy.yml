@@ -3,8 +3,8 @@ name: Build and Deploy Pollen Site
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -76,7 +76,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'release'
     
     environment:
       name: github-pages
