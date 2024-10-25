@@ -2,7 +2,7 @@
   "name": "Shindig-Codespaces",
   "image": "nicheceviche/shindig-dev:latest",
 
-  "postCreateCommand": "pnpm install",
+  "postCreateCommand": "raco pkg install --auto chief && pnpm install",
 
   "forwardPorts": [8085],
   "portsAttributes": {
