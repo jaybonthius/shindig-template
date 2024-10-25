@@ -2,29 +2,49 @@
   "name": "Shindig-Codespaces",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-  "updateContentCommand": "apt-get update && apt-get upgrade -y",
-
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "18"
     }
   },
 
-  "onCreateCommand": "sudo apt-get update && sudo apt-get install -y curl git && curl -fsSL https://download.racket-lang.org/installers/8.14/racket-8.14-x86_64-linux-cs.sh > racket.sh && sudo sh racket.sh --create-dir --unix-style --dest /usr/ && rm racket.sh && sudo npm install -g pnpm@9.10.0",
+  // Core system and environment setup
+  "updateContentCommand": [
+    "echo 'Installing system dependencies...'",
+    "sudo apt-get update",
+    "sudo apt-get install -y curl git",
+    "echo 'Downloading Racket...'",
+    "curl -fsSL https://download.racket-lang.org/installers/8.14/racket-8.14-x86_64-linux-cs.sh > racket.sh",
+    "echo 'Installing Racket...'",
+    "sudo sh racket.sh --create-dir --unix-style --dest /usr/",
+    "echo 'Cleaning up Racket installer...'",
+    "rm racket.sh",
+    "echo 'Installing pnpm...'",
+    "sudo npm install -g pnpm@9.10.0",
+    "echo 'Verifying installations...'",
+    "racket --version && pnpm --version"
+  ],
 
-  "postCreateCommand": "pnpm install && raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git",
+  // User-specific setup and project dependencies
+  "postCreateCommand": [
+    "pnpm install",
+    "raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git"
+  ],
+
+  // Wait for core setup before connecting
+  "waitFor": "updateContentCommand",
 
   "forwardPorts": [8085],
   "portsAttributes": {
     "8085": {
-      "label": "Proxy Server",
+      "label": "Pollen Server",
       "onAutoForward": "notify"
     }
   },
 
   "customizations": {
     "codespaces": {
-      "openFiles": ["README.md"]
+      "openFiles": ["source/main.ptx"]
     },
     "vscode": {
       "settings": {
