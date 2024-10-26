@@ -43,6 +43,9 @@ jobs:
           BASE_URL="${BASE_URL%/}/"
           echo "base_url=$BASE_URL" >> $GITHUB_OUTPUT
       
+      - name: Pull base image
+        run: docker pull nicheceviche/shindig-dev:latest
+      
       - name: Build the Docker image
         env:
           BASE_URL: ${{ steps.site-url.outputs.base_url }}
