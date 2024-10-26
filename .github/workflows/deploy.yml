@@ -46,22 +46,21 @@ jobs:
       - name: Pull base image
         run: docker pull nicheceviche/shindig-dev:latest
       
-      - name: Build the Docker image
+      - name: Build and extract site
         env:
           BASE_URL: ${{ steps.site-url.outputs.base_url }}
         run: |
           echo "Building Docker image with BASE_URL=$BASE_URL"
+          # Build the image
           docker build . --file Dockerfile --tag pollen-site:latest \
             --build-arg BASE_URL=$BASE_URL 2>&1 | tee build.log
-      
-      - name: Copy built site from container
-        run: |
-          echo "Creating container..."
+
+          echo "Creating container and extracting files..."
+          # Create a container from our newly built image and copy files
           container_id=$(docker create pollen-site:latest)
-          echo "Copying files from container..."
           docker cp $container_id:/app/out ./public
-          echo "Removing container..."
           docker rm $container_id
+
           echo "Built site contents:"
           ls -la ./public
           
