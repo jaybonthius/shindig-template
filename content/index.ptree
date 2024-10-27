@@ -1,0 +1,12 @@
+#lang pollen
+ 
+index.html
+◊chapter/1-introduction/index.html{
+    chapter/1-introduction/page1.html
+    chapter/1-introduction/page2.html
+    chapter/1-introduction/page3.html
+    chapter/1-introduction/page4.html
+}
+◊chapter/2-my-second-chapter/index.html{
+    chapter/2-my-second-chapter/how-do-we-measure-velocity.html
+}

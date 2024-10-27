@@ -1,6 +1,12 @@
-## Extensions
+## Recommended Extensions
 
-### CSS
-
-- [CSS Var Complete](https://marketplace.visualstudio.com/items?itemName=phoenisx.cssvar)
-- [PostCSS Language Support](https://marketplace.visualstudio.com/items?itemName=csstools.postcss)
+"csstools.postcss",
+"alexcvzz.vscode-sqlite",
+"benspaulding.procfile",
+"evzen-wybitul.magic-racket",
+"james-yu.latex-workshop",
+"ms-vscode.live-server",
+"otovo-oss.htmx-tags",
+"phoenisx.cssvar",
+"ritwickdey.liveserver",
+"tldraw-org.tldraw-vscode"

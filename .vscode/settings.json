@@ -3,6 +3,7 @@
       "Procfile.static": "heroku",
       "*.pm": "document",
       "*.p": "template",
+      "*.ptree": "tree"
   },
   "material-icon-theme.folders.associations": {
       "sqlite": "database",

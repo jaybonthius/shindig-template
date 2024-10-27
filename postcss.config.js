@@ -5,12 +5,14 @@ import postcssNested from 'postcss-nested'
 import postcssPresetEnv from 'postcss-preset-env'
 import purgecss from '@fullhuman/postcss-purgecss'
 import postcssJitProps from 'postcss-jit-props'
+import postcssImport from 'postcss-import'
 
 import postcssCustomMedia from 'postcss-custom-media';
 
 /** @type {import('postcss-load-config').Config} */
 const config = {
   plugins: [
+    postcssImport(),
 		postcssCustomMedia(),
     postcssJitProps({
       ...OpenProps,

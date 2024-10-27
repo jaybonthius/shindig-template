@@ -1,9 +1,13 @@
+/* VARIABLES */
+
 :root {
   --brand: var(--red-6);
   --text-primary: var(--gray-10);
-  --bg-primary: var(--choco-0);
-  --bg-primary-2: var(--choco-1);
-  --bg-primary-3: var(--choco-2);
+  --bg-primary: var(--gray-1);
+  --bg-primary-2: var(--gray-2);
+  --bg-primary-3: var(--gray-3);
+  --sidebar-width: 300px;
+  --sidebar-line-color: var(--gray-4);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,13 +17,11 @@
     --bg-primary: var(--gray-10);
     --bg-primary-2: var(--gray-11);
     --bg-primary-3: var(--gray-12);
+    --sidebar-line-color: var(--gray-8);
   }
 }
 
-a {
-  color: var(--brand);
-  text-decoration: none;
-}
+/* GLOBAL */
 
 html {
   background: var(--bg-primary);
@@ -27,9 +29,16 @@ html {
 }
 
 body {
-  display: flex;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
   font-family: var(--font-humanist);
+  overflow-y: scroll;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
 }
 
 h1,
@@ -41,14 +50,143 @@ h6 {
   font-family: var(--font-classical);
 }
 
-main {
-  width: 100%;
-  max-width: var(--size-content-3);
-}
-
 p {
   margin-block: var(--size-4);
 }
+
+/* LAYOUT */
+
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  max-width: var(--size-content-3);
+  margin: 0 var(--size-7);
+  padding: var(--size-7);
+}
+
+/* SIDEBAR */
+
+.toc {
+  flex: 0 0 var(--sidebar-width);
+  background: var(--bg-primary-2);
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  border-right: 1px solid var(--bg-primary-3);
+}
+
+.table-of-contents {
+  padding: var(--size-5);
+}
+
+.table-of-contents h2 {
+  margin-top: 0;
+  color: var(--text-primary);
+  font-size: var(--size-4);
+  margin-bottom: var(--size-3);
+}
+
+.table-of-contents ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.table-of-contents ul ul {
+  position: relative;
+  padding-left: var(--size-5);
+  margin: var(--size-2) 0;
+}
+
+/* Add vertical line for nested items */
+.table-of-contents ul ul::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--sidebar-line-color);
+}
+
+.table-of-contents li {
+  margin: var(--size-1) 0;
+}
+
+.table-of-contents a {
+  color: var(--text-primary);
+  text-decoration: none;
+  display: block;
+  padding: var(--size-2);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.table-of-contents a:hover {
+  color: var(--brand);
+  background-color: color-mix(
+    in srgb,
+    var(--bg-primary-2) 95%,
+    var(--brand) 5%
+  );
+  transform: translateX(4px);
+}
+
+.table-of-contents a:active {
+  transform: translateX(2px) scale(0.98);
+}
+
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: var(--size-3);
+  left: var(--size-3);
+  z-index: 1000;
+  background: var(--bg-primary-2);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-primary-3);
+  padding: var(--size-2);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .toc {
+    transform: translateX(-100%);
+    z-index: 999;
+  }
+
+  .toc.active {
+    transform: translateX(0);
+  }
+
+  main {
+    margin-left: 0;
+  }
+
+  .content-wrapper {
+    padding: var(--size-3);
+  }
+}
+
+/* REFERENCE */
 
 .knowl-container {
   margin-top: var(--size-4);
@@ -60,19 +198,17 @@ p {
   border-bottom: 1px dashed var(--text-primary);
   cursor: pointer;
 }
+
 .reference-link:hover {
   color: var(--brand);
   background-color: var(--bg-primary-2);
   border-bottom: 1px dashed var(--brand);
 }
 
-/* to fix jerky motion on scrollbar appearance */
-body {
-  overflow-y: scroll;
-}
 .reference-container > * {
   overflow: hidden;
 }
+
 .reference-container {
   border-style: solid;
   border-top-width: 0px;
@@ -84,6 +220,7 @@ body {
   transition: 500ms grid-template-rows, 500ms margin, 500ms background-color,
     100ms border-width;
 }
+
 .reference-container.expanded.htmx-added {
   margin-block: var(--size-4);
   background-color: var(--bg-primary-2);
@@ -91,23 +228,21 @@ body {
   border-bottom-width: 1px;
   grid-template-rows: 1fr;
 }
+
 .reference-subcontainer {
   padding: var(--size-2);
 }
-
-/* TODO: make the top margin of the first paragraph of components (e.g. definition) 0 */
 
 p:has(+ .reference-container) {
   margin-bottom: 0;
 }
 
+/* MATH */
+
 math-field {
   outline: 2px dashed lightgray;
-  /* border-radius: 4px; */
-  /* background: rgba(251,	187,	182, .1);  */
 }
 
 math-field:not(:defined) {
   display: none !important;
-  /* outline: 2px dashed red !important; */
 }

@@ -1,32 +1,101 @@
 #lang pollen
 
-◊(define-meta title     "Page 4")
+◊(define-meta title     "Math rendering test")
 
-Hey it's working????
+Look how ◊strong{strong} I am!
 
-This is a paragraph and all of the sudden ◊div{There's a random div in it, what!!!} and now here is the rest of the paragraph.
+That's impressive!
 
-Now I'd like to reference the definition I just made: ◊ref[#:type 'definition #:uid "avg-velocity"] And this is the rest of the paragraph here. Yahoo!!
+And this should be some math: ◊${f(x) = x^2 + \int_0^x \sin(t) \, dt}.
 
-◊theorem[#:title "Second Version of FTC" #:uid "ftc-2"]{
-    Suppose ◊${f(x)} is a continuous function. Then
-    ◊$${
-        \frac{d}{dx}\int_a^x f(t) dt = f(x)\text{.}
-    }
+Now that's pretty fast!
+
+And we could type even more math, if we wanted:
+
+◊$${\int_0^1 x^2 \, dx = \frac{1}{3}}
+
+Look, we can even do matrices
+
+◊$${
+    \begin{bmatrix} 
+        1 & 2 \\ 
+        3 & 4 
+    \end{bmatrix}
 }
 
-And now, I'm going to reference the theorem I just made: ◊ref[#:type 'theorem #:uid "ftc-2"] And this is the rest of the paragraph here. Yahoo!!
+In fact, we can do the craziest things with math in Pollen!
 
-
-I'm going to create a definition here:
-◊definition[#:uid "avg-velocity-2" #:title "Average Velocity"]{
-    For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊${t=a} to ◊${t=b}, denoted ◊${AV_{[a,b]}}, is given by the formula
-    ◊$${AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}
+◊$${
+    \begin{bmatrix} 
+        1 & 2 \\ 
+        3 & 4 
+    \end{bmatrix}
+    \begin{bmatrix} 
+        1 & 2 \\ 
+        3 & 4 
+    \end{bmatrix}
+    =
+    \begin{bmatrix} 
+        7 & 10 \\ 
+        15 & 22 
+    \end{bmatrix}
 }
 
-And now here's a lemma 
+◊h2{The Lorentz Equations}
 
-◊lemma[#:title "1" #:uid "1"]{
-    This is a lemma.
+◊$${
+    \begin{aligned} 
+        \dot{x} & = \sigma(y-x) \\ \dot{y} 
+                & = \rho x - y - xz \\ \dot{z} 
+                & = -\beta z + xy 
+    \end{aligned}
 }
 
+◊h2{The Cauchy-Schwarz Inequality}
+
+◊$${\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)}
+
+◊h2{A Cross Product Formula}
+
+◊$${\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\ \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0 \end{vmatrix}}
+
+◊h2{The probability of getting ◊${k} heads when flipping ◊${n} coins}
+
+◊$${P(E) = {n \choose k} p^k (1-p)^{ n-k}}
+
+An Identity of Ramanujan
+
+◊$${\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\ldots} } } }}
+
+◊h2{A Rogers-Ramanujan Identity}
+
+◊$${
+    1 + \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots = \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \quad\quad \text{for $|q|<1$}
+}
+
+◊h2{Maxwell's Equations}
+
+◊$${
+    \begin{aligned} 
+        \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\ 
+        \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\ \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\ 
+        \nabla \cdot \vec{\mathbf{B}} & = 0 
+    \end{aligned}
+}
+
+
+This is a numbered equation:
+
+◊$${
+    \begin{equation}
+        E = mc^2
+    \end{equation}
+}
+
+This is a test from the PreText page:
+
+◊$${
+    \begin{equation}
+        A\xmapsto[\text{bijection}]{\Phi+\Psi+\Theta}B
+    \end{equation}
+}
