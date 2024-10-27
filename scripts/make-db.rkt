@@ -38,32 +38,6 @@
 
       (printf "Table created successfully.\n"))))
 
-(define free-response-submissions-sqlite-filepath
-  (build-path config:sqlite-path "free-response-submissions.sqlite"))
-(define free-response-submissions-sql-string
-  "CREATE TABLE IF NOT EXISTS free_response_submissions (
-                  field_id TEXT NOT NULL,
-                  user_id TEXT NOT NULL,
-                  question_id TEXT,
-                  submission TEXT,
-                  is_correct INT,
-                  PRIMARY KEY (field_id, user_id)
-              )")
-
-; TODO: only do this if config:backend (or whatever) is enabled
-(create-db free-response-submissions-sqlite-filepath free-response-submissions-sql-string)
-
-(define free-response-questions-sqlite-filepath
-  (build-path config:sqlite-path "free-response-questions.sqlite"))
-(define free-response-questions-sql-string
-  "CREATE TABLE IF NOT EXISTS free_response_questions (
-                field_id TEXT PRIMARY KEY NOT NULL,
-                question_id TEXT NOT NULL,
-                answer TEXT
-              )")
-
-(create-db free-response-questions-sqlite-filepath free-response-questions-sql-string)
-
 (define cross-references-sqlite-filepatch (build-path config:sqlite-path "cross-references.sqlite"))
 (define cross-references-sql-string
   "CREATE TABLE IF NOT EXISTS cross_references (

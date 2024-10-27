@@ -25,7 +25,7 @@
       [else url-str])))
 
 (baseurl (remove-baseurl (or (getenv "BASE_URL") "/")))
-(pretty-url (or (getenv "PRETTY_URL") #f))
+(pretty-url (or (string->boolean (getenv "PRETTY_URL")) #f))
 
 (printf "BASE_URL: ~a\n" (baseurl))
 (printf "PRETTY_URL: ~a\n" (pretty-url))
