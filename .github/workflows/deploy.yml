@@ -52,10 +52,11 @@ jobs:
         env:
           BASE_URL: ${{ steps.site-url.outputs.base_url }}
         run: |
-          echo "Building Docker image with BASE_URL=$BASE_URL"
+          echo "Building Docker image with BASE_URL=$BASE_URL and PRETTY_URL=true"
           # Build the image
           docker build . --file Dockerfile --tag pollen-site:latest \
-            --build-arg BASE_URL=$BASE_URL 2>&1 | tee build.log
+            --build-arg BASE_URL=$BASE_URL \
+            --build-arg PRETTY_URL=true 2>&1 | tee build.log
 
           echo "Creating container and extracting files..."
           # Create a container from our newly built image and copy files

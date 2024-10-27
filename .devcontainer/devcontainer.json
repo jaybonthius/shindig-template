@@ -4,9 +4,9 @@
 
   "postCreateCommand": "raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git && raco pkg install --auto chief && pnpm install",
 
-  "forwardPorts": [8085],
+  "forwardPorts": [8080],
   "portsAttributes": {
-    "8085": {
+    "8080": {
       "label": "Pollen Server",
       "onAutoForward": "notify"
     }
@@ -57,29 +57,14 @@
       "extensions": [
         "csstools.postcss",
         "alexcvzz.vscode-sqlite",
-        "austenc.tailwind-docs",
         "benspaulding.procfile",
-        "bradlc.vscode-tailwindcss",
-        "eamodio.gitlens",
-        "esbenp.prettier-vscode",
         "evzen-wybitul.magic-racket",
-        "george-alisson.html-preview-vscode",
-        "github.copilot",
-        "github.copilot-chat",
-        "hbenl.vscode-test-explorer",
         "james-yu.latex-workshop",
-        "littlefoxteam.vscode-python-test-adapter",
-        "moalamri.inline-fold",
-        "ms-python.debugpy",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
         "ms-vscode.live-server",
-        "ms-vscode.test-adapter-converter",
         "otovo-oss.htmx-tags",
         "phoenisx.cssvar",
         "ritwickdey.liveserver",
-        "tldraw-org.tldraw-vscode",
-        "yzhang.markdown-all-in-one"
+        "tldraw-org.tldraw-vscode"
       ]
     }
   }

@@ -32,46 +32,64 @@ zap-sqlite:
 	make sqlite
 
 format:
-	@echo "Formatting Racket files with uncommitted changes (staged and unstaged)..."
-	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
-		echo "Formatting \"$$file\"..."; \
-		if [ -f "$$file" ]; then \
-			if raco fmt -i "$$file"; then \
-				echo "Successfully formatted \"$$file\""; \
-			else \
-				echo "Failed on \"$$file\""; \
-				exit 1; \
+	@echo "Searching for Git repositories and formatting Racket files with uncommitted changes..."
+	@find . -type d -name .git -prune | while read -r gitdir; do \
+		repodir="$$(dirname "$$gitdir")"; \
+		echo "\nProcessing repository in $$repodir"; \
+		cd "$$repodir" || continue; \
+		git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+			echo "Formatting \"$$file\"..."; \
+			if [ -f "$$file" ]; then \
+				if raco fmt -i "$$file"; then \
+					echo "Successfully formatted \"$$file\""; \
+				else \
+					echo "Failed on \"$$file\""; \
+					exit 1; \
+				fi; \
 			fi; \
-		fi; \
+		done; \
+		cd - > /dev/null; \
 	done
-	@echo "Formatting complete."
+	@echo "\nFormatting complete."
 
 lint:
-	@echo "Linting Racket files with uncommitted changes (staged and unstaged)..."
-	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
-		if [ -f "$$file" ]; then \
-			if raco review "$$file"; then \
-				:; \
-			else \
-				echo "Failed on \"$$file\""; \
-				echo ""; \
+	@echo "Searching for Git repositories and linting Racket files with uncommitted changes..."
+	@find . -type d -name .git -prune | while read -r gitdir; do \
+		repodir="$$(dirname "$$gitdir")"; \
+		echo "\nProcessing repository in $$repodir"; \
+		cd "$$repodir" || continue; \
+		git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+			if [ -f "$$file" ]; then \
+				if raco review "$$file"; then \
+					:; \
+				else \
+					echo "Failed on \"$$file\""; \
+					echo ""; \
+				fi; \
 			fi; \
-		fi; \
+		done; \
+		cd - > /dev/null; \
 	done
-	@echo "Linting complete."
+	@echo "\nLinting complete."
 
 refactor:
-	@echo "Refactoring Racket files with uncommitted changes (staged and unstaged)..."
-	@git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
-		echo "Refactoring \"$$file\"..."; \
-		if [ -f "$$file" ]; then \
-			if resyntax fix --file "$$file"; then \
-				echo "Successfully refactored \"$$file\""; \
-			else \
-				echo "Failed on \"$$file\""; \
-				exit 1; \
+	@echo "Searching for Git repositories and refactoring Racket files with uncommitted changes..."
+	@find . -type d -name .git -prune | while read -r gitdir; do \
+		repodir="$$(dirname "$$gitdir")"; \
+		echo "\nProcessing repository in $$repodir"; \
+		cd "$$repodir" || continue; \
+		git status --porcelain | grep '\.rkt$$' | awk '{print $$2}' | while read -r file; do \
+			echo "Refactoring \"$$file\"..."; \
+			if [ -f "$$file" ]; then \
+				if resyntax fix --file "$$file"; then \
+					echo "Successfully refactored \"$$file\""; \
+				else \
+					echo "Failed on \"$$file\""; \
+					exit 1; \
+				fi; \
 			fi; \
-		fi; \
+		done; \
+		cd - > /dev/null; \
 	done
-	@echo "Refactor complete."
+	@echo "\nRefactor complete."
 	make format
