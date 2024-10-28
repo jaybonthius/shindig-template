@@ -13,7 +13,6 @@ RUN pnpm install --frozen-lockfile --prod
 
 COPY pollen.rkt ./
 COPY content/ ./content/
-COPY sqlite/ ./sqlite/
 
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git
 
