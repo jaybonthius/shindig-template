@@ -3,11 +3,11 @@
 :root {
   --brand: var(--red-6);
   --text-primary: var(--gray-10);
-  --bg-primary: var(--gray-1);
-  --bg-primary-2: var(--gray-2);
-  --bg-primary-3: var(--gray-3);
+  --bg-primary: var(--gray-0);
+  --bg-primary-2: var(--gray-1);
+  --bg-primary-3: var(--gray-2);
   --sidebar-width: 300px;
-  --sidebar-line-color: var(--gray-4);
+  --sidebar-line-color: var(--gray-3);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -108,8 +108,9 @@ main {
 
 .table-of-contents ul ul {
   position: relative;
-  padding-left: var(--size-5);
-  margin: var(--size-2) 0;
+  padding-left: var(--size-2);
+  margin-block: var(--size-2);
+  margin-left: var(--size-3);
 }
 
 /* Add vertical line for nested items */
@@ -245,4 +246,64 @@ math-field {
 
 math-field:not(:defined) {
   display: none !important;
+}
+
+.math-container {
+  display: flex;
+  justify-content: center;
+  margin-block: var(--size-2);
+}
+
+.math-wrapper {
+  display: inline-block;
+}
+
+/* TABLES */
+
+th, td {
+  padding: var(--size-2);
+}
+
+blockquote {
+  background-color: var(--bg-primary-2);
+  border-left: 4px solid var(--brand);
+  padding: var(--size-3);
+  margin-block: var(--size-4);
+  font-style: italic;
+}
+
+/* CODEBLOCKS */
+
+pre {
+  background-color: var(--bg-primary-2);
+  padding: var(--size-3);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* KNOWLS */
+
+.knowl {
+  padding: 1em 1em 1em 1em;
+}
+
+.knowl.definition {
+  border-left: 2px solid var(--red-3);
+  background: linear-gradient(90deg, var(--red-1) 1%, transparent 1%);
+}
+
+.knowl.theorem {
+  border-left: 2px solid var(--blue-3); 
+  background: linear-gradient(90deg, var(--blue-1) 1%, transparent 1%);
+}
+
+.knowl.lemma {
+  border-left: 2px solid var(--green-3);
+  background: linear-gradient(90deg, var(--green-1) 1%, transparent 1%);
+}
+
+.view-in-context {
+  display: block;  /* Makes sure the link is on its own line */
+  margin-top: var(--size-1);
+  text-align: right;  /* Right aligns the text */
 }

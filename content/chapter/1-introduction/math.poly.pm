@@ -1,45 +1,8 @@
 #lang pollen
 
-◊(define-meta title     "Math rendering test")
+◊(define-meta title     "Math showcase")
 
-Look how ◊strong{strong} I am!
-
-That's impressive!
-
-And this should be some math: ◊${f(x) = x^2 + \int_0^x \sin(t) \, dt}.
-
-Now that's pretty fast!
-
-And we could type even more math, if we wanted:
-
-◊$${\int_0^1 x^2 \, dx = \frac{1}{3}}
-
-Look, we can even do matrices
-
-◊$${
-    \begin{bmatrix} 
-        1 & 2 \\ 
-        3 & 4 
-    \end{bmatrix}
-}
-
-In fact, we can do the craziest things with math in Pollen!
-
-◊$${
-    \begin{bmatrix} 
-        1 & 2 \\ 
-        3 & 4 
-    \end{bmatrix}
-    \begin{bmatrix} 
-        1 & 2 \\ 
-        3 & 4 
-    \end{bmatrix}
-    =
-    \begin{bmatrix} 
-        7 & 10 \\ 
-        15 & 22 
-    \end{bmatrix}
-}
+This page is a showcase of various math elements that can be used in this book. 
 
 ◊h2{The Lorentz Equations}
 
@@ -63,7 +26,7 @@ In fact, we can do the craziest things with math in Pollen!
 
 ◊$${P(E) = {n \choose k} p^k (1-p)^{ n-k}}
 
-An Identity of Ramanujan
+◊h2{An Identity of Ramanujan}
 
 ◊$${\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\ldots} } } }}
 

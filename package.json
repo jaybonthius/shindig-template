@@ -7,20 +7,18 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^6.0.0",
+    "@kitschpatrol/tldraw-cli": "^4.6.21",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.6",
     "open-props": "^1.7.7",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "postcss-custom-media": "^11.0.4",
+    "postcss-import": "^16.1.0",
     "postcss-jit-props": "^1.0.14",
     "postcss-minify": "^1.1.0",
     "postcss-nested": "^6.2.0",
-    "postcss-preset-env": "^10.0.8",
-    "postcss-import": "^16.1.0"
-  },
-  "devDependencies": {
-    "@kitschpatrol/tldraw-cli": "^4.6.13"
+    "postcss-preset-env": "^10.0.8"
   },
   "scripts": {
     "css": "postcss content/static/css/input.css -o content/static/css/output.css --watch",

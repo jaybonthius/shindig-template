@@ -27,8 +27,9 @@
 (baseurl (remove-baseurl (or (getenv "BASE_URL") "/")))
 (pretty-url (or (string->boolean (getenv "PRETTY_URL")) #f))
 
-(printf "BASE_URL: ~a\n" (baseurl))
-(printf "PRETTY_URL: ~a\n" (pretty-url))
+; print the project root
+
+(printf (format "Project root: ~a\n" (project-root)))
 
 (module setup racket/base
   (require racket/string)

@@ -1,7 +1,7 @@
 .PHONY: format sqlite
 
 render:
-	raco pollen render -r content
+	cd content && raco pollen render -r
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
@@ -18,7 +18,7 @@ run:
 	raco chief start
 
 pollen-server:
-	raco pollen start content 8081
+	cd content && raco pollen start . 8081
 
 publish:
 	raco pollen publish content out
