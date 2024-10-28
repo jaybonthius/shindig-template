@@ -14,6 +14,7 @@ RUN pnpm install --frozen-lockfile --prod
 COPY pollen.rkt ./
 COPY content/ ./content/
 
+RUN raco pkg install --auto html-printer
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git
 
 RUN echo "BASE_URL=${BASE_URL}" && \
