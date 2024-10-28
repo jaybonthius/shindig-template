@@ -17,8 +17,8 @@ COPY content/ ./content/
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git
 
 RUN echo "BASE_URL=${BASE_URL}" && \
-    cd content && raco pollen render . -r && cd ../ && \
-    pnpm run build:css && \
+    cd content && raco pollen render -r && \
+    cd .. && pnpm run build:css && \
     cd content && raco pollen publish . ../out
 
 # Show final content for debugging
