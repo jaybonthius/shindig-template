@@ -2,7 +2,10 @@
 
 # TODO: override default-omitted-path? to ignore sqlite and static folders https://docs.racket-lang.org/pollen/raco-pollen.html#(part._raco_pollen_render)
 
-render: render-html
+render: render-html render-pdf
+
+render-html: 
+	cd content && raco pollen render --target html --recursive
 
 # TODO: for some reason, combining target and recursive doesn't work
 # this renders both HTML and PDF
