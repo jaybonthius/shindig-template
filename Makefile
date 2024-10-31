@@ -1,7 +1,13 @@
 .PHONY: format sqlite
 
-render:
-	cd content && raco pollen render -r
+# TODO: override default-omitted-path? to ignore sqlite and static folders https://docs.racket-lang.org/pollen/raco-pollen.html#(part._raco_pollen_render)
+
+render: render-html
+
+# TODO: for some reason, combining target and recursive doesn't work
+# this renders both HTML and PDF
+render-pdf:
+	cd content && raco pollen render --target pdf --recursive
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
@@ -11,17 +17,20 @@ reset:
 
 zap:
 	find content -name "*.html" -type f -delete
-	find content -name "temp" -type d -exec rm -rf {} +
+	find content -name "*.pdf" -type f -delete
 	make reset
 
 run:
 	raco chief start
 
+build-css:
+	pnpm run build:css
+
 pollen-server:
 	cd content && raco pollen start . 8081
 
 publish:
-	raco pollen publish content out
+	cd content && raco pollen publish . ../out
 
 sqlite:
 	mkdir -p sqlite

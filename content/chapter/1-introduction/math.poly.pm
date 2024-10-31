@@ -49,16 +49,12 @@ This page is a showcase of various math elements that can be used in this book.
 
 This is a numbered equation:
 
-◊$${
-    \begin{equation}
-        E = mc^2
-    \end{equation}
+◊equation{
+    E = mc^2
 }
 
 This is a test from the PreText page:
 
-◊$${
-    \begin{equation}
-        A\xmapsto[\text{bijection}]{\Phi+\Psi+\Theta}B
-    \end{equation}
+◊equation{
+    A\xmapsto[\text{bijection}]{\Phi+\Psi+\Theta}B
 }

@@ -2,91 +2,91 @@
 
 ◊(define-meta title     "Typography showcase")
 
-This document demonstrates various typographic elements and their styling in a structured document. ◊ref[#:type 'theorem #:uid "ftc-2"] Each section will showcase different aspects of typography and document structure.
+This document demonstrates various typographic elements and their styling in a structured document. ◊ref[#:type 'theorem #:uid "ftc-2"]. Each section will showcase different aspects of typography and document structure.
 
 ◊h2{Basic Text Elements}
 
-Regular paragraphs form the foundation of any document. They should be easily readable with appropriate spacing. Sometimes we need to emphasize text using ◊em{italics} or add ◊strong{strong emphasis} to certain phrases.
+Regular paragraphs form the foundation of any document. They should be easily readable with appropriate spacing. Sometimes we need to emphasize text using ◊emph{italics} or add ◊strong{strong emphasis} to certain phrases.
 
-Here's a simple blockquote demonstrating block-level formatting:
+◊; Here's a simple blockquote demonstrating block-level formatting:
 
-◊blockquote{
-    Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
-}
+◊; ◊blockquote{
+◊;     Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
+◊; }
 
-◊h2{Lists and Structure}
+◊; ◊h2{Lists and Structure}
 
-Lists help organize information in a clear hierarchy. Here are some examples:
+◊; Lists help organize information in a clear hierarchy. Here are some examples:
 
-◊numbered-list{
-    First ordered item!
-
-
-    Second ordered item
+◊; ◊numbered-list{
+◊;     First ordered item!
 
 
-    Third ordered item with longer text to demonstrate wrap behavior
-}
-
-Unordered lists are equally important:
-
-◊bullet-list{
-    Basic list item
+◊;     Second ordered item
 
 
-    List item with ◊em{emphasized text}
+◊;     Third ordered item with longer text to demonstrate wrap behavior
+◊; }
+
+◊; Unordered lists are equally important:
+
+◊; ◊bullet-list{
+◊;     Basic list item
 
 
-    List item with ◊code{inline code}
-}
+◊;     List item with ◊em{emphasized text}
 
-◊h2{Code Formatting}
 
-Code blocks should be clearly distinguished from regular text:
+◊;     List item with ◊code{inline code}
+◊; }
 
-◊pre{
-function example() {
-    return {
-        title: "Typography Demo",
-        author: "Documentation Team",
-        date: new Date()
-    };
-}
-}
+◊; ◊h2{Code Formatting}
 
-◊h3{Nested Structures}
+◊; Code blocks should be clearly distinguished from regular text:
 
-Complex documents often require nested elements:
+◊; ◊pre{
+◊; function example() {
+◊;     return {
+◊;         title: "Typography Demo",
+◊;         author: "Documentation Team",
+◊;         date: new Date()
+◊;     };
+◊; }
+◊; }
 
-◊ol{
-    ◊li{◊strong{Primary item}
-    ◊ul{
-        ◊li{Secondary item one}
-        ◊li{Secondary item two}
-    }
-    }
-    ◊li{◊strong{Another primary item}
-    ◊ul{
-        ◊li{More nested content}
-        ◊li{Additional nested content}
-    }
-    }
-}
+◊; ◊h3{Nested Structures}
 
-◊h2{Tables}
+◊; Complex documents often require nested elements:
 
-Tables should be clear and well-formatted:
+◊; ◊ol{
+◊;     ◊li{◊strong{Primary item}
+◊;     ◊ul{
+◊;         ◊li{Secondary item one}
+◊;         ◊li{Secondary item two}
+◊;     }
+◊;     }
+◊;     ◊li{◊strong{Another primary item}
+◊;     ◊ul{
+◊;         ◊li{More nested content}
+◊;         ◊li{Additional nested content}
+◊;     }
+◊;     }
+◊; }
 
-◊quick-table{
-heading left | heading center | heading right
-upper left   | upper center   | upper right
-lower left   | lower center   | lower right
-}
+◊; ◊h2{Tables}
 
-◊h3{Additional Elements}
+◊; Tables should be clear and well-formatted:
 
-Links should be clearly visible, like this ◊a[#:href "https://example.com"]{example link}.
+◊; ◊quick-table{
+◊; heading left | heading center | heading right
+◊; upper left   | upper center   | upper right
+◊; lower left   | lower center   | lower right
+◊; }
 
-◊hr{}
+◊; ◊h3{Additional Elements}
 
-This document ends with a horizontal rule above and a final paragraph to demonstrate spacing and margins at document close.
+◊; Links should be clearly visible, like this ◊a[#:href "https://example.com"]{example link}.
+
+◊; ◊hr{}
+
+◊; This document ends with a horizontal rule above and a final paragraph to demonstrate spacing and margins at document close.

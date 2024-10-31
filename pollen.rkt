@@ -1,6 +1,7 @@
 #lang racket/base
 
 (require net/url
+         racket/path
          racket/runtime-path
          racket/string
          reprovide/reprovide
@@ -27,14 +28,16 @@
 (baseurl (remove-baseurl (or (getenv "BASE_URL") "/")))
 (pretty-url (or (string->boolean (getenv "PRETTY_URL")) #f))
 
-; print the project root
-
-(printf (format "Project root: ~a\n" (project-root)))
-
 (module setup racket/base
   (require racket/string)
   (provide (all-defined-out))
   (define command-char #\◊)
   (define block-tags '()) ; no block tags so that we can manually control them
-  (define poly-targets '(html slide.html pdf))
+  (define poly-targets '(html pdf))
   (define publish-directory (build-path (current-directory) 'up "pollen_out")))
+
+(define (pdfable? file-path)
+  (string-contains? file-path ".poly"))
+
+(define (pdf-name page)
+  (string-replace (path->string (file-name-from-path page)) "poly.pm" "pdf"))

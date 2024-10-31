@@ -8,7 +8,13 @@ __pycache__/
 .venv/
 temp/
 .env
+*.aux
+*.log
 **/*.html
+content/**/*.pdf
+content/**/*.ltx
 content/static/css/output.css
 shindig/
 shindig-docker/
+out/
+**/pollen-latex-work/

@@ -1,4 +1,5 @@
 ◊(require html-printer)
+◊(define source-file (select-from-metas 'here-path metas))
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,6 +33,13 @@
                 <div class="content-wrapper">
                     <div id="main">
                         <h1>◊(select-from-metas 'title here)</h1>
+
+                        ◊when/splice[(poly? source-file)]{
+                        <span class="downloads">
+                            <a class="download" hx-boost="false" href="◊pdf-name[source-file]">Download PDF</a>
+                        </span>
+                        }
+
                         <div class="content">◊(map xexpr->html5 (select-from-doc 'body here))</div>
                     </div>
                 </div>

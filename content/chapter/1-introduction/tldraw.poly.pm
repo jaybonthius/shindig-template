@@ -2,5 +2,6 @@
 
 ◊(define-meta title     "tldraw showcase")
 
-◊tldraw["simple"]{}
+Here's a thing:
 
+◊; ◊tldraw["simple"]{}
