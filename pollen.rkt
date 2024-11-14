@@ -11,6 +11,8 @@
 
 (provide (all-defined-out))
 
+(putenv "PROJECT_DIR" "/home/jay/Code/honeycomb/content")
+
 (define (remove-baseurl url-str)
   (with-handlers ([exn:fail? (λ (e) url-str)])
     (define url-obj (string->url url-str))
@@ -33,7 +35,7 @@
   (provide (all-defined-out))
   (define command-char #\◊)
   (define block-tags '()) ; no block tags so that we can manually control them
-  (define poly-targets '(html pdf))
+  (define poly-targets '(html pdf tex))
   (define publish-directory (build-path (current-directory) 'up "pollen_out")))
 
 (define (pdfable? file-path)

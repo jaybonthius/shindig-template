@@ -1,15 +1,29 @@
-.PHONY: format sqlite
+.PHONY: format sqlite render
 
 # TODO: override default-omitted-path? to ignore sqlite and static folders https://docs.racket-lang.org/pollen/raco-pollen.html#(part._raco_pollen_render)
 
-render: render-html render-pdf
+render:
+ifndef FILE
+	@echo "Error: Please specify a file with FILE=<filename>"
+	@echo "Example: make render FILE=index.html.pm"
+else
+	cd content && YES=blah raco pollen render $(FILE)
+endif
+
+render-book:
+	cd content && latexmk -pdf wholebook.tex
+
+render-all: render-html render-tex render-pdf
 
 render-html: 
 	cd content && raco pollen render --target html --recursive
 
 # TODO: for some reason, combining target and recursive doesn't work
 # this renders both HTML and PDF
-render-pdf:
+render-tex:
+	cd content && raco pollen render --target tex --recursive
+
+render-pdf: render-book
 	cd content && raco pollen render --target pdf --recursive
 
 xrefs:
@@ -22,6 +36,25 @@ zap:
 	find content -name "*.html" -type f -delete
 	find content -name "*.pdf" -type f -delete
 	make reset
+
+# https://mg.readthedocs.io/latexmk.html
+# TODO: latexmk -c is better for cleaning
+zap-latex:
+	find . -name "*.pdf" -type f -delete
+	find . -name "*.aux" -type f -delete
+	find . -name "*.log" -type f -delete
+	find . -name "*.out" -type f -delete
+	find . -name "*.bcf" -type f -delete
+	find . -name "*.bib" -type f -delete
+	find . -name "*.run.xml" -type f -delete
+	find . -name "*.toc" -type f -delete
+	find . -name "*.fdb_latexmk" -type f -delete
+	find . -name "*.fls" -type f -delete
+
+# this is just to remind me that latexmk exists
+# don't forget about latexmk -pdf -pvc!!! (preview continuously)
+latex:
+	latexmk -pdf main.tex
 
 run:
 	raco chief start

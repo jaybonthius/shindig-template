@@ -3,6 +3,7 @@
       "Procfile.static": "heroku",
       "*.pm": "document",
       "*.p": "template",
+      "*.pp": "document",
       "*.ptree": "tree"
   },
   "material-icon-theme.folders.associations": {
@@ -21,6 +22,11 @@
   "files.exclude": {
     "**/compiled": true,
     "node_modules": true,
+    // I should probably change this later, but these files really annoy me (except when I need them)
+    "**/*.fdb_latexmk": true,
+    "**/*.fls": true,
+    "**/*.aux": true,
+    "**/*.log": true,
   },
   // this is needed for the racket language server to work on a headless server
   "magicRacket.languageServer.command": "xvfb-run",

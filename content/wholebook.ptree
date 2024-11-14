@@ -1,0 +1,8 @@
+#lang pollen
+ 
+◊chapter/1-introduction/index.tex{
+    chapter/1-introduction/typography.tex
+    chapter/1-introduction/math.tex
+    chapter/1-introduction/knowl.tex
+    chapter/1-introduction/tldraw.tex
+}

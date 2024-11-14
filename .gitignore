@@ -9,10 +9,13 @@ __pycache__/
 temp/
 .env
 *.aux
+*.fdb_latexmk
+*.out
+*.fls
 *.log
 **/*.html
 content/**/*.pdf
-content/**/*.ltx
+content/**/*.tex
 content/static/css/output.css
 shindig/
 shindig-docker/

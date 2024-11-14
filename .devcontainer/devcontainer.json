@@ -21,7 +21,9 @@
         "material-icon-theme.files.associations": {
           "Procfile.static": "heroku",
           "*.pm": "document",
-          "*.p": "template"
+          "*.p": "template",
+          "*.pp": "document",
+          "*.ptree": "tree"
         },
         "material-icon-theme.folders.associations": {
           "sqlite": "database",
