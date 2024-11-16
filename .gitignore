@@ -13,6 +13,7 @@ temp/
 *.out
 *.fls
 *.log
+*.toc
 **/*.html
 content/**/*.pdf
 content/**/*.tex
