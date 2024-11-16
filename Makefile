@@ -10,46 +10,47 @@ else
 	cd content && YES=blah raco pollen render $(FILE)
 endif
 
-render-book:
-	cd content && latexmk -pdf wholebook.tex
-
 render-all: render-html render-tex render-pdf
 
 render-html: 
-	cd content && raco pollen render --target html --recursive
+	cd content && raco pollen render --target html index.ptree
 
-# TODO: for some reason, combining target and recursive doesn't work
-# this renders both HTML and PDF
 render-tex:
-	cd content && raco pollen render --target tex --recursive
+	cd content && raco pollen render tex.ptree && raco pollen render wholebook.tex title.tex table-of-contents.tex
 
 render-pdf: render-book
-	cd content && raco pollen render --target pdf --recursive
+	cd content && raco pollen render --target pdf pdf.ptree
+
+render-book: render-tex
+	cd content && latexmk -pdf wholebook.tex
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson
 
+clean: reset zap
+
 reset:
 	cd content && raco pollen reset
 
-zap:
-	find content -name "*.html" -type f -delete
-	find content -name "*.pdf" -type f -delete
-	make reset
+zap: zap-html zap-tex zap-pdf
 
-# https://mg.readthedocs.io/latexmk.html
-# TODO: latexmk -c is better for cleaning
-zap-latex:
-	find . -name "*.pdf" -type f -delete
-	find . -name "*.aux" -type f -delete
-	find . -name "*.log" -type f -delete
-	find . -name "*.out" -type f -delete
-	find . -name "*.bcf" -type f -delete
-	find . -name "*.bib" -type f -delete
-	find . -name "*.run.xml" -type f -delete
-	find . -name "*.toc" -type f -delete
-	find . -name "*.fdb_latexmk" -type f -delete
-	find . -name "*.fls" -type f -delete
+zap-html:
+	find content -name "*.html" -type f -delete
+
+zap-pdf:
+	find content -name "*.pdf" -type f -delete
+
+zap-tex:
+	find content -name "*.tex" -type f -delete
+	find content -name "*.aux" -type f -delete
+	find content -name "*.log" -type f -delete
+	find content -name "*.out" -type f -delete
+	find content -name "*.bcf" -type f -delete
+	find content -name "*.bib" -type f -delete
+	find content -name "*.run.xml" -type f -delete
+	find content -name "*.toc" -type f -delete
+	find content -name "*.fdb_latexmk" -type f -delete
+	find content -name "*.fls" -type f -delete
 
 # this is just to remind me that latexmk exists
 # don't forget about latexmk -pdf -pvc!!! (preview continuously)

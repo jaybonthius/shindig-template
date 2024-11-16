@@ -1,6 +1,8 @@
 #lang pollen
- 
+
 index.html
+frontmatter/index.html
+frontmatter/acknowledgements.html
 ◊chapter/1-introduction/index.html{
     chapter/1-introduction/typography.html
     chapter/1-introduction/math.html

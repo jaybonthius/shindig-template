@@ -21,3 +21,5 @@ shindig/
 shindig-docker/
 out/
 **/pollen-latex-work/
+content/sqlite
+latex/

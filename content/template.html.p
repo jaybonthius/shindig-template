@@ -1,5 +1,6 @@
-◊(require html-printer)
+◊(require html-printer pollen/pagetree)
 ◊(define source-file (select-from-metas 'here-path metas))
+◊(define project-dir (string->path (getenv "PROJECT_DIR")))
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,18 +28,22 @@
                 <i class="fas fa-bars"></i>
             </button>
             <aside class="toc">
-                ◊(xexpr->html5 (generate-toc "blah"))
+                ◊(define pagetree (get-pagetree (build-path project-dir "index.ptree")))
+                ◊(displayln (format "template pagetree: ~a" pagetree))
+                ◊(xexpr->html5 (generate-toc pagetree))
             </aside>
             <main>
                 <div class="content-wrapper">
                     <div id="main">
                         <h1>◊(select-from-metas 'title here)</h1>
 
-                        ◊when/splice[(poly? source-file)]{
-                        <span class="downloads">
-                            <a class="download" hx-boost="false" href="◊pdf-name[source-file]">Download PDF</a>
-                        </span>
-                        }
+                        
+                        ◊; TODO: make this only show up for chapter pages. create an is-chapter function
+                        ◊; ◊when/splice[(poly? source-file)]{
+                        ◊; <span class="downloads">
+                        ◊;     <a class="download" hx-boost="false" href="◊pdf-name[source-file]">Download PDF</a>
+                        ◊; </span>
+                        ◊; }
 
                         <div class="content">◊(map xexpr->html5 (select-from-doc 'body here))</div>
                     </div>

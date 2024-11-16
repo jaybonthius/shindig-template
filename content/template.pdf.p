@@ -13,8 +13,11 @@
 ◊(define tex-path (add-ext file-name-without-extension "tex"))
 ◊(render-to-file-if-needed (hash-ref metas 'here-path) (build-path project-dir "template.tex.p") tex-path)
 ◊(define temp-directory (build-path working-directory "temp"))
-◊; 
 ◊(current-directory project-dir)
+◊; 
+◊; temp-latexmk-dir is needed for some quirky latexmk reasons when \includeonly is used
+◊(define temp-latexmk-dir (build-path temp-directory (find-relative-path (current-directory) working-directory)))
+◊(make-directory* temp-latexmk-dir)
 ◊(define wholebook-path (build-path "wholebook.tex"))
 ◊(define command (format "latexmk -jobname='~a' -output-directory='~a' -pdf -usepretex='\\includeonly{~a}' wholebook.tex" job-name temp-directory (find-relative-path (current-directory) path-name-without-extension)))
 ◊(displayln command)
@@ -23,4 +26,4 @@
 ◊; 
 ◊(if (system command)
     (file->bytes (build-path working-directory "temp" (add-ext job-name "pdf")))
-    (error "xelatex: rendering error"))
+    (error "latexmk: rendering error"))
