@@ -1,4 +1,4 @@
-◊(require html-printer pollen/pagetree)
+◊(require pollen/pagetree)
 ◊(define source-file (select-from-metas 'here-path metas))
 ◊(define project-dir (string->path (getenv "PROJECT_DIR")))
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
             <aside class="toc">
                 ◊(define pagetree (get-pagetree (build-path project-dir "index.ptree")))
                 ◊(displayln (format "template pagetree: ~a" pagetree))
-                ◊(xexpr->html5 (generate-toc pagetree))
+                ◊(->html (generate-toc pagetree))
             </aside>
             <main>
                 <div class="content-wrapper">
@@ -39,10 +39,10 @@
 
                         
                         ◊when/splice[(pdfable? source-file)]{
-                            ◊(xexpr->html5 (pdf-download-button source-file))
+                            ◊(->html (pdf-download-button source-file))
                         }
 
-                        <div class="content">◊(map xexpr->html5 (select-from-doc 'body here))</div>
+                        <div class="content">◊(map ->html (select-from-doc 'body here))</div>
                     </div>
                 </div>
             </main>
