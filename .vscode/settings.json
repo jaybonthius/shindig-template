@@ -27,6 +27,8 @@
     "**/*.fls": true,
     "**/*.aux": true,
     "**/*.log": true,
+    "**/*.out": true,
+    "**/*.toc": true,
   },
   // this is needed for the racket language server to work on a headless server
   "magicRacket.languageServer.command": "xvfb-run",

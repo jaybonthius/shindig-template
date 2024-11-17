@@ -8,6 +8,8 @@
   --bg-primary-3: var(--gray-2);
   --sidebar-width: 300px;
   --sidebar-line-color: var(--gray-3);
+  --download: var(--red-7);
+  --download-text: var(--gray-0);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +20,8 @@
     --bg-primary-2: var(--gray-11);
     --bg-primary-3: var(--gray-12);
     --sidebar-line-color: var(--gray-8);
+    --download: var(--red-11);
+    --download-text: white;
   }
 }
 
@@ -306,4 +310,28 @@ pre {
   display: block;  /* Makes sure the link is on its own line */
   margin-top: var(--size-1);
   text-align: right;  /* Right aligns the text */
+}
+
+.downloads {
+  display: inline-flex;
+}
+
+.download {
+  text-decoration: none;
+  font-size: var(--size-3);
+  display: inline-flex;
+  padding: var(--size-2) var(--size-3);
+  border-radius: var(--radius-5);
+  background-color: var(--download);
+  filter: saturate(0.5);
+  color: var(--download-text);
+  font-weight: var(--font-weight-4);
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  letter-spacing: 0.08em;
+}
+
+.download:hover {
+  cursor: pointer;
+  filter: saturate(1);
 }

@@ -16,12 +16,15 @@ render-html:
 	cd content && raco pollen render --target html index.ptree
 
 render-tex:
-	cd content && raco pollen render tex.ptree && raco pollen render wholebook.tex title.tex table-of-contents.tex
+	cd content && raco pollen render tex.ptree && raco pollen render wholebook.tex handouts.tex
 
-render-pdf: render-book
+render-pdf: render-handouts
 	cd content && raco pollen render --target pdf pdf.ptree
 
-render-book: render-tex
+render-handouts: render-tex
+	cd content && latexmk -pdf handouts.tex
+
+render-wholebook: render-tex
 	cd content && latexmk -pdf wholebook.tex
 
 xrefs:

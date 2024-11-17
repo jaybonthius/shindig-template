@@ -14,5 +14,5 @@
 
 \begin{document}
 ◊(define pagetree (get-pagetree "tex.ptree"))
-◊(generate-input-toc pagetree)
+◊(generate-toc pagetree)
 \end{document}

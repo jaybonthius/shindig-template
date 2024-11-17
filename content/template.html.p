@@ -38,12 +38,9 @@
                         <h1>◊(select-from-metas 'title here)</h1>
 
                         
-                        ◊; TODO: make this only show up for chapter pages. create an is-chapter function
-                        ◊; ◊when/splice[(poly? source-file)]{
-                        ◊; <span class="downloads">
-                        ◊;     <a class="download" hx-boost="false" href="◊pdf-name[source-file]">Download PDF</a>
-                        ◊; </span>
-                        ◊; }
+                        ◊when/splice[(pdfable? source-file)]{
+                            ◊(xexpr->html5 (pdf-download-button source-file))
+                        }
 
                         <div class="content">◊(map xexpr->html5 (select-from-doc 'body here))</div>
                     </div>

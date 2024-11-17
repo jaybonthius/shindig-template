@@ -40,6 +40,3 @@
 
 (define (pdfable? file-path)
   (string-contains? file-path ".poly"))
-
-(define (pdf-name page)
-  (string-replace (path->string (file-name-from-path page)) "poly.pm" "pdf"))

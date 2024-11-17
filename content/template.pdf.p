@@ -18,8 +18,7 @@
 ◊; temp-latexmk-dir is needed for some quirky latexmk reasons when \includeonly is used
 ◊(define temp-latexmk-dir (build-path temp-directory (find-relative-path (current-directory) working-directory)))
 ◊(make-directory* temp-latexmk-dir)
-◊(define wholebook-path (build-path "wholebook.tex"))
-◊(define command (format "latexmk -jobname='~a' -output-directory='~a' -pdf -usepretex='\\includeonly{~a}' wholebook.tex" job-name temp-directory (find-relative-path (current-directory) path-name-without-extension)))
+◊(define command (format "latexmk -jobname='~a' -output-directory='~a' -pdf -usepretex='\\includeonly{~a}' handouts.tex" job-name temp-directory (find-relative-path (current-directory) path-name-without-extension)))
 ◊(displayln command)
 ◊; 
 ◊(define result (system command))

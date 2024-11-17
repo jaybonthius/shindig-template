@@ -1,3 +1,12 @@
 #lang pollen
 
-chapter/1-introduction/index.pdf
+◊frontmatter{
+    frontmatter/acknowledgements.pdf
+    frontmatter/foreword.pdf
+}
+◊chapter/1-introduction/index.pdf{
+    chapter/1-introduction/typography.pdf
+    chapter/1-introduction/math.pdf
+    chapter/1-introduction/knowl.pdf
+    chapter/1-introduction/tldraw.pdf
+}

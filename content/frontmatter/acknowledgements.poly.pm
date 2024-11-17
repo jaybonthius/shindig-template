@@ -2,4 +2,6 @@
 
 ◊(define-meta title     "Acknowledgements")
 
-I'd like to thank the academy.
+I'd like to thank the academy. 
+
+Well, not really.

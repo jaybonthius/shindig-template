@@ -1,7 +1,9 @@
 #lang pollen
 
-frontmatter/index.tex
-frontmatter/acknowledgements.tex
+◊frontmatter{
+    frontmatter/acknowledgements.tex
+    frontmatter/foreword.tex
+}
 ◊chapter/1-introduction/index.tex{
     chapter/1-introduction/typography.tex
     chapter/1-introduction/math.tex

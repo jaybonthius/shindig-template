@@ -4,7 +4,7 @@
          koyo/haml
          racket/file
          racket/path
-         (prefix-in config: "../config.rkt"))
+         (prefix-in config: "../shindig/config.rkt"))
 
 (define (try-create-empty-file path)
   (with-handlers ([exn:fail? (lambda (e)
@@ -38,7 +38,7 @@
 
       (printf "Table created successfully.\n"))))
 
-(define cross-references-sqlite-filepatch (build-path config:sqlite-path "cross-references.sqlite"))
+(define cross-references-sqlite-filepatch (build-path "content" "sqlite" "cross-references.sqlite"))
 (define cross-references-sql-string
   "CREATE TABLE IF NOT EXISTS cross_references (
                   type TEXT NOT NULL,
