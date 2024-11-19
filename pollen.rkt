@@ -11,7 +11,7 @@
 
 (provide (all-defined-out))
 
-(putenv "PROJECT_DIR" (current-directory-for-user))
+(putenv "PROJECT_DIR" (path->string (current-directory-for-user)))
 
 (define (remove-baseurl url-str)
   (with-handlers ([exn:fail? (λ (e) url-str)])
