@@ -18,7 +18,7 @@ COPY Makefile ./
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git || true
 
 RUN echo "BASE_URL=${BASE_URL}" && \
-    make render && \
+    make render-all && \
     make build-css && \
     make publish
 
