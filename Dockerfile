@@ -15,7 +15,7 @@ COPY pollen.rkt ./
 COPY content/ ./content/
 COPY Makefile ./
 
-RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git
+RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git || true
 
 RUN echo "BASE_URL=${BASE_URL}" && \
     make render && \

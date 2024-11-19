@@ -4,7 +4,6 @@
 
 Lorem ipsum odor amet, consectetuer adipiscing elit. Praesent ipsum lacinia rutrum torquent vehicula. Nunc tempus cursus ornare neque vel vel suspendisse. Elit mauris habitant posuere; vitae ultricies felis praesent. Sollicitudin nibh duis quis sagittis quis habitasse class convallis. Risus varius mollis vulputate quis eleifend. Magnis vivamus sed magnis massa dignissim litora libero curae. Mollis pulvinar donec posuere imperdiet praesent. Magna elementum gravida morbi urna rutrum.
 
-
 ◊theorem[#:title "Second Version of FTC" #:uid "ftc-2"]{
     Suppose ◊${f(x)} is a continuous function. Then
     ◊$${
@@ -14,13 +13,13 @@ Lorem ipsum odor amet, consectetuer adipiscing elit. Praesent ipsum lacinia rutr
 
 Vel penatibus sodales facilisi eget ornare. Penatibus tempus nam dolor mollis inceptos condimentum rutrum massa. Urna quam blandit condimentum porttitor magna facilisis. Integer accumsan auctor vulputate gravida potenti ligula odio. ◊ref[#:type 'theorem #:uid "ftc-2"] Nibh primis natoque leo ullamcorper suscipit conubia curae ipsum. Lacinia aliquet tincidunt maximus augue pharetra ridiculus sem. Eu velit consectetur urna accumsan montes pulvinar.
 
-◊lemma[#:title "1" #:uid "1"]{
+◊lemma[#:title "Monotone Convergence Theorem" #:uid "mct"]{
     Let ◊${a_n} be a monotone increasing sequence of real numbers. If ◊${a_n} is bounded above by some ◊${M \in \mathbb{R}}, then ◊${a_n} converges to some limit ◊${L \leq M}.
 }
 
 Ipsum nunc quis nisi neque ornare maecenas odio. Dignissim nisl pretium velit nec habitant. Aliquet ac curabitur lacus eros imperdiet donec sapien neque curae. At dui orci magna; ultrices hac nisl. Facilisis metus dapibus molestie posuere fermentum augue. Nam non hendrerit venenatis vulputate dictum maecenas sociosqu per. Sit metus velit tristique fringilla ornare vulputate posuere eget tortor. Diam dictum vehicula vestibulum duis natoque pretium aliquam! Eu dui sodales felis ut lectus phasellus eget interdum. Nibh orci ac primis conubia molestie viverra ullamcorper.
 
-◊definition[#:uid "avg-velocity-2" #:title "Average Velocity"]{
+◊definition[#:title "Average Velocity" #:uid "avg-velocity-2"]{
     For an object moving in a straight line with position function, the average velocity of the object on the interval from ◊${t=a} to ◊${t=b}, denoted ◊${AV_{[a,b]}}, is given by the formula
     ◊$${AV_{[a,b]} = \frac{s(b) - s(a)}{b - a}.}
 }

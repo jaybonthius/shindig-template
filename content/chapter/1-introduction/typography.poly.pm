@@ -8,84 +8,88 @@ This document demonstrates various typographic elements and their styling in a s
 
 Regular paragraphs form the foundation of any document. They should be easily readable with appropriate spacing. Sometimes we need to emphasize text using ◊emph{italics} or add ◊strong{strong emphasis} to certain phrases.
 
-◊; Here's a simple blockquote demonstrating block-level formatting:
+Here's a simple blockquote demonstrating block-level formatting: 
 
-◊; ◊blockquote{
-◊;     Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
-◊; }
+◊blockquote{
+    Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
+}
 
-◊; ◊h2{Lists and Structure}
+◊h2{Lists and Structure}
 
-◊; Lists help organize information in a clear hierarchy. Here are some examples:
+Lists help organize information in a clear hierarchy. Here are some examples:
 
-◊; ◊numbered-list{
-◊;     First ordered item!
-
-
-◊;     Second ordered item
+◊numbered-list{
+    First ordered item!
 
 
-◊;     Third ordered item with longer text to demonstrate wrap behavior
-◊; }
-
-◊; Unordered lists are equally important:
-
-◊; ◊bullet-list{
-◊;     Basic list item
+    Second ordered item
 
 
-◊;     List item with ◊em{emphasized text}
+    Third ordered item with longer text to demonstrate wrap behavior
+}
+
+Unordered lists are equally important:
+
+◊bullet-list{
+    Basic list item
 
 
-◊;     List item with ◊code{inline code}
-◊; }
+    List item with ◊emph{emphasized text}
 
-◊; ◊h2{Code Formatting}
 
-◊; Code blocks should be clearly distinguished from regular text:
+    List item with ◊code{inline code}
+}
 
-◊; ◊pre{
-◊; function example() {
-◊;     return {
-◊;         title: "Typography Demo",
-◊;         author: "Documentation Team",
-◊;         date: new Date()
-◊;     };
-◊; }
-◊; }
+◊h2{Code Formatting}
 
-◊; ◊h3{Nested Structures}
+Code blocks should be clearly distinguished from regular text:
 
-◊; Complex documents often require nested elements:
+◊code-block{
+function example() {
+    return {
+        title: "Typography Demo",
+        author: "Documentation Team",
+        date: new Date()
+    };
+}
+}
 
-◊; ◊ol{
-◊;     ◊li{◊strong{Primary item}
-◊;     ◊ul{
-◊;         ◊li{Secondary item one}
-◊;         ◊li{Secondary item two}
-◊;     }
-◊;     }
-◊;     ◊li{◊strong{Another primary item}
-◊;     ◊ul{
-◊;         ◊li{More nested content}
-◊;         ◊li{Additional nested content}
-◊;     }
-◊;     }
-◊; }
+◊h3{Nested Structures}
 
-◊; ◊h2{Tables}
+Complex documents often require nested elements:
 
-◊; Tables should be clear and well-formatted:
+◊numbered-list{
+    Primary item
+    ◊bullet-list{
+        Secondary item one
 
-◊; ◊quick-table{
-◊; heading left | heading center | heading right
-◊; upper left   | upper center   | upper right
-◊; lower left   | lower center   | lower right
-◊; }
 
-◊; ◊h3{Additional Elements}
+        Secondary item two
+    }
 
-◊; Links should be clearly visible, like this ◊a[#:href "https://example.com"]{example link}.
+
+    Another primary item
+    ◊bullet-list{
+        More nested content
+
+
+        Additional nested content
+    }
+}
+
+◊h2{Tables}
+
+Tables should be clear and well-formatted:
+
+◊quick-table{
+heading left | heading center | heading right
+upper left   | upper center   | upper right
+lower left   | lower center   | lower right
+}
+
+◊h3{Additional Elements}
+
+Links should be clearly visible, like this ◊link["https://example.com"]{example link}.
 
 ◊; ◊hr{}
 
