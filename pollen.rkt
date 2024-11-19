@@ -11,7 +11,7 @@
 
 (provide (all-defined-out))
 
-(putenv "PROJECT_DIR" "/home/jay/Code/honeycomb/content")
+(putenv "PROJECT_DIR" (current-directory-for-user))
 
 (define (remove-baseurl url-str)
   (with-handlers ([exn:fail? (λ (e) url-str)])
