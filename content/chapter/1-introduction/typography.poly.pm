@@ -2,7 +2,7 @@
 
 ◊(define-meta title     "Typography showcase")
 
-This document demonstrates various typographic elements and their styling in a structured document. ◊ref[#:type 'theorem #:uid "ftc-2"]. Each section will showcase different aspects of typography and document structure.
+This document demonstrates various typographic elements and their styling in a structured document. Each section will showcase different aspects of typography and document structure.
 
 ◊h2{Basic Text Elements}
 
@@ -10,9 +10,26 @@ Regular paragraphs form the foundation of any document. They should be easily re
 
 Here's a simple blockquote demonstrating block-level formatting: 
 
+◊h2{Geogebra}
+
+◊geogebra["d66jmqv2"]{blah}
+
+◊iframe["https://www.xkcd.com"]
+
+◊sage-cell{
+    # This is a simple example of a Sage cell
+    plot(sin(x), (x, 0, 2*pi))
+}
+
+Blah
+
 ◊blockquote{
     Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.
 }
+
+◊h2{Sidenotes}
+
+Sidenotes are a useful way to provide additional context or information without interrupting the main flow of text. ◊sidenote{This is a sidenote. It provides additional information related to the main text.} They should be clearly distinguished from regular text.
 
 ◊h2{Lists and Structure}
 

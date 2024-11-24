@@ -1,6 +1,10 @@
 /* VARIABLES */
 
 :root {
+  color-scheme: light dark;
+}
+
+:root {
   --brand: var(--red-6);
   --text-primary: var(--gray-10);
   --bg-primary: var(--gray-0);
@@ -56,6 +60,10 @@ h6 {
 
 p {
   margin-block: var(--size-4);
+}
+
+p, span {
+  line-height: 1.5;
 }
 
 /* LAYOUT */
@@ -272,7 +280,8 @@ blockquote {
   background-color: var(--bg-primary-2);
   border-left: 4px solid var(--brand);
   padding: var(--size-3);
-  margin-block: var(--size-4);
+  /* margin-block: var(--size-4); */
+  margin: var(--size-4) var(--size-7);
   font-style: italic;
 }
 
@@ -334,4 +343,100 @@ pre {
 .download:hover {
   cursor: pointer;
   filter: saturate(1);
+}
+
+.content {
+  --sidenote-width: 200px;
+  position: relative;
+  /* max-width: 650px; */
+  margin: 0 auto;
+}
+
+/* .sidenote {
+  position: absolute;
+  right: calc(-1 * (var(--sidenote-width) + var(--size-6)));
+  width: var(--sidenote-width);
+  margin-top: calc(-1.5 * var(--size-4));
+  padding: var(--size-2);
+  font-size: var(--font-size-1);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+@media (max-width: 1200px) {
+  .sidenote {
+    display: block;
+    position: relative;
+    right: 0;
+    width: auto;
+    margin: var(--size-4) var(--size-7);
+    padding: var(--size-3);
+    background-color: var(--bg-primary-2);
+    border-left: 4px solid var(--brand);
+  }
+} */
+
+/* Style the toggle button - hidden by default on large screens */
+.sidenote-button {
+  display: none;
+}
+
+/* Sidenote styling for large screens - always visible */
+.sidenote {
+  position: absolute;
+  right: calc(-1 * (var(--sidenote-width) + var(--size-6)));
+  width: var(--sidenote-width);
+  margin-top: calc(-1.5 * var(--size-4));
+  padding: var(--size-2);
+  font-size: var(--font-size-1);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Mobile styles */
+@media (max-width: 1200px) {
+  /* Show the toggle button */
+  .sidenote-button {
+    display: inline;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: var(--size-1);
+    color: light-dark(var(--gray-8), var(--gray-10));
+    border-color: light-dark(var(--gray-6), var(--gray-8));
+    background: light-dark(var(--gray-3), var(--gray-6));
+  }
+
+  .sidenote-button:hover {
+    background: light-dark(var(--gray-5), var(--gray-7));
+  }
+  
+  /* Hide sidenote by default on mobile */
+  .sidenote {
+    display: none;
+    position: relative;
+    right: 0;
+    width: auto;
+    margin: var(--size-4) var(--size-7);
+    padding: var(--size-3);
+    background-color: var(--bg-primary-2);
+    border-left: 4px solid var(--brand);
+  }
+
+  /* Show sidenote when toggled */
+  .sidenote.show {
+    display: block;
+  }
+}
+
+.fullwidth {
+  width: 140%;
+}
+
+@media (max-width: 1200px) {
+  .fullwidth {
+    width: 100%;
+  }
 }

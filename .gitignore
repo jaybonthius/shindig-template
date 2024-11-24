@@ -15,6 +15,7 @@ temp/
 *.log
 *.toc
 **/*.html
+**/*.tex
 content/**/*.pdf
 content/**/*.tex
 content/static/css/output.css
@@ -24,3 +25,4 @@ out/
 **/pollen-latex-work/
 content/sqlite
 latex/
+content/static/media/images/qr-codes

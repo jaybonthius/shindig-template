@@ -21,6 +21,13 @@
         <script src="https://unpkg.com/htmx-ext-preload@2.0.1/preload.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+        <script>
+            sagecell.makeSagecell({
+                inputLocation: 'div.compute',
+                evalButtonText: 'Evaluate'
+            });
+        </script>
     </head>
     <body hx-boost="true" hx-ext="multi-swap,preload">
         <div class="layout-wrapper">
@@ -42,7 +49,10 @@
                             ◊(->html (pdf-download-button source-file))
                         }
 
-                        <div class="content">◊(map ->html (select-from-doc 'body here))</div>
+                        <div class="content">
+◊; I'm unindenting this because of SageCell whitespace sensitivity
+◊(map ->html (select-from-doc 'body here))
+                        </div>
                     </div>
                 </div>
             </main>

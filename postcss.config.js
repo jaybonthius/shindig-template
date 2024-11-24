@@ -8,6 +8,7 @@ import postcssJitProps from 'postcss-jit-props'
 import postcssImport from 'postcss-import'
 
 import postcssCustomMedia from 'postcss-custom-media';
+import postcssLightDarkFunction from '@csstools/postcss-light-dark-function';
 
 /** @type {import('postcss-load-config').Config} */
 const config = {
@@ -19,6 +20,8 @@ const config = {
       // Optional: specify custom layer if needed
       // layer: 'design-system'
     }),
+
+    postcssLightDarkFunction({ preserve: false }),
     
     // autoprefixer,
     // postcssNested,

@@ -27,10 +27,12 @@ inotifywait -m -e modify,create,delete -r --format '%w%f' shindig content | whil
 
 
         if [[ "$file" == *.pm ]]; then
-            # Call raco pollen render for the changed .p file
-            # remove the content/ prefix
             file=$(echo "$file" | sed 's/content\///')
-            cd content && raco pollen render "$file"
+            cd content
+            raco pollen render "$file"
+            if [[ "$file" == *.poly.* ]]; then
+                raco pollen render -t pdf "$file"
+            fi
             cd ../
             echo "Rendered $file using raco pollen"
         fi
