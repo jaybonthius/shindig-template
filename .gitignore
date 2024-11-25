@@ -25,4 +25,5 @@ out/
 **/pollen-latex-work/
 content/sqlite
 latex/
-content/static/media/images/qr-codes
+content/static/media/images/qr-codes/*
+!content/static/media/images/qr-codes/.gitkeep
