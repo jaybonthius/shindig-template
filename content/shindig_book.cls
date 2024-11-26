@@ -1,9 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{shindig_book.cls}[2020/03/24 v1.00a Shindig book]
-% Load the amsmath and the mhchem package before loading microtype
+% Load the amsmath and package before loading microtype
 \RequirePackage{amsmath}% better math handling
 \RequirePackage{amssymb}% better math symbols
-\RequirePackage[version=3]{mhchem}% chemical formulas
 \LoadClassWithOptions{book}% this is derived from the book class
 \RequirePackage{sidenotes}% put annotations, tables and figures in the margin
 \captionsetup{font=footnotesize, skip=4pt}
