@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: this script is garbage, clean it up
+
 # Change to the parent directory of shindig and content
 cd "$(dirname "$0")/.." || exit
 

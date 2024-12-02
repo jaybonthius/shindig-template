@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{shindig_book.cls}[2020/03/24 v1.00a Shindig book]
-% Load the amsmath and package before loading microtype
+% Load the amsmath package before loading microtype
 \RequirePackage{amsmath}% better math handling
 \RequirePackage{amssymb}% better math symbols
 \LoadClassWithOptions{book}% this is derived from the book class
@@ -16,9 +16,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{array}
 \RequirePackage{listings}
-\@ifpackagelater{microtype}{2011/08/18}% xxx allow LaTeX and earlier microtype
-{\renewcommand{\shindig@letterspace}[1]{\textls{#1}}}%
-{\AtEndDocument{\ClassWarningNoLine{shindig_book}{Need newest microtype for letterspacing.}}}
+\renewcommand{\shindig@letterspace}[1]{\textls{#1}}
 %
 % Set page layout geometry
 %

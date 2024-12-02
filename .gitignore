@@ -14,8 +14,9 @@ temp/
 *.fls
 *.log
 *.toc
-**/*.html
-**/*.tex
+*.html
+*.tex
+*.listing
 content/**/*.pdf
 content/**/*.tex
 content/static/css/output.css
@@ -23,7 +24,8 @@ shindig/
 shindig-docker/
 out/
 **/pollen-latex-work/
-content/sqlite
+content/sqlite/*
+!content/sqlite/.gitkeep
 latex/
 content/static/media/images/qr-codes/*
 !content/static/media/images/qr-codes/.gitkeep

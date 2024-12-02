@@ -1,13 +1,10 @@
 #lang pollen
 
-index.html
-◊frontmatter{
-    frontmatter/acknowledgements.html
-    frontmatter/foreword.html
-}
-◊chapter/1-introduction/index.html{
-    chapter/1-introduction/typography.html
-    chapter/1-introduction/math.html
-    chapter/1-introduction/knowl.html
-    chapter/1-introduction/tldraw.html
-}
+◊'(pagetree-root
+  index.html
+  (frontmatter frontmatter/acknowledgements.html frontmatter/foreword.html)
+  (chapter/1-introduction/index.html
+   chapter/1-introduction/typography.html
+   chapter/1-introduction/math.html
+   chapter/1-introduction/knowl.html
+   chapter/1-introduction/tldraw.html))

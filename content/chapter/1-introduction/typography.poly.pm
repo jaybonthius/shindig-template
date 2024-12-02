@@ -10,6 +10,14 @@ Regular paragraphs form the foundation of any document. They should be easily re
 
 Here's a simple blockquote demonstrating block-level formatting: 
 
+◊h2{Figures}
+
+Figures are an important part of any document. They should be clearly labeled and referenced in the text. Here's an example:
+
+◊; ◊image["frogu-original.png"]{This is a placeholder image.}
+
+◊youtube-iframe["https://youtu.be/SXOHCiukZPw?si=VegHYqE-JDLm5nAy"]
+
 ◊h2{Geogebra}
 
 ◊geogebra["d66jmqv2"]{blah}
