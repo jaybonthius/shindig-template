@@ -16,8 +16,8 @@ COPY content/ ./content/
 COPY Makefile ./
 COPY scripts/ ./scripts/
 
-RUN racket scripts/make-db.rkt
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git || true
+RUN racket scripts/make-db.rkt
 
 RUN echo "BASE_URL=${BASE_URL}" && \
     make render-all && \
