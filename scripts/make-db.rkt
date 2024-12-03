@@ -1,7 +1,6 @@
 #lang racket/base
 
 (require db
-         koyo/haml
          racket/file
          racket/path
          (prefix-in config: "../shindig/config.rkt"))
