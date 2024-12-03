@@ -14,6 +14,7 @@ RUN pnpm install --frozen-lockfile --prod
 COPY pollen.rkt ./
 COPY content/ ./content/
 COPY Makefile ./
+COPY scripts/ ./scripts/
 
 RUN racket scripts/make-db.rkt
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git || true
