@@ -28,7 +28,7 @@ render-wholebook: render-tex
 	cd content && latexmk -pdf wholebook.tex
 
 pagetree: 
-	cd content && racket make-pagetree.rkt .
+	racket scripts/make-pagetree.rkt
 
 xrefs:
 	cd content && POLLEN=generate-xrefs raco pollen render . && POLLEN=generate-xrefs raco pollen render lesson

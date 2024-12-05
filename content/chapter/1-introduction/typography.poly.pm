@@ -25,8 +25,8 @@ Figures are an important part of any document. They should be clearly labeled an
 ◊iframe["https://www.xkcd.com"]
 
 ◊sage-cell{
-    # This is a simple example of a Sage cell
-    plot(sin(x), (x, 0, 2*pi))
+# This is a simple example of a Sage cell
+plot(sin(x), (x, 0, 2*pi))
 }
 
 Blah

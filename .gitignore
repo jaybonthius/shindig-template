@@ -17,6 +17,7 @@ temp/
 *.html
 *.tex
 *.listing
+*.ptree
 content/**/*.pdf
 content/**/*.tex
 content/static/css/output.css
