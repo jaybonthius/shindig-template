@@ -11,6 +11,9 @@
 
 \title{Shindig demo}
 \author{Jay Bonthius}
+\makeindex
+◊; \usepackage[totoc]{idxlayout}
+\usepackage[nottoc]{tocbibind}
 
 \begin{document}
 ◊(define pagetree (get-pagetree "tex.ptree"))

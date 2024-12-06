@@ -13,7 +13,7 @@ endif
 render-all: render-html render-tex render-pdf
 
 render-html: 
-	cd content && raco pollen render --target html index.ptree
+	cd content && raco pollen render --target html index.ptree && raco pollen render --force backmatter/book-index.html
 
 render-tex:
 	cd content && raco pollen render tex.ptree && raco pollen render wholebook.tex handouts.tex

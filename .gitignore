@@ -18,6 +18,9 @@ temp/
 *.tex
 *.listing
 *.ptree
+*.idx
+*.ilg
+*.ind
 content/**/*.pdf
 content/**/*.tex
 content/static/css/output.css

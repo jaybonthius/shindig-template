@@ -2,8 +2,8 @@
 
 (require (prefix-in config: "../content/config.rkt"))
 (require sugar)
-(require racket/string
-         racket/pretty)
+(require racket/pretty
+         racket/string)
 
 ; TODO: this script is hot garbage and needs rewriting from scratch
 
@@ -28,6 +28,7 @@
         [rest (cdr tree)])
     (define items
       (for/list ([item rest])
+        (pretty-print (format "item: ~a" item))
         (cond
           [(symbol? item)
            (define path
@@ -38,44 +39,45 @@
            (and file (substring file 8))]
           [(list? item) (build-sexp item (string-append prefix (symbol->string (car item)) "/"))])))
 
+    (pretty-print (format "items: ~a" items))
+
     (define filtered-items (filter values items))
 
-    (if (equal? prefix "")
-        `(pagetree-root ,@filtered-items)
-        (let ([index-file (find-matching-file "index" prefix)])
-          (if index-file
-              (cons (substring index-file 8)
-                    (filter (λ (x) (not (equal? x (substring index-file 8))))
-                            (append-map (λ (x)
-                                          (if (list? x)
-                                              (cdr x)
-                                              (list x)))
-                                        filtered-items)))
-              (cons (string-trim prefix "/" #:right? #t) filtered-items))))))
+    (cond
+      [(equal? prefix "") `(pagetree-root ,@filtered-items)]
+      [else
+       (define index-file (find-matching-file "index" prefix))
+       (if index-file
+           (cons (substring index-file 8)
+                 (filter (λ (x) (not (equal? x (substring index-file 8))))
+                         (append-map (λ (x)
+                                       (if (list? x)
+                                           (cdr x)
+                                           (list x)))
+                                     filtered-items)))
+           (cons (string-trim prefix "/" #:right? #t) filtered-items))])))
 
 (define (replace-extension path new-ext)
   (cond
     [(not (string? path)) path]
     [(string-contains? path ".poly.pm")
      (string-append (substring path 0 (- (string-length path) 8)) new-ext)]
-    [(string-contains? path ".html.pm") (string-append (substring path 0 (- (string-length path) 3)))]
+    [(string-contains? path ".html.pm") (substring path 0 (- (string-length path) 3))]
     [else path]))
 
 (define (transform-sexp-html sexp)
   (match sexp
     [(list 'pagetree-root items ...)
-     `(pagetree-root ,@(map (λ (item)
-                              (if (list? item)
-                                  (transform-sexp-html item)
-                                  (string->symbol (replace-extension item ".html"))))
-                            items))]
+     `(pagetree-root ,@(for/list ([item (in-list items)])
+                         (if (list? item)
+                             (transform-sexp-html item)
+                             (string->symbol (replace-extension item ".html")))))]
     [(cons head rest)
      (cons (string->symbol (replace-extension head ".html"))
-           (map (λ (item)
-                  (if (list? item)
-                      (transform-sexp-html item)
-                      (string->symbol (replace-extension item ".html"))))
-                rest))]))
+           (for/list ([item (in-list rest)])
+             (if (list? item)
+                 (transform-sexp-html item)
+                 (string->symbol (replace-extension item ".html")))))]))
 
 (define (transform-sexp-pdf type sexp)
   (define (poly-pm? path)

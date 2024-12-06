@@ -37,7 +37,7 @@
 
       (printf "Table created successfully.\n"))))
 
-(define cross-references-sqlite-filepatch (build-path "content" "sqlite" "cross-references.sqlite"))
+(define cross-references-sqlite-filepath (build-path "content" "sqlite" "cross-references.sqlite"))
 (define cross-references-sql-string
   "CREATE TABLE IF NOT EXISTS cross_references (
                   type TEXT NOT NULL,
@@ -47,4 +47,15 @@
                   PRIMARY KEY (type, id)
               )")
 
-(create-db cross-references-sqlite-filepatch cross-references-sql-string)
+(define book-index-sqlite-filepath (build-path "content" "sqlite" "book-index.sqlite"))
+(define book-index-sql-string
+  "CREATE TABLE IF NOT EXISTS book_index (
+                  id TEXT NOT NULL,
+                  source TEXT NOT NULL,
+                  entry TEXT NOT NULL,
+                  subentry TEXT NOT NULL,
+                  PRIMARY KEY (id, source)
+              )")
+
+(create-db cross-references-sqlite-filepath cross-references-sql-string)
+(create-db book-index-sqlite-filepath book-index-sql-string)

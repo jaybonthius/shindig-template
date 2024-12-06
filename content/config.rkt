@@ -5,4 +5,5 @@
 (define pagetree
   '(pagetree index
              (frontmatter acknowledgements foreword)
-             (chapter (1-introduction index typography math knowl tldraw))))
+             (chapter (1-introduction index typography math knowl tldraw))
+             (backmatter book-index)))

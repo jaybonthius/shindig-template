@@ -4,6 +4,16 @@
 
 This document demonstrates various typographic elements and their styling in a structured document. Each section will showcase different aspects of typography and document structure.
 
+This is a tag: ◊tag{integral}.
+
+This is a manual tag: ◊tag[#:entry "derivative"]{derivatives}.
+
+This is a manual tag with subentry: ◊tag[#:entry "theorems" #:subentry "Central Limit Theorem"]{CLT}.
+
+This is the same tag, but with no subentry: ◊tag[#:entry "theorems"]{blah}.
+
+This is a duplicated tag: ◊tag[#:entry "integral"]{integrals, baby!}.
+
 ◊h2{Basic Text Elements}
 
 Regular paragraphs form the foundation of any document. They should be easily readable with appropriate spacing. Sometimes we need to emphasize text using ◊emph{italics} or add ◊strong{strong emphasis} to certain phrases.

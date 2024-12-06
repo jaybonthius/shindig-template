@@ -16,6 +16,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{array}
 \RequirePackage{listings}
+\RequirePackage{makeidx}
 \renewcommand{\shindig@letterspace}[1]{\textls{#1}}
 %
 % Set page layout geometry
