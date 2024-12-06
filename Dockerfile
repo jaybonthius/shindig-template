@@ -20,10 +20,7 @@ RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shind
 RUN racket scripts/make-db.rkt
 
 RUN echo "BASE_URL=${BASE_URL}" && \
-    make pagetree && \
-    make render-all && \
-    make build-css && \
-    make publish
+    make sqlite pagetree render-all build-css publish
 
 # Show final content for debugging
 RUN echo "Final content directory:" && \

@@ -38,7 +38,7 @@ clean: reset zap
 reset:
 	cd content && raco pollen reset
 
-zap: zap-html zap-tex zap-pdf
+zap: zap-html zap-tex zap-pdf zap-sqlite
 
 zap-html:
 	find content -name "*.html" -type f -delete

@@ -28,8 +28,7 @@ shindig/
 shindig-docker/
 out/
 **/pollen-latex-work/
-content/sqlite/*
-!content/sqlite/.gitkeep
+content/sqlite
 latex/
 content/static/media/images/qr-codes/*
 !content/static/media/images/qr-codes/.gitkeep

@@ -15,6 +15,7 @@
     (path->string file)))
 
 (define (find-matching-file name path)
+
   (findf (λ (f)
            (and (string-contains? f name)
                 (string-contains? f
@@ -23,12 +24,22 @@
                                       (format "content/~a" path)))))
          all-files))
 
+; TODO: hot garbage
+(define (find-matching-file-v2 name path)
+  (pretty-print (format "Checking if ~a is in ~a" name path))
+  (findf (λ (f)
+           (and (string-contains? f
+                                  (if (equal? path "")
+                                      (format "/~a" name)
+                                      (format "/~a/~a" path name)))
+                (string-contains? f "content")))
+         all-files))
+
 (define (build-sexp tree [prefix ""])
   (let ([head (car tree)]
         [rest (cdr tree)])
     (define items
       (for/list ([item rest])
-        (pretty-print (format "item: ~a" item))
         (cond
           [(symbol? item)
            (define path
@@ -39,14 +50,12 @@
            (and file (substring file 8))]
           [(list? item) (build-sexp item (string-append prefix (symbol->string (car item)) "/"))])))
 
-    (pretty-print (format "items: ~a" items))
-
     (define filtered-items (filter values items))
 
     (cond
       [(equal? prefix "") `(pagetree-root ,@filtered-items)]
       [else
-       (define index-file (find-matching-file "index" prefix))
+       (define index-file (find-matching-file-v2 "index" prefix))
        (if index-file
            (cons (substring index-file 8)
                  (filter (λ (x) (not (equal? x (substring index-file 8))))
@@ -119,6 +128,7 @@
    #:exists 'replace))
 
 (define base-sexp (build-sexp config:pagetree))
+(pretty-print base-sexp)
 (write-ptree "index.ptree" (transform-sexp-html base-sexp))
 (write-ptree "pdf.ptree" (transform-sexp-pdf ".pdf" base-sexp))
 (write-ptree "tex.ptree" (transform-sexp-pdf ".tex" base-sexp))

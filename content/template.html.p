@@ -36,7 +36,6 @@
             </button>
             <aside class="toc">
                 ◊(define pagetree (get-pagetree (build-path project-dir "index.ptree")))
-                ◊(displayln (format "template pagetree: ~a" pagetree))
                 ◊(->html (generate-toc pagetree))
             </aside>
             <main>

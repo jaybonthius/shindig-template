@@ -1,7 +1,6 @@
 ◊; Using comments in place of newlines, since the output is 
 ◊; a binary file and is sensitive to whitespace.
 ◊(define project-dir (string->path (getenv "PROJECT_DIR")))
-◊(displayln (format "PROJECT_DIR=~a" (path->string project-dir)))
 ◊; 
 ◊(local-require racket/file racket/path racket/system sugar pollen/render)
 ◊(define working-directory (current-directory))
@@ -19,7 +18,6 @@
 ◊(define temp-latexmk-dir (build-path temp-directory (find-relative-path (current-directory) working-directory)))
 ◊(make-directory* temp-latexmk-dir)
 ◊(define command (format "latexmk -jobname='~a' -output-directory='~a' -pdf -usepretex='\\includeonly{~a}' handouts.tex" job-name temp-directory (find-relative-path (current-directory) path-name-without-extension)))
-◊(displayln command)
 ◊; 
 ◊(define result (system command))
 ◊; 
