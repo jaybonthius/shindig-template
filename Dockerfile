@@ -17,7 +17,6 @@ COPY Makefile ./
 COPY scripts/ ./scripts/
 
 RUN raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git || true
-RUN racket scripts/make-db.rkt
 
 RUN echo "BASE_URL=${BASE_URL}" && \
     make sqlite pagetree render-all build-css publish
