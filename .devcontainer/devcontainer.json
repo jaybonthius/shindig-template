@@ -1,8 +1,8 @@
 {
   "name": "Shindig-Codespaces",
-  "image": "nicheceviche/shindig-dev:latest",
+  "image": "nicheceviche/shindig-package:latest",
 
-  "postCreateCommand": "raco pkg install --auto --clone shindig https://github.com/jaybonthius/shindig.git && raco pkg install --auto chief && pnpm install",
+  "postCreateCommand": "raco pkg install --auto chief && pnpm install",
 
   "forwardPorts": [8080],
   "portsAttributes": {

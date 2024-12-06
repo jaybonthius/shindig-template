@@ -46,7 +46,7 @@ jobs:
           echo "base_url=$BASE_URL" >> $GITHUB_OUTPUT
       
       - name: Pull base image
-        run: docker pull nicheceviche/shindig-dev:latest
+        run: docker pull nicheceviche/shindig-package:latest
       
       - name: Build and extract site
         env:
