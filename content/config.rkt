@@ -6,4 +6,5 @@
   '(pagetree index
              (frontmatter acknowledgements foreword)
              (chapter (1-introduction index typography math knowl))
-             (backmatter book-index)))
+             (backmatter book-idx)
+             ))

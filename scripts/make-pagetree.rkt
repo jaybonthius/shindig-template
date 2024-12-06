@@ -15,7 +15,6 @@
     (path->string file)))
 
 (define (find-matching-file name path)
-
   (findf (λ (f)
            (and (string-contains? f name)
                 (string-contains? f
@@ -23,18 +22,7 @@
                                       "content"
                                       (format "content/~a" path)))))
          all-files))
-
-; TODO: hot garbage
-(define (find-matching-file-v2 name path)
-  (pretty-print (format "Checking if ~a is in ~a" name path))
-  (findf (λ (f)
-           (and (string-contains? f
-                                  (if (equal? path "")
-                                      (format "/~a" name)
-                                      (format "/~a/~a" path name)))
-                (string-contains? f "content")))
-         all-files))
-
+         
 (define (build-sexp tree [prefix ""])
   (let ([head (car tree)]
         [rest (cdr tree)])
@@ -55,7 +43,8 @@
     (cond
       [(equal? prefix "") `(pagetree-root ,@filtered-items)]
       [else
-       (define index-file (find-matching-file-v2 "index" prefix))
+      ;  (define index-file (find-matching-file-v2 "index" prefix))
+      (define index-file (find-matching-file "index" prefix))
        (if index-file
            (cons (substring index-file 8)
                  (filter (λ (x) (not (equal? x (substring index-file 8))))

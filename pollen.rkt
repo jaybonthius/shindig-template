@@ -30,6 +30,9 @@
 (baseurl (remove-baseurl (or (getenv "BASE_URL") "/")))
 (pretty-url (or (string->boolean (getenv "PRETTY_URL")) #f))
 
+(displayln (format "BASE_URL: ~a" (getenv "BASE_URL")))
+(displayln (format "PRETTY_URL: ~a" (getenv "PRETTY_URL")))
+
 (module setup racket/base
   (require racket/string)
   (provide (all-defined-out))
