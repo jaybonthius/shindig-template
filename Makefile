@@ -76,7 +76,7 @@ publish:
 	cd content && raco pollen publish . ../out
 
 sqlite:
-	mkdir -p sqlite
+	mkdir -p content/sqlite
 	racket scripts/make-db.rkt
 
 zap-sqlite:
