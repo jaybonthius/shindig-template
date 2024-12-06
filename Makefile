@@ -10,7 +10,7 @@ else
 	cd content && YES=blah raco pollen render $(FILE)
 endif
 
-render-all: render-html render-tex render-pdf
+render-all: render-html render-tex render-pdf render-wholebook
 
 render-html: 
 	cd content && raco pollen render --target html index.ptree && raco pollen render --force backmatter/book-idx.html
