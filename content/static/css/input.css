@@ -62,6 +62,11 @@ p {
   margin-block: var(--size-4);
 }
 
+p:has(+ .math-container),
+.math-container + p {
+  margin-block: 0;
+}
+
 p, span {
   line-height: 1.5;
 }
@@ -263,7 +268,7 @@ math-field:not(:defined) {
 .math-container {
   display: flex;
   justify-content: center;
-  margin-block: var(--size-2);
+  margin-block: var(--size-1);
 }
 
 .math-wrapper {
@@ -301,8 +306,8 @@ pre {
 }
 
 .knowl.definition {
-  border-left: 2px solid var(--red-3);
-  background: linear-gradient(90deg, var(--red-1) 1%, transparent 1%);
+  border-left: 2px solid light-dark(var(--red-3), var(--red-8));
+  background: linear-gradient(90deg, light-dark(var(--red-1), var(--red-3)) 1%, transparent 1%);
 }
 
 .knowl.theorem {
@@ -313,6 +318,16 @@ pre {
 .knowl.lemma {
   border-left: 2px solid var(--green-3);
   background: linear-gradient(90deg, var(--green-1) 1%, transparent 1%);
+}
+
+.knowl.preview-activity {
+  border-left: 2px solid light-dark(var(--orange-3), var(--orange-8));
+  background: linear-gradient(90deg, light-dark(var(--orange-1), var(--orange-3)) 1%, transparent 1%);
+}
+
+.knowl.activity {
+  border-left: 2px solid light-dark(var(--purple-3), var(--purple-8));
+  background: linear-gradient(90deg, light-dark(var(--purple-1), var(--purple-3)) 1%, transparent 1%);
 }
 
 .view-in-context {

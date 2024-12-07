@@ -17,6 +17,7 @@
 \RequirePackage{array}
 \RequirePackage{listings}
 \RequirePackage{makeidx}
+\RequirePackage{caption}
 \renewcommand{\shindig@letterspace}[1]{\textls{#1}}
 %
 % Set page layout geometry
@@ -150,6 +151,24 @@
     separator sign={.}
   },
   lemma/.style={
+    enhanced,
+    colback=red!5,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={colback=red!75!black, coltext=white},
+    separator sign={.}
+  },
+  preview-activity/.style={
+    enhanced,
+    colback=red!5,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    attach boxed title to top left={yshift=-2mm},
+    boxed title style={colback=red!75!black, coltext=white},
+    separator sign={.}
+  },
+  activity/.style={
     enhanced,
     colback=red!5,
     colframe=red!75!black,

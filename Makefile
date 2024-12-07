@@ -57,6 +57,10 @@ zap-tex:
 	find content -name "*.toc" -type f -delete
 	find content -name "*.fdb_latexmk" -type f -delete
 	find content -name "*.fls" -type f -delete
+	find content -name "*.idx" -type f -delete
+	find content -name "*.ilg" -type f -delete
+	find content -name "*.ind" -type f -delete
+	find content -name "*.listing" -type f -delete
 
 # this is just to remind me that latexmk exists
 # don't forget about latexmk -pdf -pvc!!! (preview continuously)

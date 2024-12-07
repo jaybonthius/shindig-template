@@ -4,7 +4,6 @@
 
 (define pagetree
   '(pagetree index
-             (frontmatter acknowledgements foreword)
-             (chapter (1-introduction index typography math knowl))
-             (backmatter book-idx)
-             ))
+             (frontmatter acknowledgements)
+             (chapter (understanding-the-derivative index how-do-we-measure-velocity))
+             (backmatter book-idx)))
