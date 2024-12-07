@@ -5,7 +5,10 @@
          racket/runtime-path
          racket/string
          reprovide/reprovide
-         reprovide/require-transformer/glob-in)
+         reprovide/require-transformer/glob-in
+         (prefix-in site-config: "content/config.rkt")
+         (prefix-in shindig-config: "shindig/config.rkt")
+)
 
 (reprovide shindig)
 
@@ -29,9 +32,8 @@
 
 (baseurl (remove-baseurl (or (getenv "BASE_URL") "/")))
 (pretty-url (or (string->boolean (getenv "PRETTY_URL")) #f))
-
-(displayln (format "BASE_URL: ~a" (getenv "BASE_URL")))
-(displayln (format "PRETTY_URL: ~a" (getenv "PRETTY_URL")))
+(book-title site-config:book-title)
+(author site-config:author)
 
 (module setup racket/base
   (require racket/string)

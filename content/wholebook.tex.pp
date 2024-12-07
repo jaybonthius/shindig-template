@@ -1,5 +1,6 @@
 #lang pollen
-◊(require pollen/pagetree)
+◊(require pollen/pagetree 
+         (prefix-in config: "config.rkt"))
 ◊; TODO: support twoside / openany
 ◊; https://tex.stackexchange.com/questions/111580/removing-an-unwanted-page-between-two-chapters
 \documentclass[oneside]{shindig_book}
@@ -9,8 +10,8 @@
 \usepackage{mathtools}
 \usepackage[english]{babel}
 
-\title{Shindig demo}
-\author{Jay Bonthius}
+\title{◊|config:book-title|}
+\author{◊|config:author|}
 \makeindex
 ◊; \usepackage[totoc]{idxlayout}
 \usepackage[nottoc]{tocbibind}
