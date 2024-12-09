@@ -2,8 +2,7 @@
 
 ◊(define-meta title "Understanding the Derivative")
 
-This is an index page to the introduction chapter. Let's hope this works out!
-
-This is a separate paragraph. 
-
-Another one!
+◊(case (current-poly-target)
+    [(html) ◊p{◊link[◊pollen-request{chapter/understanding-the-derivative/how-do-we-measure-velocity.html}]{How do we measure velocity?}}]
+    [(else) ""]
+)
